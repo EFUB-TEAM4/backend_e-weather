@@ -35,4 +35,11 @@ public class User extends BaseTimeEntity {
         this.email = email;
         this.fullName = fullName;
     }
+
+
+    public Object update(String name) {
+        this.id = id;
+        this.fullName = name;
+        return this;
+    }
 }
