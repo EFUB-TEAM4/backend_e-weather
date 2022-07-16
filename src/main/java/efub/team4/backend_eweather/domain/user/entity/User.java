@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,8 +20,10 @@ import java.util.UUID;
 public class User extends BaseTimeEntity {
 
     @Id
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name ="uuid", strategy = "uuid2")
+    @GeneratedValue(generator = "uuid2")
+    @GenericGenerator(name ="uuid2", strategy = "uuid2")
+    @Column(length = 16)
+    @Type(type = "org.hibernate.type.UUIDCharType")
     private UUID id;
 
     @Column
@@ -37,7 +40,7 @@ public class User extends BaseTimeEntity {
     }
 
 
-    public Object update(String name) {
+    public Object update(UUID id, String name) {
         this.id = id;
         this.fullName = name;
         return this;
