@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 
 import java.util.Map;
+import java.util.UUID;
 
 @Getter
 public class OAuthAttributes {
@@ -44,6 +45,7 @@ public class OAuthAttributes {
     // OAuthAttributes 클래스 생성이 끝나면 같은 패키지에 SessionUser 생성
     public User toEntity() {
         return User.builder()
+                .id(UUID.randomUUID())
                 .fullName(name)
                 .email(email)
                 .build();
