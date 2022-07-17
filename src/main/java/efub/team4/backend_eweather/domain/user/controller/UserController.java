@@ -22,12 +22,4 @@ public class UserController {
     public List<UserResponseDto> getUserResponseDtoList(){
         return userService.loadUsers();
     }
-
-    /*
-    @GetMapping("/{id}")
-    public UserResponseDto getUserResponseDto(@RequestParam UUID id){
-        return userService.loadUser(id);
-    }
-
-     */
 }
