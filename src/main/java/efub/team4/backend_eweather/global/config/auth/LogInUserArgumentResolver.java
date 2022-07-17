@@ -1,6 +1,6 @@
 package efub.team4.backend_eweather.global.config.auth;
 
-import efub.team4.backend_eweather.domain.user.dto.SessionUser;
+import efub.team4.backend_eweather.global.config.auth.dto.SessionUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Component;
