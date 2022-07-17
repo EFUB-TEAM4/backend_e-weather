@@ -20,21 +20,13 @@ public class CalendarDto {
     @AllArgsConstructor
     public static class CreateRequest {
         @NotNull
-        private String nickname;
+        private UUID userId;
+
         @NotEmpty
         private String description;
 
         @NotNull
-        private Integer temperature;
-
-        @NotNull
-        private Integer max_temperature;
-
-        @NotNull
-        private Integer min_temperature;
-
-        @Column(precision = 10, scale = 4)
-        private BigDecimal pty_probability;
+        private LocalDateTime createdOn;
     }
 
     @Getter
@@ -55,7 +47,7 @@ public class CalendarDto {
     @AllArgsConstructor
     public static class Response {
         private UUID id;
-        private UserResponseDto userResDto;
+        private UserResponseDto userResponseDto;
         private String description;
         private Integer temperature;
         private Integer max_temperature;
