@@ -32,7 +32,7 @@ import java.util.Map;
 public class OpenWeatherAPI {
 
     // 커밋 시 서비스 키 지우고 커밋
-    private final String BASE_URL = "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0";
+    private final String BASE_URL = "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst";
     private final String serviceKey = "*";
 
     // 요청 고정갑
@@ -78,7 +78,7 @@ public class OpenWeatherAPI {
         sb.append("&" + URLEncoder.encode("base_date", "UTF-8") + "="+ URLEncoder.encode(baseDate, "UTF-8")); /* 조회하고싶은 날짜 */
         sb.append("&" + URLEncoder.encode("base_time", "UTF-8") + "="+ URLEncoder.encode(baseTime, "UTF-8")); /* 조회하고싶은 시간 AM 02시부터 3시간 단위 */
         sb.append("&" + URLEncoder.encode("nx", "UTF-8") + "=" + URLEncoder.encode(nx, "UTF-8")); // 경도
-        sb.append("&" + URLEncoder.encode("ny", "UTF-8") + "=" + URLEncoder.encode(ny, "UTF-8")+"&"); // 위도
+        sb.append("&" + URLEncoder.encode("ny", "UTF-8") + "=" + URLEncoder.encode(ny, "UTF-8")); // 위도
 
         return new URL(sb.toString());
     }
@@ -141,8 +141,8 @@ public class OpenWeatherAPI {
             String fcstDate = (String) obj.get("fcstDate");
             String fcstTime = (String) obj.get("fcstTime");
             String fcstValue = (String) obj.get("fcstValue");
-            Integer nx = (Integer) obj.get("nx");
-            Integer ny = (Integer) obj.get("ny");
+            Long nx = (Long) obj.get("nx");
+            Long ny = (Long) obj.get("ny");
 
 
             OpenWeatherResponseDto weatherResponseDto = new OpenWeatherResponseDto(

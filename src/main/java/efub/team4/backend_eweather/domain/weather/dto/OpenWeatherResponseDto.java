@@ -25,10 +25,10 @@ public class OpenWeatherResponseDto {
     private String fcstValue;
 
     /** 예보지점 X 좌표 */
-    private int nx;
+    private Long nx;
 
     /** 예보지점 Y 좌표 */
-    private int ny;
+    private Long ny;
 
     /**
      * 코드값 정보
@@ -63,7 +63,7 @@ public class OpenWeatherResponseDto {
     */
 
     @Builder
-    public OpenWeatherResponseDto(String baseDate, String baseTime, String fcstDate, String fcstTime, String category, String fcstValue, int nx, int ny) {
+    public OpenWeatherResponseDto(String baseDate, String baseTime, String fcstDate, String fcstTime, String category, String fcstValue, Long nx, Long ny) {
         this.baseDate = baseDate;
         this.baseTime = baseTime;
         this.fcstDate = fcstDate;
