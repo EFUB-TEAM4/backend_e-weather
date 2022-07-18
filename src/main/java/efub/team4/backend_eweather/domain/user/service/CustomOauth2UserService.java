@@ -40,7 +40,7 @@ public class CustomOauth2UserService implements OAuth2UserService<OAuth2UserRequ
         System.out.println("--- This is the current User Info ---");
         System.out.println(user.getId());
         System.out.println(user.getEmail());
-        System.out.println(user.getFullName());
+        System.out.println(user.getFullName()); // utf-8
         System.out.println("--- This is the current User Info ---");
 
 
