@@ -1,6 +1,8 @@
 package efub.team4.backend_eweather.domain.weather.service;
 
 import efub.team4.backend_eweather.domain.weather.dto.OpenWeatherResponseDto;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.springframework.http.RequestEntity;
 import org.json.simple.*;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +22,7 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -30,7 +33,7 @@ public class OpenWeatherAPI {
 
     // 커밋 시 서비스 키 지우고 커밋
     private final String BASE_URL = "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0";
-    private final String serviceKey = "muVi%2BoMzwaX9%2BT2Fs2FhZmttZ8q5%2BfJhBwDbIQ7q1hlgxmyvL7psAHNQx6kzKRXQbtOeYyowUwX2lLBcSj9FbA%3D%3D";
+    private final String serviceKey = "*";
 
     // 요청 고정갑
     private String pageNo = "1";
@@ -41,7 +44,7 @@ public class OpenWeatherAPI {
     private String ny = "126"; // nx, ny는 서대문구 신촌동 좌표값
 
 
-    public List<OpenWeatherResponseDto> findWeather() throws IOException {
+    public List<OpenWeatherResponseDto> findWeather() throws IOException, ParseException {
         String baseDate = getCurrentDate();
         URL url = buildRequestUrl(baseDate);
 
@@ -52,6 +55,10 @@ public class OpenWeatherAPI {
         String stringResult = httpURLConnect(url);
 
         // stringResult -> json parsing
+        JSONArray jsonResult = jsonParsing(stringResult);
+
+        return buildResponse(jsonResult);
+
     }
 
     // 현재 요일 반환 함수
@@ -103,10 +110,50 @@ public class OpenWeatherAPI {
         return sb.toString();
     }
 
-    public void jsonParsing() throws JsonParseException{
+    public JSONArray jsonParsing(String stringResult) throws ParseException {
 
-        JsonParser jsonParser = new JsonParser();
+        JSONParser jsonParser = new JSONParser();
+        JSONObject jsonObject = (JSONObject) jsonParser.parse(stringResult);
+        JSONObject parse_response = (JSONObject) jsonObject.get("response");
+        JSONObject parse_body = (JSONObject) parse_response.get("body");
+        JSONObject parse_items = (JSONObject) parse_body.get("items");
+        JSONArray parse_item = (JSONArray) parse_items.get("item");
 
+        return parse_item;
+    }
+
+    public List<OpenWeatherResponseDto> buildResponse(JSONArray parse_item){
+        List<OpenWeatherResponseDto> dataList = new ArrayList<OpenWeatherResponseDto>();
+
+        JSONObject obj; // 기준 날짜와 기준시간을 VillageWeather 객체에 저장합니다.
+
+        String day = "";
+        String time = "";
+
+
+
+        for(int i = 0; i < parse_item.size(); i++){
+            obj = (JSONObject) parse_item.get(i);
+
+            String baseDate = (String) obj.get("baseDate");
+            String baseTime = (String) obj.get("baseTime");
+            String category = (String) obj.get("category");
+            String fcstDate = (String) obj.get("fcstDate");
+            String fcstTime = (String) obj.get("fcstTime");
+            String fcstValue = (String) obj.get("fcstValue");
+            Integer nx = (Integer) obj.get("nx");
+            Integer ny = (Integer) obj.get("ny");
+
+
+            OpenWeatherResponseDto weatherResponseDto = new OpenWeatherResponseDto(
+                baseDate, baseTime, fcstDate, fcstTime, category, fcstValue, nx, ny
+            );
+
+            dataList.add(weatherResponseDto);
+
+        }
+
+        return dataList;
     }
 
 }
