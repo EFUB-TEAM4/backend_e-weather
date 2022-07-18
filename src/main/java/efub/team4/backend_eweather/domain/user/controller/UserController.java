@@ -29,7 +29,7 @@ public class UserController {
 
     @GetMapping("/account")
     public UserResponseDto getCurrentUser(@LoginUser SessionUser sessionUser){
-        return userService.findByUserId(sessionUser.getId());
+        return userService.getByUserId(sessionUser.getId());
     }
 
 }
