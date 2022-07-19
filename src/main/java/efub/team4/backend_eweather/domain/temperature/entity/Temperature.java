@@ -23,14 +23,14 @@ public class Temperature {
     private UUID id;
 
     @NotEmpty
-    private Integer min_temperature;
+    private Integer minTemperature;
 
     @NotEmpty
-    private Integer max_temperature;
+    private Integer maxTemperature;
 
     @Builder
-    public Temperature(Integer min_temperature, Integer max_temperature){
-        this.min_temperature = min_temperature;
-        this.max_temperature = max_temperature;
+    public Temperature(Integer minTemperature, Integer maxTemperature){
+        this.minTemperature = minTemperature;
+        this.maxTemperature = maxTemperature;
     }
 }

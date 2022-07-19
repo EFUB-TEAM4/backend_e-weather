@@ -22,12 +22,13 @@ public class Sky {
 
     @Size(max = 50)
     @NotEmpty
-    private String sky_name;
+    private String skyName;
 
     @NotEmpty
-    private Integer sky_code;
+    private Integer skyCode;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "day_night_id", nullable = false)
     private DayNight dayNight;
+
 }

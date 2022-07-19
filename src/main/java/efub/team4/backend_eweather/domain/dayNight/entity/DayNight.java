@@ -22,15 +22,15 @@ public class DayNight {
 
     @Size(max = 50)
     @NotEmpty
-    private String time_name;
+    private String timeName;
 
     @Size(max = 50)
     @NotEmpty
     private String time;
 
     @Builder
-    public DayNight(String time_name, String time) {
-        this.time_name = time_name;
+    public DayNight(String timeName, String time) {
+        this.timeName = timeName;
         this.time = time;
     }
 }

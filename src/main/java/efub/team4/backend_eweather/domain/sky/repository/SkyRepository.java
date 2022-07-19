@@ -7,5 +7,5 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface SkyRepository extends JpaRepository<Sky, UUID> {
-    Optional<Sky> findBySky_Name(String skyName);
+    Optional<Sky> findBySkyName(String skyName);
 }
