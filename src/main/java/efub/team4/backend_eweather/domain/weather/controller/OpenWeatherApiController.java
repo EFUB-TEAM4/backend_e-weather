@@ -23,5 +23,4 @@ public class OpenWeatherApiController {
         return openWeatherAPI.findWeather();
     }
 
-
 }
