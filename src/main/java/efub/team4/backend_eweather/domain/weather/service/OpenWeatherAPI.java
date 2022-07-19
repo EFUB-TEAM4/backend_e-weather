@@ -3,6 +3,7 @@ package efub.team4.backend_eweather.domain.weather.service;
 import efub.team4.backend_eweather.domain.weather.dto.CalendarWeatherResponseDto;
 import efub.team4.backend_eweather.domain.weather.dto.ForcastResponseDto;
 import efub.team4.backend_eweather.domain.weather.dto.OpenWeatherResponseDto;
+import efub.team4.backend_eweather.domain.weather.dto.WeatherResponseDto;
 import lombok.NoArgsConstructor;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -64,6 +65,18 @@ public class OpenWeatherAPI {
         String stringResult = httpURLConnect(url);
         JSONArray jsonResult = getItems(stringResult);
         return buildCalendarData(jsonResult);
+    }
+
+    @Transactional
+    public WeatherResponseDto findTemperature() {
+    }
+
+    @Transactional
+    public WeatherResponseDto findSkyCode() {
+    }
+
+    @Transactional
+    public WeatherResponseDto findPrecipitation() {
     }
 
     // 현재 요일 반환 함수
@@ -269,6 +282,7 @@ public class OpenWeatherAPI {
 
         return dataList;
     }
+
 
 
 }
