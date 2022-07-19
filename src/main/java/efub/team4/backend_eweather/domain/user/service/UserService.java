@@ -3,10 +3,13 @@ package efub.team4.backend_eweather.domain.user.service;
 import efub.team4.backend_eweather.domain.user.dto.UserResponseDto;
 import efub.team4.backend_eweather.domain.user.entity.User;
 import efub.team4.backend_eweather.domain.user.repository.UserRepository;
+import efub.team4.backend_eweather.global.config.auth.dto.SessionUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -19,10 +22,13 @@ public class UserService {
     @Autowired
     private final UserRepository userRepository;
 
+    private final HttpSession httpSession;
+
     public UserResponseDto buildUserDto(User user){
         return new UserResponseDto(user);
     }
 
+    @Transactional
     public List<UserResponseDto> loadUsers() {
         List<User> userList = userRepository.findAll();
         List<UserResponseDto> userResponseDtoList = new ArrayList<>();
@@ -33,14 +39,17 @@ public class UserService {
         return userResponseDtoList;
     }
 
-    public UserResponseDto loadUser(UUID id) {
-        User user;
-        if(userRepository.findById(id).isPresent()){
-            user = userRepository.findById(id).get();
-        }
-        else{
-            return null; // 예외처리 필요할 듯
-        }
+    @Transactional
+    public UserResponseDto getByUserId(UUID id) {
+        User user = userRepository.findById(id).get();
         return buildUserDto(user);
+    }
+
+    @Transactional
+    public UUID getSessionUser(){
+        SessionUser user = (SessionUser) httpSession.getAttribute("user");
+        UUID userId = user.getId();
+        return userId;
+
     }
 }
