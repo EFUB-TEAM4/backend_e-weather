@@ -7,5 +7,5 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface TemperatureRepository extends JpaRepository<Temperature, UUID> {
-    Optional<Temperature> findByMinTemperatureGreaterThanEqualAndMaxTemperatureLessThanEqual(Integer temperature);
+
 }
