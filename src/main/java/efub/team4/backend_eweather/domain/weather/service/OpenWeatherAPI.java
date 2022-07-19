@@ -1,5 +1,6 @@
 package efub.team4.backend_eweather.domain.weather.service;
 
+import efub.team4.backend_eweather.domain.weather.dto.CalendarWeatherResponseDto;
 import efub.team4.backend_eweather.domain.weather.dto.ForcastResponseDto;
 import efub.team4.backend_eweather.domain.weather.dto.OpenWeatherResponseDto;
 import lombok.NoArgsConstructor;
@@ -28,7 +29,7 @@ public class OpenWeatherAPI {
 
     // 커밋 시 서비스 키 지우고 커밋
     private final String BASE_URL = "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst";
-    private final String serviceKey = "*";
+    private final String serviceKey = "muVi%2BoMzwaX9%2BT2Fs2FhZmttZ8q5%2BfJhBwDbIQ7q1hlgxmyvL7psAHNQx6kzKRXQbtOeYyowUwX2lLBcSj9FbA%3D%3D";
     // 요청 고정갑
     private String pageNo = "1";
     private String numOfRows = "310";
@@ -56,11 +57,26 @@ public class OpenWeatherAPI {
         return buildForcastResponse(jsonResult);
     }
 
+    @Transactional
+    public CalendarWeatherResponseDto findCalendarWeather() throws IOException, ParseException{
+        URL url = buildRequestUrl(); // url 생성성
+        System.out.println(url);  // url 어떻게 되는지 확인
+        String stringResult = httpURLConnect(url);
+        JSONArray jsonResult = getItems(stringResult);
+        return buildCalendarData(jsonResult);
+    }
+
     // 현재 요일 반환 함수
     public String getCurrentDate(){
         DateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
         Date currentDate = new Date();
         return simpleDateFormat.format(currentDate);
+    }
+
+    public String getCurrentTime(){
+        DateFormat simpleDateFormat = new SimpleDateFormat("k");
+        Date currentTime = new Date();
+        return simpleDateFormat.format(currentTime) + "00";
     }
 
     public URL buildRequestUrl() throws IOException {
@@ -154,6 +170,76 @@ public class OpenWeatherAPI {
         }
 
         return dtoList;
+    }
+
+
+    private CalendarWeatherResponseDto buildCalendarData(JSONArray jsonResult) {
+        // 현재 시간 받아서 예상 시간 조회
+        String fcstTime = getCurrentTime();
+        if(fcstTime.length() == 3){
+            fcstTime = "0" + fcstTime;
+        }
+        String baseDate = getCurrentDate();
+        String tmp = "";
+        String tmx = "";
+        String tmn = "";
+        String sky = "";
+        String pop = "";
+
+        // jsonResult를 조회하며 필요한 데이터 받기
+        for(int i = 0; i < jsonResult.size(); i++){
+            JSONObject obj = (JSONObject) jsonResult.get(i);
+
+            String TimeTemp = (String) obj.get("fcstTime");
+            String CategoryTemp = (String) obj.get("category");
+
+            if(CategoryTemp.equals("TMN")){
+                tmn = (String) obj.get("fcstValue");
+            }
+            else if(CategoryTemp.equals("TMX")){
+                tmx = (String) obj.get("fcstValue");
+            }
+            else if(!fcstTime.equals(TimeTemp)){
+                continue;
+            }
+            else{
+                if(CategoryTemp.equals("TMP")){
+                    tmp = (String) obj.get("fcstValue");
+                }
+                if(CategoryTemp.equals("SKY")){
+                    sky = (String) obj.get("fcstValue");
+                }
+                if(CategoryTemp.equals("POP")){
+                    pop = (String) obj.get("fcstValue");
+                }
+            }
+
+            /*
+
+                        if((tmn != null) && (tmx != null) && (tmp != null) && (sky != null) && (pop != null)){
+                break;
+            }
+
+             */
+
+
+
+        }
+
+        // dto로 만들어서 반환
+        CalendarWeatherResponseDto responseDto = CalendarWeatherResponseDto.builder()
+                .baseDate(baseDate)
+                .baseTime(baseTime)
+                .fcstDate(baseDate)
+                .fcstTime(fcstTime)
+                .tmp(tmp)
+                .tmx(tmx)
+                .tmn(tmn)
+                .sky(sky)
+                .pop(pop)
+                .build();
+
+        return responseDto;
     }
 
     public List<OpenWeatherResponseDto> buildResponse(JSONArray parse_item){

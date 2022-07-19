@@ -1,5 +1,6 @@
 package efub.team4.backend_eweather.domain.weather.controller;
 
+import efub.team4.backend_eweather.domain.weather.dto.CalendarWeatherResponseDto;
 import efub.team4.backend_eweather.domain.weather.dto.ForcastResponseDto;
 import efub.team4.backend_eweather.domain.weather.dto.OpenWeatherResponseDto;
 import efub.team4.backend_eweather.domain.weather.service.OpenWeatherAPI;
@@ -27,6 +28,11 @@ public class OpenWeatherApiController {
     @GetMapping("/forcast")
     public List<ForcastResponseDto> loadForcastWeather() throws IOException, ParseException{
         return openWeatherAPI.findForcastWeather();
+    }
+
+    @GetMapping("/calendar")
+    public CalendarWeatherResponseDto loadCalendarWeather() throws IOException, ParseException{
+        return openWeatherAPI.findCalendarWeather();
     }
 
 
