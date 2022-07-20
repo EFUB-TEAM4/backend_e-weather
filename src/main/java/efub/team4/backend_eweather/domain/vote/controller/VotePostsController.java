@@ -18,9 +18,13 @@ public class VotePostsController {
 
     private final VotePostsService votePostsService;
 
+<<<<<<< HEAD
 
 
     @PostMapping()
+=======
+    @PostMapping
+>>>>>>> vote
     public VoteResponseDto savePost(@RequestBody VoteRequestDto voteRequestDto){
         return votePostsService.savePost(voteRequestDto);
     }
