@@ -68,15 +68,30 @@ public class OpenWeatherAPI {
     }
 
     @Transactional
-    public WeatherResponseDto findTemperature() {
+    public WeatherResponseDto findTemperature() throws IOException, ParseException {
+        URL url = buildRequestUrl(); // url 생성성
+        System.out.println(url);  // url 어떻게 되는지 확인
+        String stringResult = httpURLConnect(url);
+        JSONArray jsonResult = getItems(stringResult);
+        return builldWeatherResponse(jsonResult, "TMP");
     }
 
     @Transactional
-    public WeatherResponseDto findSkyCode() {
+    public WeatherResponseDto findSkyCode() throws IOException, ParseException{
+        URL url = buildRequestUrl(); // url 생성성
+        System.out.println(url);  // url 어떻게 되는지 확인
+        String stringResult = httpURLConnect(url);
+        JSONArray jsonResult = getItems(stringResult);
+        return builldWeatherResponse(jsonResult, "SKY");
     }
 
     @Transactional
-    public WeatherResponseDto findPrecipitation() {
+    public WeatherResponseDto findPrecipitation() throws IOException, ParseException{
+        URL url = buildRequestUrl(); // url 생성성
+        System.out.println(url);  // url 어떻게 되는지 확인
+        String stringResult = httpURLConnect(url);
+        JSONArray jsonResult = getItems(stringResult);
+        return builldWeatherResponse(jsonResult, "POP");
     }
 
     // 현재 요일 반환 함수
@@ -228,15 +243,10 @@ public class OpenWeatherAPI {
             }
 
             /*
-
                         if((tmn != null) && (tmx != null) && (tmp != null) && (sky != null) && (pop != null)){
                 break;
             }
-
              */
-
-
-
         }
 
         // dto로 만들어서 반환
@@ -250,6 +260,43 @@ public class OpenWeatherAPI {
                 .tmn(tmn)
                 .sky(sky)
                 .pop(pop)
+                .build();
+
+        return responseDto;
+    }
+
+    public WeatherResponseDto builldWeatherResponse(JSONArray jsonResult, String category) {
+        // 현재 시간 받아서 예상 시간 조회
+        String fcstTime = getCurrentTime();
+        if (fcstTime.length() == 3) {
+            fcstTime = "0" + fcstTime;
+        }
+        String baseDate = getCurrentDate();
+        String value = "";
+
+        // jsonResult를 조회하며 필요한 데이터 받기
+        for (int i = 0; i < jsonResult.size(); i++) {
+            JSONObject obj = (JSONObject) jsonResult.get(i);
+
+            String TimeTemp = (String) obj.get("fcstTime");
+            String CategoryTemp = (String) obj.get("category");
+
+            if (!fcstTime.equals(TimeTemp)) {
+                continue;
+            } else {
+                if (CategoryTemp.equals(category)) {
+                    value = (String) obj.get("fcstValue");
+                }
+            }
+        }
+        WeatherResponseDto responseDto = WeatherResponseDto
+                .builder()
+                .baseDate(baseDate)
+                .baseTime(baseTime)
+                .fcstDate(baseDate)
+                .fcstTime(fcstTime)
+                .category(category)
+                .value(value)
                 .build();
 
         return responseDto;
@@ -282,7 +329,6 @@ public class OpenWeatherAPI {
 
         return dataList;
     }
-
 
 
 }
