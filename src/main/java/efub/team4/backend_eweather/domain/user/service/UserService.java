@@ -24,10 +24,13 @@ public class UserService {
 
     private final HttpSession httpSession;
 
+    private final HttpSession httpSession;
+
     public UserResponseDto buildUserDto(User user){
         return new UserResponseDto(user);
     }
 
+    @Transactional
     public List<UserResponseDto> loadUsers() {
         List<User> userList = userRepository.findAll();
         List<UserResponseDto> userResponseDtoList = new ArrayList<>();
