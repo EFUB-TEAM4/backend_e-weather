@@ -8,4 +8,5 @@ import java.util.UUID;
 
 public interface SkyRepository extends JpaRepository<Sky, UUID> {
     Optional<Sky> findBySkyName(String skyName);
+    Optional<Sky> findBySkyCode(Integer skyCode);
 }
