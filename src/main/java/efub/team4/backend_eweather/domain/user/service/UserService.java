@@ -12,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -21,6 +20,7 @@ public class UserService {
 
     @Autowired
     private final UserRepository userRepository;
+    private final HttpSession httpSession;
 
     private final HttpSession httpSession;
 
@@ -52,4 +52,5 @@ public class UserService {
         return userId;
 
     }
+
 }

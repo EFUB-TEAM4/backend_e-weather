@@ -1,5 +1,6 @@
 package efub.team4.backend_eweather.global.exception;
 
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
