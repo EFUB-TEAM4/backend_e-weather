@@ -12,8 +12,8 @@ import java.util.UUID;
 
 @Getter
 @Entity
+@Table(name = "vote_posts")
 @RequiredArgsConstructor
-//@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class VotePosts extends BaseTimeEntity{
 
 /*    @Id

@@ -1,9 +1,11 @@
 package efub.team4.backend_eweather.domain.vote.controller;
 
+import efub.team4.backend_eweather.domain.user.dto.SessionUser;
 import efub.team4.backend_eweather.domain.vote.dto.VoteRequestDto;
 import efub.team4.backend_eweather.domain.vote.dto.VoteResponseDto;
 import efub.team4.backend_eweather.domain.vote.dto.VoteUpdateRequestDto;
 import efub.team4.backend_eweather.domain.vote.service.VotePostsService;
+import efub.team4.backend_eweather.global.config.auth.LoginUser;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -20,8 +22,8 @@ public class VotePostsController {
 
 
     @PostMapping
-    public VoteResponseDto savePost(@RequestBody VoteRequestDto voteRequestDto){
-        return votePostsService.savePost(voteRequestDto);
+    public VoteResponseDto savePost(@LoginUser SessionUser user, @RequestBody VoteRequestDto voteRequestDto){
+        return votePostsService.savePost(user, voteRequestDto);
     }
 
     // 좋아요, 싫어요 기능
