@@ -61,13 +61,5 @@ public class CustomOauth2UserService implements OAuth2UserService<OAuth2UserRequ
         } else {
             return userRepository.save(attributes.toEntity());
         }
-
-        /*
-        User user = (User) userRepository.findByEmail(attributes.getEmail())
-                .map(entity -> entity.update(UUID.randomUUID(), attributes.getName()))
-                .orElse(attributes.toEntity());
-        return userRepository.save(user);
-
-        */
     }
 }
