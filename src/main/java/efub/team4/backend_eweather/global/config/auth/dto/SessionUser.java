@@ -1,6 +1,6 @@
 package efub.team4.backend_eweather.global.config.auth.dto;
 
-import efub.team4.backend_eweather.domain.user.entity.User;
+import efub.team4.backend_eweather.user.entity.User;
 import lombok.Builder;
 import lombok.Getter;
 

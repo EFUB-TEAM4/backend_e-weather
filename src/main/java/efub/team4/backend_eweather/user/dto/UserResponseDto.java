@@ -1,12 +1,11 @@
-package efub.team4.backend_eweather.domain.user.dto;
+package efub.team4.backend_eweather.user.dto;
 
-import efub.team4.backend_eweather.domain.user.entity.User;
+import efub.team4.backend_eweather.user.entity.User;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 

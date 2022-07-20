@@ -1,5 +1,6 @@
-package efub.team4.backend_eweather.domain.user.entity;
+package efub.team4.backend_eweather.domain.vote.entity;
 
+import efub.team4.backend_eweather.user.entity.User;
 import efub.team4.backend_eweather.global.entity.BaseTimeEntity;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -8,41 +9,42 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.UUID;
 
 @Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class User extends BaseTimeEntity {
+public class votePosts extends BaseTimeEntity{
 
     @Id
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name ="uuid2", strategy = "uuid2")
     @Column(length = 16)
     @Type(type = "org.hibernate.type.UUIDCharType")
-    private UUID id;
+    UUID id;
+
+    @OneToMany
+    User user;
 
     @Column
-    private String email;
+    String building;
 
     @Column
-    private String fullName;
+    String clothes;
+
+    @Column
+    Long like;
+
+    @Column
+    Long dislike;
 
     @Builder
-    public User(UUID id, String email, String fullName) {
+    public votePosts(UUID id, User user, String building, Long like, Long dislike) {
         this.id = id;
-        this.email = email;
-        this.fullName = fullName;
-    }
-
-
-    public Object update(UUID id, String name) {
-        this.id = id;
-        this.fullName = name;
-        return this;
+        this.user = user;
+        this.building = building;
+        this.like = like;
+        this.dislike = dislike;
     }
 }
