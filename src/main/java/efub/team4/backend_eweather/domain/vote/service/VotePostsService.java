@@ -1,6 +1,8 @@
 package efub.team4.backend_eweather.domain.vote.service;
 
+import efub.team4.backend_eweather.domain.user.dto.SessionUser;
 import efub.team4.backend_eweather.domain.user.entity.User;
+import efub.team4.backend_eweather.domain.user.repository.UserRepository;
 import efub.team4.backend_eweather.domain.user.service.UserService;
 import efub.team4.backend_eweather.domain.vote.dto.VoteRequestDto;
 import efub.team4.backend_eweather.domain.vote.dto.VoteResponseDto;
@@ -13,8 +15,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.UUID;
 import java.util.List;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
@@ -24,23 +26,26 @@ public class VotePostsService {
     private final VotePostsRespsitory votePostsRespsitory;
 
     @Autowired
-    private UserService userService;
+    private final UserRepository userRepository;
 
     public VoteResponseDto buildResponseDto(VotePosts entity){
         return new VoteResponseDto(entity);
     }
 
     @Transactional
-    public VoteResponseDto savePost(VoteRequestDto voteRequestDto) {
+    public VoteResponseDto savePost(SessionUser user, VoteRequestDto voteRequestDto) {
         // voteRequestDto -> entity
-        User user = userService.getSessionUser();
+
+        UUID id = user.getId();
+
+        User writer = userRepository.findById(id).get();
 
         System.out.println(user.getEmail());
         System.out.println(voteRequestDto.getBuilding());
         System.out.println(voteRequestDto.getClothes());
 
         VotePosts votePosts = VotePosts.builder()
-                .user(user)
+                .user(writer)
                 .building(voteRequestDto.getBuilding())
                 .clothes(voteRequestDto.getClothes())
                 .build();
