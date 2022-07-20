@@ -33,14 +33,4 @@ public class UserService {
         return userResponseDtoList;
     }
 
-    public UserResponseDto loadUser(UUID id) {
-        User user;
-        if(userRepository.findById(id).isPresent()){
-            user = userRepository.findById(id).get();
-        }
-        else{
-            return null; // 예외처리 필요할 듯
-        }
-        return buildUserDto(user);
-    }
 }
