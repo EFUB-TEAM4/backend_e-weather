@@ -2,7 +2,7 @@ package efub.team4.backend_eweather.domain.user.service;
 
 import efub.team4.backend_eweather.domain.user.dto.OAuthAttributes;
 import efub.team4.backend_eweather.domain.user.dto.SessionUser;
-import efub.team4.backend_eweather.domain.user.entity.UserRepository;
+import efub.team4.backend_eweather.domain.user.repository.UserRepository;
 import efub.team4.backend_eweather.domain.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
 import java.util.Collections;
-import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service

@@ -8,5 +8,5 @@ import java.util.UUID;
 
 public interface VotePostsRespsitory extends JpaRepository<VotePosts, Long> {
 
-    void deleteVotePost(VotePosts votePosts);
+    // void deleteVotePost(VotePosts votePosts);
 }

@@ -1,7 +1,6 @@
 package efub.team4.backend_eweather.domain.vote.service;
 
 import efub.team4.backend_eweather.domain.user.entity.User;
-import efub.team4.backend_eweather.domain.user.entity.UserRepository;
 import efub.team4.backend_eweather.domain.user.service.UserService;
 import efub.team4.backend_eweather.domain.vote.dto.VoteRequestDto;
 import efub.team4.backend_eweather.domain.vote.dto.VoteResponseDto;
@@ -90,6 +89,6 @@ public class VotePostsService {
     public void deleteVotePost (Long id){
         VotePosts votePosts = votePostsRespsitory.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("no votePost id = " + id));
-        votePostsRespsitory.deleteVotePost(votePosts);
+        votePostsRespsitory.delete(votePosts);
     }
 }

@@ -4,7 +4,6 @@ import efub.team4.backend_eweather.domain.user.dto.UserResponseDto;
 import efub.team4.backend_eweather.domain.user.service.CustomOauth2UserService;
 import efub.team4.backend_eweather.domain.user.service.UserService;
 import efub.team4.backend_eweather.global.config.auth.LoginUser;
-import efub.team4.backend_eweather.global.config.auth.dto.SessionUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,11 +22,6 @@ public class UserController {
     @GetMapping
     public List<UserResponseDto> getUserResponseDtoList(){
         return userService.loadUsers();
-    }
-
-    @GetMapping("/account")
-    public UserResponseDto getCurrentUser(@LoginUser SessionUser sessionUser){
-        return userService.getByUserId(sessionUser.getId());
     }
 
 }

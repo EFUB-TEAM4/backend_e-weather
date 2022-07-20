@@ -1,7 +1,7 @@
 package efub.team4.backend_eweather.domain.calendar.controller;
 
 
-public class CalendarController {
+
 
 import efub.team4.backend_eweather.domain.calendar.dto.CalendarDto;
 import efub.team4.backend_eweather.domain.calendar.dto.CalendarMapper;
