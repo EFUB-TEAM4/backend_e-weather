@@ -18,13 +18,8 @@ public class VotePostsController {
 
     private final VotePostsService votePostsService;
 
-<<<<<<< HEAD
 
-
-    @PostMapping()
-=======
     @PostMapping
->>>>>>> vote
     public VoteResponseDto savePost(@RequestBody VoteRequestDto voteRequestDto){
         return votePostsService.savePost(voteRequestDto);
     }
@@ -39,7 +34,7 @@ public class VotePostsController {
     }
 
     // 투표 게시글 전체 조회 기능
-    @GetMapping("{id}")
+    @GetMapping()
     public List<VoteResponseDto> findAllVotePostsList(){
         return votePostsService.findAllVotePostsList();
     }

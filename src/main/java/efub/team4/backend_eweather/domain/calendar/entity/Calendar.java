@@ -51,24 +51,6 @@ public class Calendar extends BaseTimeEntity {
     private Integer min_temperature;
 
     /**
-     * 기온
-     */
-    @NotNull
-    private Integer temperature;
-
-    /**
-     * 최고 기온
-     */
-    @NotNull
-    private Integer max_temperature;
-
-    /**
-     * 최저 기온
-     */
-    @NotNull
-    private Integer min_temperature;
-
-    /**
      * 강수 확률
      */
 

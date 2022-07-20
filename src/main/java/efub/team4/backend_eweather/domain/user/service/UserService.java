@@ -4,7 +4,7 @@ import efub.team4.backend_eweather.domain.user.dto.SessionUser;
 import efub.team4.backend_eweather.domain.user.dto.UserResponseDto;
 import efub.team4.backend_eweather.domain.user.entity.User;
 
-import efub.team4.backend_eweather.domain.user.entity.UserRepository;
+import efub.team4.backend_eweather.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,8 +21,6 @@ public class UserService {
 
     @Autowired
     private final UserRepository userRepository;
-
-    private final HttpSession httpSession;
 
     private final HttpSession httpSession;
 
