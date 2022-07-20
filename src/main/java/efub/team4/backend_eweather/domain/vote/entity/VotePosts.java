@@ -1,6 +1,6 @@
 package efub.team4.backend_eweather.domain.vote.entity;
 
-import efub.team4.backend_eweather.user.entity.User;
+import efub.team4.backend_eweather.domain.user.entity.User;
 import efub.team4.backend_eweather.global.entity.BaseTimeEntity;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -15,7 +15,7 @@ import java.util.UUID;
 @Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class votePosts extends BaseTimeEntity{
+public class VotePosts extends BaseTimeEntity{
 
     @Id
     @GeneratedValue(generator = "uuid2")
@@ -24,7 +24,8 @@ public class votePosts extends BaseTimeEntity{
     @Type(type = "org.hibernate.type.UUIDCharType")
     UUID id;
 
-    @OneToMany
+    @ManyToOne
+    @JoinColumn(name = "userId")
     User user;
 
     @Column
@@ -34,17 +35,18 @@ public class votePosts extends BaseTimeEntity{
     String clothes;
 
     @Column
-    Long like;
+    Long good;
 
     @Column
-    Long dislike;
+    Long bad;
 
     @Builder
-    public votePosts(UUID id, User user, String building, Long like, Long dislike) {
+    public VotePosts(UUID id, User user, String clothes,String building, Long good, Long bad) {
         this.id = id;
         this.user = user;
+        this.clothes = clothes;
         this.building = building;
-        this.like = like;
-        this.dislike = dislike;
+        this.good = good;
+        this.bad = bad;
     }
 }

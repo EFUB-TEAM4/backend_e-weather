@@ -1,5 +1,6 @@
 package efub.team4.backend_eweather.domain.vote.dto;
 
+import efub.team4.backend_eweather.domain.vote.entity.VotePosts;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -14,10 +15,10 @@ public class VoteResponseDto {
     private String clothes;
 
     @Builder
-    public VoteResponseDto(UUID id, UUID userId, String building, String clothes) {
-        this.id = id;
-        this.userId = userId;
-        this.building = building;
-        this.clothes = clothes;
+    public VoteResponseDto(VotePosts entity) {
+        this.id = entity.getId();
+        this.userId = entity.getUser().getId();
+        this.building = entity.getBuilding();
+        this.clothes = entity.getClothes();
     }
 }

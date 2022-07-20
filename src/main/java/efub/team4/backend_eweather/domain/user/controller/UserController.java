@@ -1,7 +1,7 @@
-package efub.team4.backend_eweather.user.controller;
+package efub.team4.backend_eweather.domain.user.controller;
 
-import efub.team4.backend_eweather.user.dto.UserResponseDto;
-import efub.team4.backend_eweather.user.service.UserService;
+import efub.team4.backend_eweather.domain.user.dto.UserResponseDto;
+import efub.team4.backend_eweather.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

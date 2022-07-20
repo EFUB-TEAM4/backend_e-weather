@@ -1,9 +1,9 @@
-package efub.team4.backend_eweather.user.service;
+package efub.team4.backend_eweather.domain.user.service;
 
+import efub.team4.backend_eweather.domain.user.entity.User;
+import efub.team4.backend_eweather.domain.user.repository.UserRepository;
 import efub.team4.backend_eweather.global.config.auth.dto.OAuthAttributes;
 import efub.team4.backend_eweather.global.config.auth.dto.SessionUser;
-import efub.team4.backend_eweather.user.entity.User;
-import efub.team4.backend_eweather.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;

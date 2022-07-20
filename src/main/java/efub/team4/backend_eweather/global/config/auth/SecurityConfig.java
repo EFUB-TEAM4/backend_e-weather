@@ -1,6 +1,6 @@
 package efub.team4.backend_eweather.global.config.auth;
 
-import efub.team4.backend_eweather.user.service.CustomOauth2UserService;
+import efub.team4.backend_eweather.domain.user.service.CustomOauth2UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
