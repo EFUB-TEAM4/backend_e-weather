@@ -2,27 +2,30 @@ package efub.team4.backend_eweather.domain.vote.entity;
 
 import efub.team4.backend_eweather.domain.user.entity.User;
 import efub.team4.backend_eweather.global.entity.BaseTimeEntity;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Getter
 @Entity
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@RequiredArgsConstructor
+//@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class VotePosts extends BaseTimeEntity{
 
-    @Id
+/*    @Id
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name ="uuid2", strategy = "uuid2")
     @Column(length = 16)
     @Type(type = "org.hibernate.type.UUIDCharType")
-    UUID id;
+    UUID id;*/
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "userId")
@@ -41,12 +44,16 @@ public class VotePosts extends BaseTimeEntity{
     Long bad;
 
     @Builder
-    public VotePosts(UUID id, User user, String clothes,String building, Long good, Long bad) {
+    public VotePosts(Long id, User user, String clothes,String building, Long good, Long bad) {
         this.id = id;
         this.user = user;
         this.clothes = clothes;
         this.building = building;
         this.good = good;
         this.bad = bad;
+    }
+
+    public void update(String clothes) {
+        this.clothes = clothes;
     }
 }
