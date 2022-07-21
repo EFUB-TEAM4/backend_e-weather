@@ -16,7 +16,10 @@ public class DayNightDto {
         private String timeName;
         @Size(max = 50)
         @NotEmpty
-        private LocalTime time;
+        private LocalTime startTime;
+        @Size(max = 50)
+        @NotEmpty
+        private LocalTime endTime;
     }
 
     @Getter
@@ -27,7 +30,6 @@ public class DayNightDto {
     public static class DayNightResponseDto {
         private UUID id;
         private String timeName;
-        private LocalTime time;
     }
 
 }

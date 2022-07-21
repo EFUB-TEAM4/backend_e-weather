@@ -19,7 +19,7 @@ public class DayNightService {
 
     @Transactional
     public DayNight save(DayNight dayNight) {
-        dayNightRepository.findByTimeName(dayNight.getTimeName())
+        dayNightRepository.findById(dayNight.getId())
                 .ifPresent((existedDayNight) -> {
                     throw new DayNightAlreadyExistsException("DayNight already exists with specified DayNight name");
                 });
@@ -27,24 +27,8 @@ public class DayNightService {
     }
 
     @Transactional(readOnly = true)
-    public DayNight findByTime(LocalTime time) {
-        Optional<DayNight> dayOptional = dayNightRepository.findByTimeName("day");
-        Optional<DayNight> nightOptional = dayNightRepository.findByTimeName("night");
-
-        dayOptional.ifPresent((existedDay) -> {
-            throw new DayNightNotFoundException("DayNight not found with day");
-        });
-
-        nightOptional.ifPresent((existedNight) -> {
-            throw new DayNightNotFoundException("DayNight not found with night");
-        });
-
-        LocalTime dayTime = dayOptional.get().getTime();
-        LocalTime nightTime = nightOptional.get().getTime();
-        if ((dayTime.isAfter(time) || dayTime.equals(time)) && nightTime.isBefore(time)) {
-            return dayOptional.get();
-        } else {
-            return nightOptional.get();
-        }
+    public DayNight findByTime(String time) {
+        DayNight dayNight = dayNightRepository.findDayNightWithQueryByTime(time).orElseThrow(() -> new DayNightNotFoundException("DayNight not found"));
+        return dayNight;
     }
 }
