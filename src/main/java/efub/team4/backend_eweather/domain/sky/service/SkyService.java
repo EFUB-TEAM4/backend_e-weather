@@ -22,9 +22,4 @@ public class SkyService {
         return skyRepository.save(sky);
     }
 
-    @Transactional(readOnly = true)
-    public Sky findBySkyCode(Integer skyCode) {
-        return skyRepository.findBySkyCode(skyCode)
-                .orElseThrow(() -> new SkyNotFoundException("Sky not found with skyCode = " + skyCode));
-    }
 }

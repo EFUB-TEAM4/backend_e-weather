@@ -20,9 +20,9 @@ public class SkyDto {
         @NotEmpty
         private Integer skyCode;
 
-        @DateTimeFormat(pattern = "HH:mm:ss")
+        @Size(max = 50)
         @NotEmpty
-        private LocalTime time;
+        private String time;
     }
 
     @Getter
