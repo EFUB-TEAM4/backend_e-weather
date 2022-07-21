@@ -1,9 +1,9 @@
 package efub.team4.backend_eweather.domain.user.service;
 
-import efub.team4.backend_eweather.global.config.auth.dto.OAuthAttributes;
-import efub.team4.backend_eweather.global.config.auth.dto.SessionUser;
-import efub.team4.backend_eweather.domain.user.entity.User;
+import efub.team4.backend_eweather.domain.user.dto.OAuthAttributes;
+import efub.team4.backend_eweather.domain.user.dto.SessionUser;
 import efub.team4.backend_eweather.domain.user.repository.UserRepository;
+import efub.team4.backend_eweather.domain.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
@@ -36,13 +36,7 @@ public class CustomOauth2UserService implements OAuth2UserService<OAuth2UserRequ
 
         User user = saveOrUpdate(attributes);
         httpSession.setAttribute("user", new SessionUser(user));
-
-        // 세션 저장 됐는지 확인
-        System.out.println("--- This is the current User Info ---");
-        System.out.println(user.getId());
-        System.out.println(user.getEmail());
-        System.out.println(user.getFullName());
-        System.out.println("--- This is the current User Info ---");
+        SessionUser sessionUser = (SessionUser) httpSession.getAttribute("user");
 
 
         return new DefaultOAuth2User(
@@ -60,7 +54,9 @@ public class CustomOauth2UserService implements OAuth2UserService<OAuth2UserRequ
         if(user != null){
             return user;
         } else {
-            return userRepository.save(attributes.toEntity());
+            userRepository.save(attributes.toEntity());
+            user = userRepository.findByEmail(attributes.getEmail());
+            return user;
         }
 
     }
