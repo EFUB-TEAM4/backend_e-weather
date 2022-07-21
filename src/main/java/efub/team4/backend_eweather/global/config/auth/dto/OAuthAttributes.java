@@ -24,7 +24,7 @@ public class OAuthAttributes {
     }
 
     // Oauth2User에서 반환하는 사용자 정보는 Map -> 변환해야 함
-    public static OAuthAttributes of(String registrationId, String userNameAttributeName, Map<String, Object> attributes){
+    public static OAuthAttributes of(String userNameAttributeName, Map<String, Object> attributes){
         return ofGoogle(userNameAttributeName, attributes);
     }
 
@@ -39,10 +39,6 @@ public class OAuthAttributes {
                 .build();
     }
 
-    // User 엔티티 생성
-    // 엔티티 생성 시점은 처음 가입할 때
-    // 가입할 때 기본 권한은 GUEST ..-> 한 번 바꿔 볼까?
-    // OAuthAttributes 클래스 생성이 끝나면 같은 패키지에 SessionUser 생성
     public User toEntity() {
         return User.builder()
                 .id(UUID.randomUUID())
