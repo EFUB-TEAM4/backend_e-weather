@@ -20,14 +20,14 @@ public class Pty {
     @Id
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
-    @Column(length = 16)
+    @Column(length = 16, name = "pty_id")
     private UUID id;
 
     @Size(max = 50)
     @NotEmpty
     private String ptyName;
 
-    @NotEmpty
+    @Column(nullable = false)
     private Integer ptyCode;
 
     @Builder

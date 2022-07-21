@@ -1,6 +1,7 @@
 package efub.team4.backend_eweather.domain.sky.entity;
 
 import efub.team4.backend_eweather.domain.dayNight.entity.DayNight;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
@@ -17,18 +18,25 @@ public class Sky {
     @Id
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
-    @Column(length = 16)
+    @Column(length = 16, name = "sky_id")
     private UUID id;
 
     @Size(max = 50)
     @NotEmpty
     private String skyName;
 
-    @NotEmpty
+    @Column(nullable = false)
     private Integer skyCode;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToOne
     @JoinColumn(name = "day_night_id", nullable = false)
     private DayNight dayNight;
+
+    @Builder
+    public Sky(String skyName, Integer skyCode, DayNight dayNight) {
+        this.skyName = skyName;
+        this.skyCode = skyCode;
+        this.dayNight = dayNight;
+    }
 
 }

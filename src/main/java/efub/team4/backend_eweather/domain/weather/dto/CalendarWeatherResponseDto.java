@@ -15,9 +15,10 @@ public class CalendarWeatherResponseDto {
     private String tmn;
     private String sky;
     private String pop;
+    private String pty;
 
     @Builder
-    public CalendarWeatherResponseDto(String baseDate, String baseTime, String fcstDate, String fcstTime, String tmp, String tmx, String tmn, String sky, String pop) {
+    public CalendarWeatherResponseDto(String baseDate, String baseTime, String fcstDate, String fcstTime, String tmp, String tmx, String tmn, String sky, String pop, String pty) {
         this.baseDate = baseDate;
         this.baseTime = baseTime;
         this.fcstDate = fcstDate;
@@ -27,5 +28,6 @@ public class CalendarWeatherResponseDto {
         this.tmn = tmn;
         this.sky = sky;
         this.pop = pop;
+        this.pty = pty;
     }
 }
