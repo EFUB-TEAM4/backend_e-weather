@@ -110,7 +110,6 @@ public class OpenWeatherAPI {
     public URL buildRequestUrl() throws IOException {
         StringBuilder sb = new StringBuilder(BASE_URL);
         String baseDate = getCurrentDate();
-        // append로만 구성되게 바꾸고는 싶은데 공식문서 참고코드에 이렇게 나와있으니 잠시 대기
         sb.append("?").append(URLEncoder.encode("serviceKey", "UTF-8")).append("=").append(serviceKey);
         sb.append("&").append(URLEncoder.encode("pageNo", "UTF-8")).append("=").append(URLEncoder.encode(pageNo, "UTF-8"));
         sb.append("&").append(URLEncoder.encode("numOfRows", "UTF-8")).append("=").append(URLEncoder.encode(numOfRows, "UTF-8")); /* 한 페이지 결과 수 */
