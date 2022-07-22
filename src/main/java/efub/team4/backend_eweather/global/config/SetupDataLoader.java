@@ -86,6 +86,7 @@ public class SetupDataLoader implements
             Pty ptyNth = Pty.builder()
                     .ptyName("강우강수" + i)
                     .ptyCode(code)
+                    .ptyBackGroundFileUrl("https://eweather-bucket.s3.ap-northeast-2.amazonaws.com/share/bear/bear_01.png")
                     .build();
             ptyRepository.save(ptyNth);
         }

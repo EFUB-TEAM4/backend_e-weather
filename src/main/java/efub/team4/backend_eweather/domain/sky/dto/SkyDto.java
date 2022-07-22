@@ -23,6 +23,9 @@ public class SkyDto {
         @Size(max = 50)
         @NotEmpty
         private String time;
+
+        @NotEmpty
+        private String skyBackGroundFileUrl;
     }
 
     @Getter
@@ -35,5 +38,16 @@ public class SkyDto {
         private String skyName;
         private Integer skyCode;
         private DayNightDto.DayNightResponseDto dayNightResponseDto;
+    }
+
+    @Getter
+    @Setter
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class SkyResponseDtoWithUrl{
+        private UUID id;
+        private String skyName;
+        private String skyBackGroundFileUrl;
     }
 }
