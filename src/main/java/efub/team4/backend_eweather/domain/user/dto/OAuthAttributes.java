@@ -1,4 +1,4 @@
-package efub.team4.backend_eweather.global.config.auth.dto;
+package efub.team4.backend_eweather.domain.user.dto;
 
 import efub.team4.backend_eweather.domain.user.entity.User;
 import lombok.Builder;
@@ -27,7 +27,6 @@ public class OAuthAttributes {
     public static OAuthAttributes of(String userNameAttributeName, Map<String, Object> attributes){
         return ofGoogle(userNameAttributeName, attributes);
     }
-
 
 
     public static OAuthAttributes ofGoogle(String userNameAttributeName, Map<String, Object> attributes){
