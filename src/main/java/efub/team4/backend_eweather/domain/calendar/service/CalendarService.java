@@ -4,6 +4,7 @@ import efub.team4.backend_eweather.domain.calendar.entity.Calendar;
 import efub.team4.backend_eweather.domain.calendar.exception.CalendarNotFoundException;
 import efub.team4.backend_eweather.domain.calendar.repository.CalendarRepository;
 import efub.team4.backend_eweather.domain.user.repository.UserRepository;
+import efub.team4.backend_eweather.domain.weather.service.OpenWeatherAPI;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;

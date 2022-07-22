@@ -213,6 +213,7 @@ public class OpenWeatherAPI {
         String tmn = "";
         String sky = "";
         String pop = "";
+        String pty = "";
 
         // jsonResult를 조회하며 필요한 데이터 받기
         for(int i = 0; i < jsonResult.size(); i++){
@@ -240,6 +241,9 @@ public class OpenWeatherAPI {
                 if(CategoryTemp.equals("POP")){
                     pop = (String) obj.get("fcstValue");
                 }
+                if(CategoryTemp.equals("PTY")){
+                    pty = (String) obj.get("fcstValue");
+                }
             }
 
             /*
@@ -260,6 +264,7 @@ public class OpenWeatherAPI {
                 .tmn(tmn)
                 .sky(sky)
                 .pop(pop)
+                .pty(pty)
                 .build();
 
         return responseDto;
