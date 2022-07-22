@@ -13,6 +13,7 @@ import efub.team4.backend_eweather.domain.pty.service.PtyService;
 import efub.team4.backend_eweather.domain.sky.entity.Sky;
 import efub.team4.backend_eweather.domain.sky.repository.SkyRepository;
 import efub.team4.backend_eweather.domain.sky.service.SkyService;
+import efub.team4.backend_eweather.domain.temperature.entity.Temperature;
 import efub.team4.backend_eweather.domain.weather.dto.CalendarWeatherResponseDto;
 import efub.team4.backend_eweather.domain.weather.service.OpenWeatherAPI;
 import lombok.RequiredArgsConstructor;
@@ -64,6 +65,7 @@ public class SetupDataLoader implements
                     .skyName("낮 날씨 상태" + i)
                     .dayNight(day)
                     .skyCode(code)
+                    .skyBackGroundFileUrl("https://eweather-bucket.s3.ap-northeast-2.amazonaws.com/share/bear/bear_01.png")
                     .build();
             skyRepository.save(dayNth);
         }
@@ -74,6 +76,7 @@ public class SetupDataLoader implements
                     .skyName("밤 날씨 상태" + i)
                     .dayNight(night)
                     .skyCode(code)
+                    .skyBackGroundFileUrl("https://eweather-bucket.s3.ap-northeast-2.amazonaws.com/share/bear/bear_01.png")
                     .build();
             skyRepository.save(nightNth);
         }
@@ -95,6 +98,21 @@ public class SetupDataLoader implements
         }
         createInitialFields();
 
+
+        Optional<DayNight> dayNight = dayNightRepository.findDayNightWithQueryByTime("1200");
+        Optional<Sky> sky = skyRepository.findSkyBySkyCodeAndDayNight_Id(Integer.parseInt("1"), dayNight.get().getId());
+        Optional<Pty> pty = ptyRepository.findByPtyCode(Integer.parseInt("2"));
+
+
+        Icon icon = Icon.builder()
+                .iconName("icon")
+                .sky(sky.get())
+                .pty(pty.get())
+                .build();
+
+        iconRepository.save(icon);
+
+        /*
         try {
             CalendarWeatherResponseDto responseDto = openWeatherAPI.findCalendarWeather();
             String skyCode = responseDto.getSky();
@@ -105,10 +123,12 @@ public class SetupDataLoader implements
             System.out.println(ptyCode);
             System.out.println(time);
 
+
             Optional<DayNight> dayNight = dayNightRepository.findDayNightWithQueryByTime(time);
             System.out.println(dayNight.get().getTimeName());
             Optional<Sky> sky = skyRepository.findSkyBySkyCodeAndDayNight_Id(Integer.parseInt(skyCode), dayNight.get().getId());
             Optional<Pty> pty = ptyRepository.findByPtyCode(Integer.parseInt(ptyCode));
+
 
             Icon icon = Icon.builder()
                     .iconName("icon")
@@ -117,11 +137,12 @@ public class SetupDataLoader implements
                     .build();
 
             iconRepository.save(icon);
+
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ParseException e) {
             e.printStackTrace();
         }
-
+*/
     }
 }
