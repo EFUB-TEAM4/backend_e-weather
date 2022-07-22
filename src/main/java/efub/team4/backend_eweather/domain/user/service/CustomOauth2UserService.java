@@ -1,9 +1,9 @@
 package efub.team4.backend_eweather.domain.user.service;
 
-import efub.team4.backend_eweather.global.config.auth.dto.OAuthAttributes;
-import efub.team4.backend_eweather.global.config.auth.dto.SessionUser;
-import efub.team4.backend_eweather.domain.user.entity.User;
+import efub.team4.backend_eweather.domain.user.dto.OAuthAttributes;
+import efub.team4.backend_eweather.domain.user.dto.SessionUser;
 import efub.team4.backend_eweather.domain.user.repository.UserRepository;
+import efub.team4.backend_eweather.domain.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
@@ -16,6 +16,8 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
 import java.util.Collections;
+import java.util.Map;
+import java.util.Objects;
 
 @RequiredArgsConstructor
 @Service
@@ -27,21 +29,21 @@ public class CustomOauth2UserService implements OAuth2UserService<OAuth2UserRequ
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException{
         OAuth2UserService<OAuth2UserRequest, OAuth2User> delegate = new DefaultOAuth2UserService();
         OAuth2User oAuth2User = delegate.loadUser(userRequest);
+        System.out.println(oAuth2User.getAttributes());
+        System.out.println();
 
-        String registrationId = userRequest.getClientRegistration().getRegistrationId();
+        String hd = (String) oAuth2User.getAttribute("hd");
+
+        if(!Objects.equals(hd, "ewhain.net")){
+            return null;
+        }
+
         String userNameAttributeName = userRequest.getClientRegistration().getProviderDetails().getUserInfoEndpoint().getUserNameAttributeName();
-
-        OAuthAttributes attributes = OAuthAttributes.of(registrationId, userNameAttributeName, oAuth2User.getAttributes());
+        OAuthAttributes attributes = OAuthAttributes.of(userNameAttributeName, oAuth2User.getAttributes());
 
         User user = saveOrUpdate(attributes);
         httpSession.setAttribute("user", new SessionUser(user));
-
-        // 세션 저장 됐는지 확인
-        System.out.println("--- This is the current User Info ---");
-        System.out.println(user.getId());
-        System.out.println(user.getEmail());
-        System.out.println(user.getFullName());
-        System.out.println("--- This is the current User Info ---");
+        SessionUser sessionUser = (SessionUser) httpSession.getAttribute("user");
 
 
         return new DefaultOAuth2User(
@@ -59,15 +61,17 @@ public class CustomOauth2UserService implements OAuth2UserService<OAuth2UserRequ
         if(user != null){
             return user;
         } else {
-            return userRepository.save(attributes.toEntity());
+            userRepository.save(attributes.toEntity());
+            user = userRepository.findByEmail(attributes.getEmail());
+            return user;
         }
 
-        /*
-        User user = (User) userRepository.findByEmail(attributes.getEmail())
-                .map(entity -> entity.update(UUID.randomUUID(), attributes.getName()))
-                .orElse(attributes.toEntity());
-        return userRepository.save(user);
+    }
 
-        */
+    public Object loadUserPostman(Map<String, Object> attribute) {
+        OAuthAttributes attributes = OAuthAttributes.ofGoogle((String) attribute.get("sub"), attribute);
+        User user = saveOrUpdate(attributes);
+        httpSession.setAttribute("user", new SessionUser(user));
+        return httpSession.getAttribute("user");
     }
 }

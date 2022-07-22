@@ -1,9 +1,10 @@
 package efub.team4.backend_eweather.domain.user.service;
 
+import efub.team4.backend_eweather.domain.user.dto.SessionUser;
 import efub.team4.backend_eweather.domain.user.dto.UserResponseDto;
 import efub.team4.backend_eweather.domain.user.entity.User;
+
 import efub.team4.backend_eweather.domain.user.repository.UserRepository;
-import efub.team4.backend_eweather.global.config.auth.dto.SessionUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -46,10 +46,16 @@ public class UserService {
     }
 
     @Transactional
-    public UUID getSessionUser(){
-        SessionUser user = (SessionUser) httpSession.getAttribute("user");
-        UUID userId = user.getId();
-        return userId;
-
+    public User getSessionUser(){
+        SessionUser sessionUser = (SessionUser) httpSession.getAttribute("user");
+        // 세션 저장 됐는지 확인
+        System.out.println("--- This is the current User Info ---");
+        System.out.println(sessionUser.getId());
+        System.out.println(sessionUser.getEmail());
+        System.out.println(sessionUser.getFullName()); // utf-8
+        System.out.println("--- This is the current User Info ---");
+        User user = userRepository.findByEmail(sessionUser.getEmail());
+        return user;
     }
+
 }
