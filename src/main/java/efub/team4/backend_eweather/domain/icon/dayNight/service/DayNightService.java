@@ -1,15 +1,12 @@
-package efub.team4.backend_eweather.domain.dayNight.service;
+package efub.team4.backend_eweather.domain.icon.dayNight.service;
 
-import efub.team4.backend_eweather.domain.dayNight.entity.DayNight;
-import efub.team4.backend_eweather.domain.dayNight.exception.DayNightAlreadyExistsException;
-import efub.team4.backend_eweather.domain.dayNight.exception.DayNightNotFoundException;
-import efub.team4.backend_eweather.domain.dayNight.repository.DayNightRepository;
+import efub.team4.backend_eweather.domain.icon.dayNight.entity.DayNight;
+import efub.team4.backend_eweather.domain.icon.dayNight.exception.DayNightAlreadyExistsException;
+import efub.team4.backend_eweather.domain.icon.dayNight.exception.DayNightNotFoundException;
+import efub.team4.backend_eweather.domain.icon.dayNight.repository.DayNightRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.time.LocalTime;
-import java.util.Optional;
 
 
 @Service
