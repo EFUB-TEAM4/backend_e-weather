@@ -32,7 +32,7 @@ public class CustomOauth2UserService implements OAuth2UserService<OAuth2UserRequ
 
         String userNameAttributeName = userRequest.getClientRegistration().getProviderDetails().getUserInfoEndpoint().getUserNameAttributeName();
         System.out.println(userNameAttributeName);
-        OAuthAttributes attributes = OAuthAttributes.of(userNameAttributeName, oAuth2User.getAttributes());
+        OAuthAttributes attributes = OAuthAttributes.of(oAuth2User.getAttribute("sub"), oAuth2User.getAttributes());
 
         User user = saveOrUpdate(attributes);
         httpSession.setAttribute("user", new SessionUser(user));
@@ -62,7 +62,7 @@ public class CustomOauth2UserService implements OAuth2UserService<OAuth2UserRequ
     }
 
     public Object loadUserPostman(Map<String, Object> attribute) {
-        OAuthAttributes attributes = OAuthAttributes.ofGoogle("109922330674617439719", attribute);
+        OAuthAttributes attributes = OAuthAttributes.ofGoogle((String) attribute.get("sub"), attribute);
         User user = saveOrUpdate(attributes);
         httpSession.setAttribute("user", new SessionUser(user));
         return httpSession.getAttribute("user");
