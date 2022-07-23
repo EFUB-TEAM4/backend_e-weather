@@ -9,8 +9,11 @@ import efub.team4.backend_eweather.domain.pty.entity.Pty;
 import efub.team4.backend_eweather.domain.pty.repository.PtyRepository;
 import efub.team4.backend_eweather.domain.sky.entity.Sky;
 import efub.team4.backend_eweather.domain.sky.repository.SkyRepository;
+import efub.team4.backend_eweather.domain.weather.dto.CalendarWeatherResponseDto;
+import efub.team4.backend_eweather.domain.weather.dto.CurrentWeatherResponseDto;
 import efub.team4.backend_eweather.domain.weather.service.OpenWeatherAPI;
 import lombok.RequiredArgsConstructor;
+import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationListener;
@@ -18,6 +21,7 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
 import java.time.LocalTime;
 import java.util.Optional;
 
@@ -61,6 +65,7 @@ public class SetupDataLoader implements
                     .skyName("낮 날씨 상태" + i)
                     .dayNight(day)
                     .skyCode(code)
+                    .skyBackGroundFileUrl("https://eweather-bucket.s3.ap-northeast-2.amazonaws.com/share/bear/bear_01.png")
                     .build();
             skyRepository.save(dayNth);
         }
@@ -71,6 +76,7 @@ public class SetupDataLoader implements
                     .skyName("밤 날씨 상태" + i)
                     .dayNight(night)
                     .skyCode(code)
+                    .skyBackGroundFileUrl("https://eweather-bucket.s3.ap-northeast-2.amazonaws.com/share/bear/bear_01.png")
                     .build();
             skyRepository.save(nightNth);
         }
@@ -103,18 +109,19 @@ public class SetupDataLoader implements
                 .iconName("icon")
                 .sky(sky.get())
                 .pty(pty.get())
+                .iconUrl("https://eweather-bucket.s3.ap-northeast-2.amazonaws.com/share/bear/bear_01.png")
                 .build();
 
         iconRepository.save(icon);
 
         boolean isBucket = s3Client.doesBucketExistV2(bucketName);
-        System.out.println("bucket exists "+ isBucket);
+        System.out.println("bucket exists " + isBucket);
         boolean isObject = s3Client.doesObjectExist(bucketName, "share/bear/bear_01.png");
         System.out.println("object exists " + isObject);
         
-        /*
+/*
         try {
-            CalendarWeatherResponseDto responseDto = openWeatherAPI.findCalendarWeather();
+            CurrentWeatherResponseDto responseDto = openWeatherAPI.findCurrentWeather();
             String skyCode = responseDto.getSky();
             String ptyCode = responseDto.getPty();
             String time = responseDto.getFcstTime();
@@ -134,13 +141,13 @@ public class SetupDataLoader implements
                     .iconName("icon")
                     .sky(sky.get())
                     .pty(pty.get())
+                    .iconUrl("https://eweather-bucket.s3.ap-northeast-2.amazonaws.com/share/bear/bear_01.png")
                     .build();
 
             iconRepository.save(icon);
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
+        }
+        catch (ParseException | IOException e) {
             e.printStackTrace();
         }
 */
