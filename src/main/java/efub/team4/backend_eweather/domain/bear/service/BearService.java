@@ -85,6 +85,13 @@ public class BearService {
             name = "0";
         }
 
-        return BEAR_TMP_PREFIX + name + ".png";
+        if(pty != 0){
+            return BEAR_TMP_PREFIX + name + "_umbrella.png";
+        }
+        else{
+            return BEAR_TMP_PREFIX + name + ".png";
+        }
+
+
     }
 }
