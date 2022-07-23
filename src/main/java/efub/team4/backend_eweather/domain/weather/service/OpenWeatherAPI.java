@@ -56,12 +56,21 @@ public class OpenWeatherAPI {
     }
 
     @Transactional
-    public CalendarWeatherResponseDto findCalendarWeather() throws IOException, ParseException{
+    public CurrentWeatherResponseDto findCalendarWeather() throws IOException, ParseException{
         URL url = buildRequestUrl(); // url 생성성
         System.out.println(url);  // url 어떻게 되는지 확인
         String stringResult = httpURLConnect(url);
         JSONArray jsonResult = getItems(stringResult);
-        return buildCalendarData(jsonResult);
+        return buildCurrentData(jsonResult);
+    }
+
+    @Transactional
+    public CurrentWeatherResponseDto findCurrentWeather() throws IOException, ParseException{
+        URL url = buildRequestUrl(); // url 생성성
+        System.out.println(url);  // url 어떻게 되는지 확인
+        String stringResult = httpURLConnect(url);
+        JSONArray jsonResult = getItems(stringResult);
+        return buildCurrentData(jsonResult);
     }
 
     @Transactional
@@ -205,7 +214,7 @@ public class OpenWeatherAPI {
     }
 
 
-    private CalendarWeatherResponseDto buildCalendarData(JSONArray jsonResult) {
+    private CurrentWeatherResponseDto buildCurrentData(JSONArray jsonResult) {
         // 현재 시간 받아서 예상 시간 조회
         String fcstTime = getCurrentTime();
         if(fcstTime.length() == 3){
@@ -258,7 +267,7 @@ public class OpenWeatherAPI {
         }
 
         // dto로 만들어서 반환
-        CalendarWeatherResponseDto responseDto = CalendarWeatherResponseDto.builder()
+        CurrentWeatherResponseDto responseDto = CurrentWeatherResponseDto.builder()
                 .baseDate(baseDate)
                 .baseTime(baseTime)
                 .fcstDate(baseDate)
