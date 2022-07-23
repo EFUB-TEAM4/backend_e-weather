@@ -19,10 +19,10 @@ public class Temperature {
     @Column(length = 16, name = "temperature_id")
     private UUID id;
 
-    @NotEmpty
+    @Column(nullable = false)
     private Integer minTemperature;
 
-    @NotEmpty
+    @Column(nullable = false)
     private Integer maxTemperature;
 
     @Builder

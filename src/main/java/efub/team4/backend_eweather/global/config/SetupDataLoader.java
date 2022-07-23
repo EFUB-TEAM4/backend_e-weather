@@ -3,22 +3,16 @@ package efub.team4.backend_eweather.global.config;
 import com.amazonaws.services.s3.AmazonS3;
 import efub.team4.backend_eweather.domain.dayNight.entity.DayNight;
 import efub.team4.backend_eweather.domain.dayNight.repository.DayNightRepository;
-import efub.team4.backend_eweather.domain.dayNight.service.DayNightService;
 import efub.team4.backend_eweather.domain.icon.entity.Icon;
 import efub.team4.backend_eweather.domain.icon.repository.IconRepository;
-import efub.team4.backend_eweather.domain.icon.service.IconService;
-import efub.team4.backend_eweather.domain.item.entity.Item;
 import efub.team4.backend_eweather.domain.pty.entity.Pty;
 import efub.team4.backend_eweather.domain.pty.repository.PtyRepository;
-import efub.team4.backend_eweather.domain.pty.service.PtyService;
 import efub.team4.backend_eweather.domain.sky.entity.Sky;
 import efub.team4.backend_eweather.domain.sky.repository.SkyRepository;
-import efub.team4.backend_eweather.domain.sky.service.SkyService;
 import efub.team4.backend_eweather.domain.temperature.entity.Temperature;
-import efub.team4.backend_eweather.domain.weather.dto.CalendarWeatherResponseDto;
+import efub.team4.backend_eweather.domain.temperature.repository.TemperatureRepository;
 import efub.team4.backend_eweather.domain.weather.service.OpenWeatherAPI;
 import lombok.RequiredArgsConstructor;
-import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationListener;
@@ -26,10 +20,9 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.IOException;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
@@ -44,6 +37,7 @@ public class SetupDataLoader implements
     private final SkyRepository skyRepository;
     private final PtyRepository ptyRepository;
     private final IconRepository iconRepository;
+    private final TemperatureRepository temperatureRepository;
 
     private final AmazonS3 s3Client;
 
@@ -96,6 +90,18 @@ public class SetupDataLoader implements
                     .build();
             ptyRepository.save(ptyNth);
         }
+
+        int temp = 0;
+        while (temp<30){
+            Integer minTemp = temp;
+            Integer maxTemp = temp + 3;
+            Temperature tempNth = Temperature.builder()
+                    .minTemperature(minTemp)
+                    .maxTemperature(maxTemp)
+                    .build();
+            temperatureRepository.save(tempNth);
+            temp += 4;
+        }
     }
 
     @Override
@@ -123,7 +129,11 @@ public class SetupDataLoader implements
         System.out.println("bucket exists "+ isBucket);
         boolean isObject = s3Client.doesObjectExist(bucketName, "share/bear/bear_01.png");
         System.out.println("object exists " + isObject);
-        
+
+
+        Optional<Temperature> findTemp = temperatureRepository.findByTemperature(5);
+        System.out.println(findTemp.get().getId());
+
         /*
         try {
             CalendarWeatherResponseDto responseDto = openWeatherAPI.findCalendarWeather();
