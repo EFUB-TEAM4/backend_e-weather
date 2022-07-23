@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class BearService {
     private final BearRepository bearRepository;
 
+
     @Transactional
     public Bear save(Bear bear){
         bearRepository.findById(bear.getId())
