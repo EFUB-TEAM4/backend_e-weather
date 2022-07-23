@@ -8,6 +8,7 @@ import efub.team4.backend_eweather.domain.vote.service.VotePostsService;
 import efub.team4.backend_eweather.global.config.auth.LoginUser;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,6 +19,7 @@ import java.util.UUID;
 @RequestMapping("/api/v1/votes")
 public class VotePostsController {
 
+    @Autowired
     private final VotePostsService votePostsService;
 
     @PostMapping
@@ -26,7 +28,10 @@ public class VotePostsController {
     }
 
     // 좋아요, 싫어요 기능
-    // @PutMapping
+    @PutMapping("/good/{id}")
+    public VoteResponseDto votesGood(@PathVariable Long id){
+        return votePostsService.updateGood(id);
+    }
 
 
     @PutMapping("/{id}")

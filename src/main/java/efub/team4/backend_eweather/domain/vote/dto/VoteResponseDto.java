@@ -13,6 +13,8 @@ public class VoteResponseDto {
     private UUID userId;
     private String building;
     private String clothes;
+    private Long good;
+    private Long bad;
 
     @Builder
     public VoteResponseDto(VotePosts entity) {
@@ -20,5 +22,7 @@ public class VoteResponseDto {
         this.userId = entity.getUser().getId();
         this.building = entity.getBuilding();
         this.clothes = entity.getClothes();
+        this.good = entity.getGood();
+        this.bad = entity.getBad();
     }
 }

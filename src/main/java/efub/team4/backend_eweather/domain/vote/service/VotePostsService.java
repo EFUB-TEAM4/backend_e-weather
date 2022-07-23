@@ -96,4 +96,11 @@ public class VotePostsService {
                 .orElseThrow(() -> new IllegalArgumentException("no votePost id = " + id));
         votePostsRespsitory.delete(votePosts);
     }
+
+    public VoteResponseDto updateGood(Long id) {
+        VotePosts votePosts = votePostsRespsitory.findById(id).orElseThrow(() -> new IllegalArgumentException("no votePost id = " + id));
+        votePosts.updateGood(id);
+        VotePosts response = votePostsRespsitory.save(votePosts);
+        return buildResponseDto(response);
+    }
 }
