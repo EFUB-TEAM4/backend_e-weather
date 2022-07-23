@@ -1,12 +1,10 @@
 package efub.team4.backend_eweather.domain.sky.dto;
 
-import efub.team4.backend_eweather.domain.dayNight.dto.DayNightDto;
+import efub.team4.backend_eweather.domain.icon.dayNight.dto.DayNightDto;
 import lombok.*;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
-import java.time.LocalTime;
 import java.util.UUID;
 
 public class SkyDto {

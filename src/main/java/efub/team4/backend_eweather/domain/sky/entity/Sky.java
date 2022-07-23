@@ -1,6 +1,6 @@
 package efub.team4.backend_eweather.domain.sky.entity;
 
-import efub.team4.backend_eweather.domain.dayNight.entity.DayNight;
+import efub.team4.backend_eweather.domain.icon.dayNight.entity.DayNight;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

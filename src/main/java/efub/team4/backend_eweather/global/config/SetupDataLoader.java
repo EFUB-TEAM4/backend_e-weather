@@ -1,24 +1,18 @@
 package efub.team4.backend_eweather.global.config;
 
 import com.amazonaws.services.s3.AmazonS3;
-import efub.team4.backend_eweather.domain.dayNight.entity.DayNight;
-import efub.team4.backend_eweather.domain.dayNight.repository.DayNightRepository;
-import efub.team4.backend_eweather.domain.dayNight.service.DayNightService;
+import efub.team4.backend_eweather.domain.icon.dayNight.entity.DayNight;
+import efub.team4.backend_eweather.domain.icon.dayNight.repository.DayNightRepository;
 import efub.team4.backend_eweather.domain.icon.entity.Icon;
 import efub.team4.backend_eweather.domain.icon.repository.IconRepository;
-import efub.team4.backend_eweather.domain.icon.service.IconService;
 import efub.team4.backend_eweather.domain.item.entity.Item;
 import efub.team4.backend_eweather.domain.pty.entity.Pty;
 import efub.team4.backend_eweather.domain.pty.repository.PtyRepository;
-import efub.team4.backend_eweather.domain.pty.service.PtyService;
 import efub.team4.backend_eweather.domain.sky.entity.Sky;
 import efub.team4.backend_eweather.domain.sky.repository.SkyRepository;
-import efub.team4.backend_eweather.domain.sky.service.SkyService;
 import efub.team4.backend_eweather.domain.temperature.entity.Temperature;
-import efub.team4.backend_eweather.domain.weather.dto.CalendarWeatherResponseDto;
 import efub.team4.backend_eweather.domain.weather.service.OpenWeatherAPI;
 import lombok.RequiredArgsConstructor;
-import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationListener;
@@ -26,9 +20,7 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.IOException;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 @Component

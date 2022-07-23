@@ -1,4 +1,4 @@
-package efub.team4.backend_eweather.domain.dayNight.dto;
+package efub.team4.backend_eweather.domain.icon.dayNight.dto;
 
 import lombok.*;
 
