@@ -18,7 +18,7 @@ public class BearService {
     @Autowired
     private final OpenWeatherAPI openWeatherAPI;
 
-    private final TimeUtil timeUtil;
+    private final TimeUtil timeUtil = new TimeUtil();
 
     public final String BEAR_TMP_PREFIX = "https://eweather-bucket.s3.ap-northeast-2.amazonaws.com/bear/tmp/";
     public final String BEAR_SKY_PREFIX = "https://eweather-bucket.s3.ap-northeast-2.amazonaws.com/bear/sky/";

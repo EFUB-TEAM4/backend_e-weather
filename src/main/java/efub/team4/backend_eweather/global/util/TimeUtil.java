@@ -6,7 +6,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-@RequiredArgsConstructor
+
 public class TimeUtil {
     public String getCurrentDate(){
         DateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
