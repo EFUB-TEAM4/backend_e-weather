@@ -14,7 +14,7 @@ public class IconService {
 
     @Transactional
     public Icon save(Icon icon) {
-        iconRepository.findById(icon.getId())
+        iconRepository.findIconByIconName(icon.getIconName())
                 .ifPresent((existedIcon) -> {
                     throw new IconNotFoundException("Icon already exists with specified id= " + icon.getId());
                 });

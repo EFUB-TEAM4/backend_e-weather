@@ -15,14 +15,15 @@ public class IconDto {
     @Setter
     public static class IconCreateDto {
         @NotEmpty
+        private String iconName;
         private Integer skyCode;
-
-        @NotEmpty
         private Integer ptyCode;
 
         @Size(max = 50)
         @NotEmpty
         private String time;
+        @NotEmpty
+        private String iconUrl;
     }
 
     @Getter
@@ -34,5 +35,16 @@ public class IconDto {
         private UUID id;
         private SkyDto.SkyResponseDto skyResponseDto;
         private PtyDto.PtyResponseDto ptyResponseDto;
+    }
+
+    @Getter
+    @Setter
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class IconResponseUrlDto {
+        private UUID id;
+        private String iconName;
+        private String iconUrl;
     }
 }

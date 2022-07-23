@@ -10,4 +10,5 @@ import java.util.UUID;
 
 public interface IconRepository extends JpaRepository<Icon, UUID> {
     Optional<Icon> findBySkyAndPty(Sky sky, Pty pty);
+    Optional<Icon> findIconByIconName(String iconName);
 }

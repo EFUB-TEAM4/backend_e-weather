@@ -37,8 +37,10 @@ public class IconMapper {
                 .orElseThrow(() -> new PtyNotFoundException("Pty not found with ptyCode = " + requestDto.getPtyCode()));
 
         return Icon.builder()
+                .iconName(requestDto.getIconName())
                 .sky(sky)
                 .pty(pty)
+                .iconUrl(requestDto.getIconUrl())
                 .build();
     }
 
@@ -47,6 +49,14 @@ public class IconMapper {
                 .id(entity.getId())
                 .skyResponseDto(skyMapper.fromEntity(entity.getSky()))
                 .ptyResponseDto(ptyMapper.fromEntity(entity.getPty()))
+                .build();
+    }
+
+    public IconDto.IconResponseUrlDto iconResponseUrlDto(Icon entity){
+        return IconDto.IconResponseUrlDto.builder()
+                .id(entity.getId())
+                .iconName(entity.getIconName())
+                .iconUrl(entity.getIconUrl())
                 .build();
     }
 }
