@@ -1,9 +1,6 @@
 package efub.team4.backend_eweather.domain.weather.service;
 
-import efub.team4.backend_eweather.domain.weather.dto.CalendarWeatherResponseDto;
-import efub.team4.backend_eweather.domain.weather.dto.ForcastResponseDto;
-import efub.team4.backend_eweather.domain.weather.dto.OpenWeatherResponseDto;
-import efub.team4.backend_eweather.domain.weather.dto.WeatherResponseDto;
+import efub.team4.backend_eweather.domain.weather.dto.*;
 import lombok.NoArgsConstructor;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -92,6 +89,14 @@ public class OpenWeatherAPI {
         String stringResult = httpURLConnect(url);
         JSONArray jsonResult = getItems(stringResult);
         return builldWeatherResponse(jsonResult, "POP");
+    }
+
+    public BearResponseDto findBearInfo() throws IOException, ParseException{
+        URL url = buildRequestUrl(); // url 생성성
+        System.out.println(url);  // url 어떻게 되는지 확인
+        String stringResult = httpURLConnect(url);
+        JSONArray jsonResult = getItems(stringResult);
+        return buildBearResponse(jsonResult);
     }
 
     // 현재 요일 반환 함수
@@ -334,5 +339,53 @@ public class OpenWeatherAPI {
         return dataList;
     }
 
+    private BearResponseDto buildBearResponse(JSONArray jsonResult) {
+
+        String fcstTime = getCurrentTime();
+        if (fcstTime.length() == 3) {
+            fcstTime = "0" + fcstTime;
+        }
+        String baseDate = getCurrentDate();
+        String tmp = "";
+        String tmx = "";
+        String tmn = "";
+        String sky = "";
+        String pop = "";
+        String pty = "";
+
+        // jsonResult를 조회하며 필요한 데이터 받기
+        for (int i = 0; i < jsonResult.size(); i++) {
+            JSONObject obj = (JSONObject) jsonResult.get(i);
+
+            String TimeTemp = (String) obj.get("fcstTime");
+            String CategoryTemp = (String) obj.get("category");
+
+            if (!fcstTime.equals(TimeTemp)) {
+                continue;
+            } else {
+                if (CategoryTemp.equals("TMP")) {
+                    tmp = (String) obj.get("fcstValue");
+                }
+                if (CategoryTemp.equals("SKY")) {
+                    sky = (String) obj.get("fcstValue");
+                }
+                if (CategoryTemp.equals("PTY")) {
+                    pty = (String) obj.get("fcstValue");
+                }
+            }
+        }
+
+        BearResponseDto responseDto = BearResponseDto.builder()
+                .baseDate(baseDate)
+                .baseTime(baseTime)
+                .fcstDate(baseDate)
+                .fcstTime(fcstTime)
+                .tmp(tmp)
+                .sky(sky)
+                .pty(pty)
+                .build();
+
+        return responseDto;
+    }
 
 }
