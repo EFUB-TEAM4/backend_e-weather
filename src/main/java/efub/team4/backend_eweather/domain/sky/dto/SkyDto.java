@@ -15,7 +15,6 @@ public class SkyDto {
         @NotEmpty
         private String skyName;
 
-        @NotEmpty
         private Integer skyCode;
 
         @Size(max = 50)
@@ -24,6 +23,17 @@ public class SkyDto {
 
         @NotEmpty
         private String skyBackGroundFileUrl;
+    }
+
+    @Getter
+    @Setter
+    public static class SkyRequestDto{
+        @NotEmpty
+        private String skyCode;
+
+        @Size(max = 50)
+        @NotEmpty
+        private String time;
     }
 
     @Getter
@@ -46,6 +56,7 @@ public class SkyDto {
     public static class SkyResponseDtoWithUrl{
         private UUID id;
         private String skyName;
+        private Integer skyCode;
         private String skyBackGroundFileUrl;
     }
 }
