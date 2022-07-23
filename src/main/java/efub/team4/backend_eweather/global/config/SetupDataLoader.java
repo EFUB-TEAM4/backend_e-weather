@@ -11,9 +11,10 @@ import efub.team4.backend_eweather.domain.sky.entity.Sky;
 import efub.team4.backend_eweather.domain.sky.repository.SkyRepository;
 import efub.team4.backend_eweather.domain.weather.dto.CalendarWeatherResponseDto;
 import efub.team4.backend_eweather.domain.weather.dto.CurrentWeatherResponseDto;
+import efub.team4.backend_eweather.domain.temperature.entity.Temperature;
+import efub.team4.backend_eweather.domain.temperature.repository.TemperatureRepository;
 import efub.team4.backend_eweather.domain.weather.service.OpenWeatherAPI;
 import lombok.RequiredArgsConstructor;
-import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationListener;
@@ -21,9 +22,9 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.IOException;
 import java.time.LocalTime;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
@@ -38,6 +39,7 @@ public class SetupDataLoader implements
     private final SkyRepository skyRepository;
     private final PtyRepository ptyRepository;
     private final IconRepository iconRepository;
+    private final TemperatureRepository temperatureRepository;
 
     private final AmazonS3 s3Client;
 
@@ -90,6 +92,18 @@ public class SetupDataLoader implements
                     .build();
             ptyRepository.save(ptyNth);
         }
+
+        int temp = 0;
+        while (temp<30){
+            Integer minTemp = temp;
+            Integer maxTemp = temp + 3;
+            Temperature tempNth = Temperature.builder()
+                    .minTemperature(minTemp)
+                    .maxTemperature(maxTemp)
+                    .build();
+            temperatureRepository.save(tempNth);
+            temp += 4;
+        }
     }
 
     @Override
@@ -120,6 +134,12 @@ public class SetupDataLoader implements
         System.out.println("object exists " + isObject);
         
 /*
+
+
+        Optional<Temperature> findTemp = temperatureRepository.findByTemperature(5);
+        System.out.println(findTemp.get().getId());
+
+        /*
         try {
             CurrentWeatherResponseDto responseDto = openWeatherAPI.findCurrentWeather();
             String skyCode = responseDto.getSky();
