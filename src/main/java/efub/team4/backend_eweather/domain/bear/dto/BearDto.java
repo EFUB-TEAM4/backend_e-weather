@@ -17,7 +17,8 @@ public class BearDto {
         @NotEmpty
         private Integer ptyCode;
 
-
+        @NotEmpty
+        private String bearFileUrl;
     }
 
     @Getter
@@ -29,5 +30,7 @@ public class BearDto {
         private UUID id;
         private PtyDto.PtyResponseDto ptyResponseDto;
         private TemperatureDto.TemperatureResponseDto temperatureResponseDto;
+        private String bearFileUrl;
     }
+
 }
