@@ -1,4 +1,4 @@
-package efub.team4.backend_eweather.domain.icon.dayNight.exception;
+package efub.team4.backend_eweather.domain.dayNight.exception;
 
 import org.springframework.dao.DataIntegrityViolationException;
 

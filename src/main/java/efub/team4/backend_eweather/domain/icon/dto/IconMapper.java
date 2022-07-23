@@ -1,8 +1,8 @@
 package efub.team4.backend_eweather.domain.icon.dto;
 
-import efub.team4.backend_eweather.domain.icon.dayNight.entity.DayNight;
-import efub.team4.backend_eweather.domain.icon.dayNight.exception.DayNightNotFoundException;
-import efub.team4.backend_eweather.domain.icon.dayNight.repository.DayNightRepository;
+import efub.team4.backend_eweather.domain.dayNight.entity.DayNight;
+import efub.team4.backend_eweather.domain.dayNight.exception.DayNightNotFoundException;
+import efub.team4.backend_eweather.domain.dayNight.repository.DayNightRepository;
 import efub.team4.backend_eweather.domain.icon.entity.Icon;
 import efub.team4.backend_eweather.domain.pty.dto.PtyMapper;
 import efub.team4.backend_eweather.domain.pty.entity.Pty;

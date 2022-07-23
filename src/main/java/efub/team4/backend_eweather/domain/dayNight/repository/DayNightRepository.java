@@ -1,6 +1,6 @@
-package efub.team4.backend_eweather.domain.icon.dayNight.repository;
+package efub.team4.backend_eweather.domain.dayNight.repository;
 
-import efub.team4.backend_eweather.domain.icon.dayNight.entity.DayNight;
+import efub.team4.backend_eweather.domain.dayNight.entity.DayNight;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

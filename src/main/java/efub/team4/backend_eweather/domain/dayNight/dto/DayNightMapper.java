@@ -1,7 +1,7 @@
-package efub.team4.backend_eweather.domain.icon.dayNight.dto;
+package efub.team4.backend_eweather.domain.dayNight.dto;
 
-import efub.team4.backend_eweather.domain.icon.dayNight.entity.DayNight;
-import efub.team4.backend_eweather.domain.icon.dayNight.repository.DayNightRepository;
+import efub.team4.backend_eweather.domain.dayNight.repository.DayNightRepository;
+import efub.team4.backend_eweather.domain.dayNight.entity.DayNight;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

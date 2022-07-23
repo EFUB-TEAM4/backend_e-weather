@@ -1,6 +1,6 @@
 package efub.team4.backend_eweather.domain.sky.dto;
 
-import efub.team4.backend_eweather.domain.icon.dayNight.dto.DayNightDto;
+import efub.team4.backend_eweather.domain.dayNight.dto.DayNightDto;
 import lombok.*;
 
 import javax.validation.constraints.NotEmpty;
