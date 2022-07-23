@@ -1,10 +1,9 @@
 package efub.team4.backend_eweather.domain.sky.dto;
 
-import efub.team4.backend_eweather.domain.dayNight.dto.DayNightDto;
-import efub.team4.backend_eweather.domain.dayNight.dto.DayNightMapper;
-import efub.team4.backend_eweather.domain.dayNight.entity.DayNight;
-import efub.team4.backend_eweather.domain.dayNight.exception.DayNightNotFoundException;
-import efub.team4.backend_eweather.domain.dayNight.repository.DayNightRepository;
+import efub.team4.backend_eweather.domain.icon.dayNight.dto.DayNightMapper;
+import efub.team4.backend_eweather.domain.icon.dayNight.entity.DayNight;
+import efub.team4.backend_eweather.domain.icon.dayNight.exception.DayNightNotFoundException;
+import efub.team4.backend_eweather.domain.icon.dayNight.repository.DayNightRepository;
 import efub.team4.backend_eweather.domain.sky.entity.Sky;
 import efub.team4.backend_eweather.domain.sky.repository.SkyRepository;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +24,7 @@ public class SkyMapper {
                 .skyName(requestDto.getSkyName())
                 .skyCode(requestDto.getSkyCode())
                 .dayNight(dayNight)
+                .skyBackGroundFileUrl(requestDto.getSkyBackGroundFileUrl())
                 .build();
     }
 
@@ -34,6 +34,14 @@ public class SkyMapper {
                 .skyName(entity.getSkyName())
                 .skyCode(entity.getSkyCode())
                 .dayNightResponseDto(dayNightMapper.fromEntity(entity.getDayNight()))
+                .build();
+    }
+
+    public SkyDto.SkyResponseDtoWithUrl getUrlFromEntity(Sky entity){
+        return SkyDto.SkyResponseDtoWithUrl.builder()
+                .id(entity.getId())
+                .skyName(entity.getSkyName())
+                .skyBackGroundFileUrl(entity.getSkyBackGroundFileUrl())
                 .build();
     }
 }

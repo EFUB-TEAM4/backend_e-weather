@@ -1,10 +1,11 @@
 package efub.team4.backend_eweather.domain.sky.entity;
 
-import efub.team4.backend_eweather.domain.dayNight.entity.DayNight;
+import efub.team4.backend_eweather.domain.icon.dayNight.entity.DayNight;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.validator.constraints.URL;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -32,11 +33,15 @@ public class Sky {
     @JoinColumn(name = "day_night_id", nullable = false)
     private DayNight dayNight;
 
+    @URL
+    private String skyBackGroundFileUrl;
+
     @Builder
-    public Sky(String skyName, Integer skyCode, DayNight dayNight) {
+    public Sky(String skyName, Integer skyCode, DayNight dayNight, String skyBackGroundFileUrl) {
         this.skyName = skyName;
         this.skyCode = skyCode;
         this.dayNight = dayNight;
+        this.skyBackGroundFileUrl = skyBackGroundFileUrl;
     }
 
 }

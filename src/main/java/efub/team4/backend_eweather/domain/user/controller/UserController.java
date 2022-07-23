@@ -3,16 +3,11 @@ package efub.team4.backend_eweather.domain.user.controller;
 import efub.team4.backend_eweather.domain.user.dto.UserResponseDto;
 import efub.team4.backend_eweather.domain.user.service.CustomOauth2UserService;
 import efub.team4.backend_eweather.domain.user.service.UserService;
-import efub.team4.backend_eweather.global.config.auth.LoginUser;
-import efub.team4.backend_eweather.global.config.auth.dto.SessionUser;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
+import java.util.Map;
 
 @RequiredArgsConstructor
 @RestController
@@ -27,9 +22,8 @@ public class UserController {
         return userService.loadUsers();
     }
 
-    @GetMapping("/account")
-    public UserResponseDto getCurrentUser(@LoginUser SessionUser sessionUser){
-        return userService.getByUserId(sessionUser.getId());
+    @PostMapping("/postman")
+    public Object sessionTest(@RequestBody Map<String, Object> attribute){
+        return oauth2UserService.loadUserPostman(attribute);
     }
-
 }
