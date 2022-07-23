@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.validator.constraints.URL;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -29,10 +30,14 @@ public class Bear {
     @JoinColumn(name = "pty_id", nullable = false)
     private Pty pty;
 
+    @URL
+    private String bearFileUrl;
+
     @Builder
-    public Bear(Temperature temperature, Pty pty){
+    public Bear(Temperature temperature, Pty pty, String bearFileUrl){
         this.temperature = temperature;
         this.pty = pty;
+        this.bearFileUrl = bearFileUrl;
     }
 
 
