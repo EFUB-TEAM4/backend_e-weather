@@ -65,7 +65,6 @@ public class SetupDataLoader implements
                     .skyName("낮 날씨 상태" + i)
                     .dayNight(day)
                     .skyCode(code)
-                    .skyBackGroundFileUrl("https://eweather-bucket.s3.ap-northeast-2.amazonaws.com/share/bear/bear_01.png")
                     .build();
             skyRepository.save(dayNth);
         }
@@ -76,7 +75,6 @@ public class SetupDataLoader implements
                     .skyName("밤 날씨 상태" + i)
                     .dayNight(night)
                     .skyCode(code)
-                    .skyBackGroundFileUrl("https://eweather-bucket.s3.ap-northeast-2.amazonaws.com/share/bear/bear_01.png")
                     .build();
             skyRepository.save(nightNth);
         }

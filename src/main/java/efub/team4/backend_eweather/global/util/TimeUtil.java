@@ -20,10 +20,16 @@ public class TimeUtil {
         return simpleDateFormat.format(currentTime) + "00";
     }
 
-    public Integer getHour(){
+    public String getDay(){
         DateFormat simpleDateFormat = new SimpleDateFormat("k");
         Date currentTime = new Date();
-        return Integer.parseInt(simpleDateFormat.format(currentTime));
+        Integer time = Integer.parseInt(simpleDateFormat.format(currentTime));
+        if(time > 6 && time < 18 ){
+            return "day";
+        }
+        else{
+            return "night";
+        }
     }
 
     public Integer getMonth(){
@@ -31,5 +37,7 @@ public class TimeUtil {
         Date currentTime = new Date();
         return Integer.parseInt(simpleDateFormat.format(currentTime));
     }
+
+
 
 }

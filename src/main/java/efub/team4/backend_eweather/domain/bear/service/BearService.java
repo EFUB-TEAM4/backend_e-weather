@@ -30,9 +30,18 @@ public class BearService {
         Integer tmp = Integer.parseInt(bearInfo.getTmp());
         String pty = bearInfo.getPty();
         String sky = bearInfo.getSky();
+        String day = timeUtil.getDay();
         String tmpUrl = buildTMPURL(tmp, Integer.parseInt(pty));
-        String skyUrl = BEAR_SKY_PREFIX + sky + ".png";
-        String ptyUrl = BEAR_PTY_PREFIX + pty + ".png";
+        String skyUrl = BEAR_SKY_PREFIX + sky + day + ".png";
+        String ptyUrl = null;
+
+        if(pty.equals("0")){
+            ptyUrl = null;
+        }
+        else{
+            ptyUrl = BEAR_PTY_PREFIX + pty + ".png";
+        }
+
         String seasonUrl = buildSeasonUrl();
 
         return BearImageResponseDto.builder()
