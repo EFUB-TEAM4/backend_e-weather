@@ -1,6 +1,5 @@
 package efub.team4.backend_eweather.domain.sky.dto;
 
-import efub.team4.backend_eweather.domain.dayNight.dto.DayNightDto;
 import efub.team4.backend_eweather.domain.dayNight.dto.DayNightMapper;
 import efub.team4.backend_eweather.domain.dayNight.entity.DayNight;
 import efub.team4.backend_eweather.domain.dayNight.exception.DayNightNotFoundException;
@@ -9,6 +8,8 @@ import efub.team4.backend_eweather.domain.sky.entity.Sky;
 import efub.team4.backend_eweather.domain.sky.repository.SkyRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+
+import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
@@ -38,10 +39,11 @@ public class SkyMapper {
                 .build();
     }
 
-    public SkyDto.SkyResponseDtoWithUrl getUrlFromEntity(Sky entity){
+    public SkyDto.SkyResponseDtoWithUrl fromEntityWithUrl(Sky entity) {
         return SkyDto.SkyResponseDtoWithUrl.builder()
                 .id(entity.getId())
                 .skyName(entity.getSkyName())
+                .skyCode(entity.getSkyCode())
                 .skyBackGroundFileUrl(entity.getSkyBackGroundFileUrl())
                 .build();
     }

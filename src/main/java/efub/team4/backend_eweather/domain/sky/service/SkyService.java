@@ -35,4 +35,13 @@ public class SkyService {
                 .orElseThrow(() -> new SkyNotFoundException("Sky Not found with skyCode and time"));
     }
 
+    @Transactional(readOnly = true)
+    public Sky findBySkyCodeAndTimeFromString(String skyCode, String time) {
+        DayNight dayNight = dayNightRepository.findDayNightWithQueryByTime(time)
+                .orElseThrow(() -> new DayNightNotFoundException("DayNight Not Found with time = " + time));
+
+        return skyRepository.findSkyBySkyCodeAndDayNight_Id(Integer.parseInt(skyCode), dayNight.getId())
+                .orElseThrow(() -> new SkyNotFoundException("Sky Not found with skyCode and time"));
+    }
+
 }

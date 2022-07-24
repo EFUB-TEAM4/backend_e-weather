@@ -1,9 +1,6 @@
 package efub.team4.backend_eweather.domain.weather.controller;
 
-import efub.team4.backend_eweather.domain.weather.dto.CalendarWeatherResponseDto;
-import efub.team4.backend_eweather.domain.weather.dto.ForcastResponseDto;
-import efub.team4.backend_eweather.domain.weather.dto.OpenWeatherResponseDto;
-import efub.team4.backend_eweather.domain.weather.dto.WeatherResponseDto;
+import efub.team4.backend_eweather.domain.weather.dto.*;
 import efub.team4.backend_eweather.domain.weather.service.OpenWeatherAPI;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,9 +28,9 @@ public class OpenWeatherApiController {
         return openWeatherAPI.findForcastWeather();
     }
 
-    @GetMapping("/calendar")
-    public CalendarWeatherResponseDto loadCalendarWeather() throws IOException, ParseException{
-        return openWeatherAPI.findCalendarWeather();
+    @GetMapping("/current")
+    public CurrentWeatherResponseDto loadCurrentWeather() throws IOException, ParseException{
+        return openWeatherAPI.findCurrentWeather();
     }
 
     @GetMapping("/tmp")
@@ -51,4 +48,8 @@ public class OpenWeatherApiController {
         return openWeatherAPI.findPrecipitation();
     }
 
+    @GetMapping("/bear")
+    public BearResponseDto loadBearInfo() throws IOException, ParseException{
+        return openWeatherAPI.findBearInfo();
+    }
 }
