@@ -1,6 +1,10 @@
 package efub.team4.backend_eweather.global.config;
 
 import com.amazonaws.services.s3.AmazonS3;
+import efub.team4.backend_eweather.domain.calendar.dto.CalendarDto;
+import efub.team4.backend_eweather.domain.calendar.dto.CalendarMapper;
+import efub.team4.backend_eweather.domain.calendar.entity.Calendar;
+import efub.team4.backend_eweather.domain.calendar.repository.CalendarRepository;
 import efub.team4.backend_eweather.domain.dayNight.entity.DayNight;
 import efub.team4.backend_eweather.domain.dayNight.repository.DayNightRepository;
 import efub.team4.backend_eweather.domain.icon.entity.Icon;
@@ -37,11 +41,16 @@ public class SetupDataLoader implements
     @Autowired
     private final OpenWeatherAPI openWeatherAPI = new OpenWeatherAPI();
 
+    @Autowired
+    private final CalendarMapper calendarMapper;
+
     private final DayNightRepository dayNightRepository;
     private final SkyRepository skyRepository;
     private final PtyRepository ptyRepository;
     private final IconRepository iconRepository;
     private final TemperatureRepository temperatureRepository;
+    private final CalendarRepository calendarRepository;
+
 
     private final AmazonS3 s3Client;
 
@@ -166,5 +175,24 @@ public class SetupDataLoader implements
                 .build();
 
         iconRepository.save(iconTemp);
+
+        Double cTemp = Double.parseDouble(responseDto.getTmp());
+        Double minTemp = Double.parseDouble(responseDto.getTmn());
+        Double maxTemp = Double.parseDouble(responseDto.getTmx());
+        Double rainPop = Double.parseDouble(responseDto.getPop());
+
+        CalendarDto.CreateRequest createRequest = CalendarDto.CreateRequest.builder()
+                .currentTemperature(cTemp.intValue())
+                .maxTemperature(maxTemp.intValue())
+                .minTemperature(minTemp.intValue())
+                .rainfallPercentage(rainPop.intValue())
+                .forecastDate(responseDto.getFcstDate())
+                .iconId(iconTemp.getId())
+                .skyId(skyTemp.get().getId())
+                .ptyId(ptyTemp.get().getId())
+                .description("게시글 생성")
+                .build();
+        Calendar calendar = calendarMapper.createRequestDtoToEntity(createRequest);
+        calendarRepository.save(calendar);
     }
 }

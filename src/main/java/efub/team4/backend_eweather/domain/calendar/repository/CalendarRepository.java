@@ -8,6 +8,6 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface CalendarRepository extends JpaRepository<Calendar, UUID>, JpaSpecificationExecutor<Calendar> {
-    Optional<Calendar> findByUser_Id(UUID uuid);
+    //Optional<Calendar> findByUser_Id(UUID uuid);
     Optional<Calendar> findCalendarByForecastDate(String foreCastDate);
 }

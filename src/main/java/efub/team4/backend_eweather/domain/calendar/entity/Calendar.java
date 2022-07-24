@@ -29,11 +29,11 @@ public class Calendar extends BaseTimeEntity {
 
     /**
      * 사용자
-     */
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
-
+*/
     /**
      * 캘린더 내용
      */
@@ -70,8 +70,8 @@ public class Calendar extends BaseTimeEntity {
     private Pty pty;
 
     @Builder
-    public Calendar(User user, String description, String forecastDate, Integer minTemperature, Integer currentTemperature, Integer maxTemperature, Integer rainfallPercentage, Icon icon, Sky sky, Pty pty) {
-        this.user = user;
+    public Calendar(String description, String forecastDate, Integer minTemperature, Integer currentTemperature, Integer maxTemperature, Integer rainfallPercentage, Icon icon, Sky sky, Pty pty) {
+        //this.user = user;
         this.description = description;
         this.forecastDate = forecastDate;
         this.minTemperature = minTemperature;

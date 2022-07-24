@@ -35,10 +35,11 @@ public class CalendarMapper {
     private final PtyMapper ptyMapper;
     private final IconMapper iconMapper;
 
-    public Calendar createRequestDtoToEntity(UUID userId, CalendarDto.CreateRequest requestDto) {
+    public Calendar createRequestDtoToEntity(CalendarDto.CreateRequest requestDto) {
+        /*
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found with id=" + userId));
-
+*/
         Icon icon = iconRepository.findById(requestDto.getIconId())
                 .orElseThrow(() -> new IconNotFoundException("Icon not found with id=" + requestDto.getIconId()));
 
@@ -49,7 +50,6 @@ public class CalendarMapper {
                 .orElseThrow(() -> new PtyNotFoundException("Pty not found with id = " + icon.getPty().getId()));
 
         return Calendar.builder()
-                .user(user)
                 .icon(icon)
                 .sky(sky)
                 .pty(pty)

@@ -33,8 +33,8 @@ public class CalendarController {
 
     @PostMapping
     @ApiOperation(value = "캘린더 생성", notes = "캘린더를 생성한다.")
-    public ResponseEntity<CalendarDto.Response> createCalendar(@LoginUser SessionUser user, @RequestBody CalendarDto.CreateRequest requestDto) {
-        Calendar entity = calendarMapper.createRequestDtoToEntity(user.getId(), requestDto);
+    public ResponseEntity<CalendarDto.Response> createCalendar(@RequestBody CalendarDto.CreateRequest requestDto) {
+        Calendar entity = calendarMapper.createRequestDtoToEntity(requestDto);
         return ResponseEntity
                 .created(
                         WebMvcLinkBuilder
@@ -44,17 +44,31 @@ public class CalendarController {
                 .body(calendarMapper.CalendarResponse(entity));
     }
 
+    /*
+    @PostMapping
+    @ApiOperation(value = "캘린더 생성", notes = "캘린더를 생성한다.")
+    public ResponseEntity<CalendarDto.Response> createCalendar(@LoginUser SessionUser user, @RequestBody CalendarDto.CreateRequest requestDto) {
+        Calendar entity = calendarMapper.createRequestDtoToEntity(user.getId(), requestDto);
+        return ResponseEntity
+                .created(
+                        WebMvcLinkBuilder
+                                .linkTo(CalendarController.class)
+                                .slash(entity.getId())
+                                .toUri())
+                .body(calendarMapper.CalendarResponse(entity));
+    }*/
+
     @DeleteMapping("/{id}")
     @ApiOperation(value = "캘린더 삭제", notes = "캘린더를 삭제한다.")
     public ResponseEntity<DeletedEntityIdResponseDto> deleteCalendar(
-            @ApiIgnore @LoginUser SessionUser user,
             @ApiParam(value = "캘린더 ID", required = true) @PathVariable UUID id) {
 
         Calendar calendar = calendarService.findById(id);
 
+        /*
         if (!user.getId().equals(calendar.getUser().getId())) {
             throw new InvalidParameterException("User Forbidden Exception with id = " + user.getId());
-        }
+        }*/
 
         calendarService.delete(id);
 
