@@ -1,5 +1,6 @@
 package efub.team4.backend_eweather.domain.eweather.dto;
 
+import efub.team4.backend_eweather.domain.bear.dto.BearMapper;
 import efub.team4.backend_eweather.domain.dayNight.entity.DayNight;
 import efub.team4.backend_eweather.domain.dayNight.exception.DayNightNotFoundException;
 import efub.team4.backend_eweather.domain.dayNight.repository.DayNightRepository;
@@ -8,6 +9,7 @@ import efub.team4.backend_eweather.domain.icon.dto.IconMapper;
 import efub.team4.backend_eweather.domain.pty.dto.PtyMapper;
 import efub.team4.backend_eweather.domain.pty.entity.Pty;
 import efub.team4.backend_eweather.domain.pty.repository.PtyRepository;
+import efub.team4.backend_eweather.domain.season.dto.SeasonMapper;
 import efub.team4.backend_eweather.domain.sky.dto.SkyDto;
 import efub.team4.backend_eweather.domain.sky.dto.SkyMapper;
 import efub.team4.backend_eweather.domain.sky.entity.Sky;
@@ -24,6 +26,8 @@ public class EweatherMapper {
     private final SkyMapper skyMapper;
     private final PtyMapper ptyMapper;
     private final IconMapper iconMapper;
+    private final BearMapper bearMapper;
+    private final SeasonMapper seasonMapper;
 
     public EweatherDto.CurrentResponseDto fromEntity(Eweather eweather) {
         return EweatherDto.CurrentResponseDto.builder()
@@ -36,6 +40,8 @@ public class EweatherMapper {
                 .skyResponseDto(skyMapper.fromEntityWithUrl(eweather.getSky()))
                 .ptyResponseDto(ptyMapper.fromEntityWithUrl(eweather.getPty()))
                 .iconResponseDto(iconMapper.iconResponseUrlDto(eweather.getIcon()))
+                .bearResponseDto(bearMapper.bearResponseDto(eweather.getBear()))
+                .seasonResponseDto(seasonMapper.fromEntity(eweather.getSeason()))
                 .build();
     }
 }

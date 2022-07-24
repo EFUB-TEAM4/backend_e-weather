@@ -1,7 +1,9 @@
 package efub.team4.backend_eweather.domain.eweather.dto;
 
+import efub.team4.backend_eweather.domain.bear.dto.BearDto;
 import efub.team4.backend_eweather.domain.icon.dto.IconDto;
 import efub.team4.backend_eweather.domain.pty.dto.PtyDto;
+import efub.team4.backend_eweather.domain.season.dto.SeasonDto;
 import efub.team4.backend_eweather.domain.sky.dto.SkyDto;
 import lombok.*;
 
@@ -38,5 +40,7 @@ public class EweatherDto {
         private PtyDto.PtyResponseDtoWithUrl ptyResponseDto;
         private SkyDto.SkyResponseDtoWithUrl skyResponseDto;
         private IconDto.IconResponseUrlDto iconResponseDto;
+        private BearDto.BearResponseDto bearResponseDto;
+        private SeasonDto.SeasonResponseDto seasonResponseDto;
     }
 }
