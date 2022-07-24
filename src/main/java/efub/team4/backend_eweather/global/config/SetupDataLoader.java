@@ -1,6 +1,8 @@
 package efub.team4.backend_eweather.global.config;
 
 import com.amazonaws.services.s3.AmazonS3;
+import efub.team4.backend_eweather.domain.bear.entity.Bear;
+import efub.team4.backend_eweather.domain.bear.repository.BearRepository;
 import efub.team4.backend_eweather.domain.calendar.dto.CalendarDto;
 import efub.team4.backend_eweather.domain.calendar.dto.CalendarMapper;
 import efub.team4.backend_eweather.domain.calendar.entity.Calendar;
@@ -30,7 +32,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.time.LocalTime;
+import java.util.Date;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -53,6 +57,7 @@ public class SetupDataLoader implements
     private final TemperatureRepository temperatureRepository;
     private final CalendarRepository calendarRepository;
     private final SeasonRepository seasonRepository;
+    private final BearRepository bearRepository;
 
 
     private final AmazonS3 s3Client;
@@ -177,12 +182,26 @@ public class SetupDataLoader implements
         System.out.println(ptyCode);
         System.out.println(time);
 
+        Double cTemp = Double.parseDouble(responseDto.getTmp());
+        Double minTemp = Double.parseDouble(responseDto.getTmn());
+        Double maxTemp = Double.parseDouble(responseDto.getTmx());
+        Double rainPop = Double.parseDouble(responseDto.getPop());
+
+        Date date = new Date();
+
+        try {
+            date = new SimpleDateFormat("yyyyMMdd").parse(responseDto.getFcstDate());
+        } catch (java.text.ParseException e) {
+            e.printStackTrace();
+        }
+
+        Integer month = Integer.parseInt(new SimpleDateFormat("MM").format(date));
 
         Optional<DayNight> dayTempNight = dayNightRepository.findDayNightWithQueryByTime(time);
         System.out.println(dayTempNight.get().getTimeName());
         Optional<Sky> skyTemp = skyRepository.findSkyBySkyCodeAndDayNight_Id(Integer.parseInt(skyCode), dayTempNight.get().getId());
         Optional<Pty> ptyTemp = ptyRepository.findByPtyCode(Integer.parseInt(ptyCode));
-
+        Optional<Temperature> tempTemp = temperatureRepository.findByTemperature(cTemp.intValue());
 
         Icon iconTemp = Icon.builder()
                 .iconName("icon2")
@@ -193,10 +212,18 @@ public class SetupDataLoader implements
 
         iconRepository.save(iconTemp);
 
-        Double cTemp = Double.parseDouble(responseDto.getTmp());
-        Double minTemp = Double.parseDouble(responseDto.getTmn());
-        Double maxTemp = Double.parseDouble(responseDto.getTmx());
-        Double rainPop = Double.parseDouble(responseDto.getPop());
+        Bear bearSave = Bear.builder()
+                .pty(ptyTemp.get())
+                .temperature(tempTemp.get())
+                .clothName("곰돌이옷차림")
+                .bearFileUrl("https://eweather-bucket.s3.ap-northeast-2.amazonaws.com/share/bear/bear_01.png")
+                .build();
+
+        bearRepository.save(bearSave);
+
+        Optional<Bear> bear = bearRepository.findBearByPtyAndTemperature(ptyTemp.get(), tempTemp.get());
+        Optional<Season> season = seasonRepository.findByMonth(month);
+
 
         CalendarDto.CreateRequest createRequest = CalendarDto.CreateRequest.builder()
                 .currentTemperature(cTemp.intValue())
@@ -207,6 +234,8 @@ public class SetupDataLoader implements
                 .iconId(iconTemp.getId())
                 .skyId(skyTemp.get().getId())
                 .ptyId(ptyTemp.get().getId())
+                .bearId(bear.get().getId())
+                .seasonId(season.get().getId())
                 .description("게시글 생성")
                 .build();
         Calendar calendar = calendarMapper.createRequestDtoToEntity(createRequest);
