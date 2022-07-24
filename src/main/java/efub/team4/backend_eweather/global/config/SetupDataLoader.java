@@ -15,6 +15,7 @@ import efub.team4.backend_eweather.domain.temperature.entity.Temperature;
 import efub.team4.backend_eweather.domain.temperature.repository.TemperatureRepository;
 import efub.team4.backend_eweather.domain.weather.service.OpenWeatherAPI;
 import lombok.RequiredArgsConstructor;
+import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationListener;
@@ -22,6 +23,7 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
 import java.time.LocalTime;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -132,44 +134,37 @@ public class SetupDataLoader implements
         System.out.println("bucket exists " + isBucket);
         boolean isObject = s3Client.doesObjectExist(bucketName, "share/bear/bear_01.png");
         System.out.println("object exists " + isObject);
-        
-/*
 
-
-        Optional<Temperature> findTemp = temperatureRepository.findByTemperature(5);
-        System.out.println(findTemp.get().getId());
-
-        /*
+        CurrentWeatherResponseDto responseDto = null;
         try {
-            CurrentWeatherResponseDto responseDto = openWeatherAPI.findCurrentWeather();
-            String skyCode = responseDto.getSky();
-            String ptyCode = responseDto.getPty();
-            String time = responseDto.getFcstTime();
-
-            System.out.println(skyCode);
-            System.out.println(ptyCode);
-            System.out.println(time);
-
-
-            Optional<DayNight> dayNight = dayNightRepository.findDayNightWithQueryByTime(time);
-            System.out.println(dayNight.get().getTimeName());
-            Optional<Sky> sky = skyRepository.findSkyBySkyCodeAndDayNight_Id(Integer.parseInt(skyCode), dayNight.get().getId());
-            Optional<Pty> pty = ptyRepository.findByPtyCode(Integer.parseInt(ptyCode));
-
-
-            Icon icon = Icon.builder()
-                    .iconName("icon")
-                    .sky(sky.get())
-                    .pty(pty.get())
-                    .iconUrl("https://eweather-bucket.s3.ap-northeast-2.amazonaws.com/share/bear/bear_01.png")
-                    .build();
-
-            iconRepository.save(icon);
-
-        }
-        catch (ParseException | IOException e) {
+            responseDto = openWeatherAPI.findCurrentWeather();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
             e.printStackTrace();
         }
-*/
+        String skyCode = responseDto.getSky();
+        String ptyCode = responseDto.getPty();
+        String time = responseDto.getFcstTime();
+
+        System.out.println(skyCode);
+        System.out.println(ptyCode);
+        System.out.println(time);
+
+
+        Optional<DayNight> dayTempNight = dayNightRepository.findDayNightWithQueryByTime(time);
+        System.out.println(dayTempNight.get().getTimeName());
+        Optional<Sky> skyTemp = skyRepository.findSkyBySkyCodeAndDayNight_Id(Integer.parseInt(skyCode), dayTempNight.get().getId());
+        Optional<Pty> ptyTemp = ptyRepository.findByPtyCode(Integer.parseInt(ptyCode));
+
+
+        Icon iconTemp = Icon.builder()
+                .iconName("icon2")
+                .sky(skyTemp.get())
+                .pty(ptyTemp.get())
+                .iconUrl("https://eweather-bucket.s3.ap-northeast-2.amazonaws.com/share/bear/bear_01.png")
+                .build();
+
+        iconRepository.save(iconTemp);
     }
 }
