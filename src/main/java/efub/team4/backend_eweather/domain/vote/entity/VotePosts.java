@@ -44,13 +44,13 @@ public class VotePosts extends BaseTimeEntity{
     Long bad;
 
     @Builder
-    public VotePosts(Long id, User user, String clothes,String building, Long good, Long bad) {
+    public VotePosts(Long id, User user, String clothes,String building) {
         this.id = id;
         this.user = user;
         this.clothes = clothes;
         this.building = building;
-        this.good = good;
-        this.bad = bad;
+        this.good = Long.valueOf(0);
+        this.bad = Long.valueOf(0);
     }
 
     public void update(String clothes) {

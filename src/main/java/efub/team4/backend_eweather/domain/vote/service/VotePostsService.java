@@ -8,7 +8,9 @@ import efub.team4.backend_eweather.domain.vote.dto.VoteRequestDto;
 import efub.team4.backend_eweather.domain.vote.dto.VoteResponseDto;
 import efub.team4.backend_eweather.domain.vote.dto.VoteUpdateRequestDto;
 import efub.team4.backend_eweather.domain.vote.entity.VotePosts;
+import efub.team4.backend_eweather.domain.vote.entity.Votes;
 import efub.team4.backend_eweather.domain.vote.repository.VotePostsRespsitory;
+import efub.team4.backend_eweather.domain.vote.repository.VotesRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,6 +30,9 @@ public class VotePostsService {
     @Autowired
     private final UserRepository userRepository;
 
+    @Autowired
+    private final VotesRepository votesRepository;
+
     public VoteResponseDto buildResponseDto(VotePosts entity){
         return new VoteResponseDto(entity);
     }
@@ -40,10 +45,6 @@ public class VotePostsService {
 
         User writer = userRepository.findById(id).get();
 
-        System.out.println(user.getEmail());
-        System.out.println(voteRequestDto.getBuilding());
-        System.out.println(voteRequestDto.getClothes());
-
         VotePosts votePosts = VotePosts.builder()
                 .user(writer)
                 .building(voteRequestDto.getBuilding())
@@ -51,6 +52,11 @@ public class VotePostsService {
                 .build();
 
         votePostsRespsitory.save(votePosts);
+
+        Votes votes = Votes.builder()
+                .user(writer)
+                .votePosts(votePosts)
+                .build();
 
         return buildResponseDto(votePosts);
 
@@ -89,7 +95,6 @@ public class VotePostsService {
 
     }
 
-
     // 투표 게시글 삭제
     public void deleteVotePost (Long id){
         VotePosts votePosts = votePostsRespsitory.findById(id)
@@ -97,14 +102,41 @@ public class VotePostsService {
         votePostsRespsitory.delete(votePosts);
     }
 
-    public VoteResponseDto updateGood(Long id) {
+    // 좋아요
+    public VoteResponseDto updateGood(Long id, SessionUser sessionUser) {
         VotePosts votePosts = votePostsRespsitory.findById(id).orElseThrow(() -> new IllegalArgumentException("no votePost id = " + id));
+
+        List<Votes> votesList = votesRepository.findAllByVotePosts(votePosts);
+
+        Boolean isOkay = true;
+        UUID userId = sessionUser.getId();
+
+        for(Votes votes : votesList){
+            if(votes.getUser().getId() == userId){
+                isOkay = false;
+                break;
+            }
+            else{
+                continue;
+            }
+        }
+        if(!isOkay){
+            return null;
+        }
+
+
+        votesRepository.save(new Votes(userRepository.findByEmail(sessionUser.getEmail()), votePosts));
+
         votePosts.updateGood();
         VotePosts response = votePostsRespsitory.save(votePosts);
+
+
+
         return buildResponseDto(response);
     }
 
-    public VoteResponseDto updateBad(Long id) {
+    // 싫어요
+    public VoteResponseDto updateBad(Long id, SessionUser sessionUser) {
         VotePosts votePosts = votePostsRespsitory.findById(id).orElseThrow(() -> new IllegalArgumentException("no votePost id = " + id));
         votePosts.updateBad();
         VotePosts response = votePostsRespsitory.save(votePosts);

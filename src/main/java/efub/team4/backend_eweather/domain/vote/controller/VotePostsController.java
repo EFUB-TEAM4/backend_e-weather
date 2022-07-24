@@ -29,12 +29,12 @@ public class VotePostsController {
 
     // 좋아요, 싫어요 기능
     @PutMapping("/good/{id}")
-    public VoteResponseDto votesGood(@PathVariable Long id){
-        return votePostsService.updateGood(id);
+    public VoteResponseDto votesGood(@PathVariable Long id, @LoginUser SessionUser sessionUser){
+        return votePostsService.updateGood(id, sessionUser);
     }
 
-    public VoteResponseDto voteBad(@PathVariable Long id){
-        return votePostsService.updateBad(id);
+    public VoteResponseDto voteBad(@PathVariable Long id, @LoginUser SessionUser sessionUser){
+        return votePostsService.updateBad(id, sessionUser);
     }
 
 
