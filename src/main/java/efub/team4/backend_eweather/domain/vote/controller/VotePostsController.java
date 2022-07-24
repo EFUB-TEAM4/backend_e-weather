@@ -33,6 +33,10 @@ public class VotePostsController {
         return votePostsService.updateGood(id);
     }
 
+    public VoteResponseDto voteBad(@PathVariable Long id){
+        return votePostsService.updateBad(id);
+    }
+
 
     @PutMapping("/{id}")
     public Long update(@PathVariable Long id, @RequestBody VoteUpdateRequestDto requestDto){

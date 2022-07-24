@@ -99,7 +99,14 @@ public class VotePostsService {
 
     public VoteResponseDto updateGood(Long id) {
         VotePosts votePosts = votePostsRespsitory.findById(id).orElseThrow(() -> new IllegalArgumentException("no votePost id = " + id));
-        votePosts.updateGood(id);
+        votePosts.updateGood();
+        VotePosts response = votePostsRespsitory.save(votePosts);
+        return buildResponseDto(response);
+    }
+
+    public VoteResponseDto updateBad(Long id) {
+        VotePosts votePosts = votePostsRespsitory.findById(id).orElseThrow(() -> new IllegalArgumentException("no votePost id = " + id));
+        votePosts.updateBad();
         VotePosts response = votePostsRespsitory.save(votePosts);
         return buildResponseDto(response);
     }

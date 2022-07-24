@@ -57,8 +57,11 @@ public class VotePosts extends BaseTimeEntity{
         this.clothes = clothes;
     }
 
-    public void updateGood(Long id){
-        this.id = id;
+    public void updateGood(){
         this.good++;
+    }
+
+    public void updateBad(){
+        this.bad++;
     }
 }
