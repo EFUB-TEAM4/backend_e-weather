@@ -35,14 +35,18 @@ public class Bear {
     @JoinColumn(name = "season_id", nullable = false)
     private Season season;
 
+    @Column(nullable = false)
+    private String clothName;
+
     @URL
     private String bearFileUrl;
 
     @Builder
-    public Bear(Temperature temperature, Pty pty, Season season, String bearFileUrl){
+    public Bear(Temperature temperature, Pty pty, Season season, String clothName, String bearFileUrl){
         this.temperature = temperature;
         this.pty = pty;
         this.season = season;
+        this.clothName = clothName;
         this.bearFileUrl = bearFileUrl;
     }
 

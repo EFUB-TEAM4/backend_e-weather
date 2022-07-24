@@ -42,6 +42,7 @@ public class BearMapper {
         return Bear.builder()
                 .temperature(temperature)
                 .pty(pty)
+                .clothName(requestDto.getClothName())
                 .bearFileUrl(requestDto.getBearFileUrl())
                 .build();
     }
@@ -51,6 +52,7 @@ public class BearMapper {
                 .id(entity.getId())
                 .temperatureResponseDto(temperatureMapper.fromEntity(entity.getTemperature()))
                 .seasonResponseDto(seasonMapper.fromEntity(entity.getSeason()))
+                .clothName(entity.getClothName())
                 .bearFileUrl(entity.getBearFileUrl())
                 .build();
     }
