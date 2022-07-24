@@ -34,6 +34,16 @@ public class CalendarService {
         calendarRepository.delete(calendar);
     }
 
+    @Transactional
+    public UUID update(UUID id, String description) {
+        Calendar calendar = calendarRepository.findById(id)
+                .orElseThrow(() -> new CalendarNotFoundException("캘린더 게시글을 찾을 수 없습니다."));
+
+        calendar.update(description);
+
+        return id;
+    }
+
     @Transactional(readOnly = true)
     public Calendar findById(UUID id) {
         return calendarRepository.findById(id)

@@ -43,8 +43,8 @@ public class CalendarController {
                                 .toUri())
                 .body(calendarMapper.CalendarResponse(entity));
     }
+ /*
 
-    /*
     @PostMapping
     @ApiOperation(value = "캘린더 생성", notes = "캘린더를 생성한다.")
     public ResponseEntity<CalendarDto.Response> createCalendar(@LoginUser SessionUser user, @RequestBody CalendarDto.CreateRequest requestDto) {
@@ -57,6 +57,21 @@ public class CalendarController {
                                 .toUri())
                 .body(calendarMapper.CalendarResponse(entity));
     }*/
+
+    @PutMapping("/{id}")
+    @ApiOperation(value = "캘린더 수정", notes = "캘린더를 수정한다.")
+    public ResponseEntity<CalendarDto.Response> updateCalendar(@PathVariable UUID id, @RequestBody CalendarDto.UpdateRequest updateRequest) {
+        UUID calendarId = calendarService.update(id, updateRequest.getDescription());
+        Calendar calendar = calendarService.findById(calendarId);
+
+        return ResponseEntity
+                .created(
+                        WebMvcLinkBuilder
+                                .linkTo(CalendarController.class)
+                                .slash(calendar.getId())
+                                .toUri())
+                .body(calendarMapper.CalendarResponse(calendar));
+    }
 
     @DeleteMapping("/{id}")
     @ApiOperation(value = "캘린더 삭제", notes = "캘린더를 삭제한다.")

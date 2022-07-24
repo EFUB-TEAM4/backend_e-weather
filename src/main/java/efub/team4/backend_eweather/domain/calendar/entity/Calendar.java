@@ -32,10 +32,10 @@ public class Calendar extends BaseTimeEntity {
     /**
      * 사용자
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
-*/
+     @ManyToOne
+     @JoinColumn(name = "user_id")
+     private User user;
+     */
     /**
      * 캘린더 내용
      */
@@ -95,5 +95,9 @@ public class Calendar extends BaseTimeEntity {
         this.pty = pty;
         this.bear = bear;
         this.season = season;
+    }
+
+    public void update(String description) {
+        this.description = description;
     }
 }

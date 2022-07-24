@@ -64,6 +64,16 @@ public class CalendarDto {
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor
+    public static class UpdateRequest{
+        @NotNull
+        private String description;
+    }
+
+    @Getter
+    @Setter
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
     public static class DeleteRequest {
         @NotBlank
         private UUID id;
