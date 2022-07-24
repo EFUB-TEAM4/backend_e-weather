@@ -107,12 +107,13 @@ public class SetupDataLoader implements
         }
 
         int month = 1;
-        while (month<30){
+        while (month<13){
             Integer startMonth = month;
             Integer endMonth = month + 2;
             Season seasonNth = Season.builder()
                     .startMonth(startMonth)
                     .endMonth(endMonth)
+                    .seasonName("계절"+month)
                     .seasonsBackGroundFileUrl("https://eweather-bucket.s3.ap-northeast-2.amazonaws.com/share/bear/bear_01.png")
                     .build();
             seasonRepository.save(seasonNth);
