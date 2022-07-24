@@ -29,7 +29,6 @@ public class EweatherDto {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class CurrentResponseDto{
-        private String baseDate;
         private String forecastDate;
         private String forecastTime;
         private Integer minTemperature;

@@ -37,16 +37,21 @@ public class EweatherService {
         Pty pty = ptyRepository.findByPtyCode(Integer.parseInt(responseDto.getPty()))
                 .orElseThrow(() -> new PtyNotFoundException("Pty Not Found with ptyCode"));
 
-        Icon icon = iconRepository.findBySkyAndPty(sky, pty)
+        Icon icon = iconRepository.findIconBySky_IdAndPty_Id(sky.getId(), pty.getId())
                 .orElseThrow(() -> new IconNotFoundException("Icon Not Found with Sky and Pty"));
+
+        Double minTemp = Double.parseDouble(responseDto.getTmn());
+        Double maxTemp = Double.parseDouble(responseDto.getTmx());
+        Double currentTemp = Double.parseDouble(responseDto.getTmp());
+        Double rainfallPer = Double.parseDouble(responseDto.getPop());
 
         return Eweather.builder()
                 .forecastDate(responseDto.getFcstDate())
                 .forecastTime(responseDto.getFcstTime())
-                .minTemperature(Integer.parseInt(responseDto.getTmn()))
-                .maxTemperature(Integer.parseInt(responseDto.getTmx()))
-                .currentTemperature(Integer.parseInt(responseDto.getTmp()))
-                .rainfallPercentage(Integer.parseInt(responseDto.getPop()))
+                .minTemperature(minTemp.intValue())
+                .maxTemperature(maxTemp.intValue())
+                .currentTemperature(currentTemp.intValue())
+                .rainfallPercentage(rainfallPer.intValue())
                 .sky(sky)
                 .pty(pty)
                 .icon(icon)

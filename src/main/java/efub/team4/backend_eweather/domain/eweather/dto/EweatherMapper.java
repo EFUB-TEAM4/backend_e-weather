@@ -27,6 +27,8 @@ public class EweatherMapper {
 
     public EweatherDto.CurrentResponseDto fromEntity(Eweather eweather) {
         return EweatherDto.CurrentResponseDto.builder()
+                .forecastDate(eweather.getForecastDate())
+                .forecastTime(eweather.getForecastTime())
                 .currentTemperature(eweather.getCurrentTemperature())
                 .minTemperature(eweather.getMinTemperature())
                 .maxTemperature(eweather.getMaxTemperature())
