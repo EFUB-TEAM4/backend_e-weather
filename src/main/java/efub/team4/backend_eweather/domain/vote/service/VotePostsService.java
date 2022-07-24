@@ -58,6 +58,8 @@ public class VotePostsService {
                 .votePosts(votePosts)
                 .build();
 
+        votesRepository.save(votes);
+
         return buildResponseDto(votePosts);
 
     }
@@ -109,12 +111,15 @@ public class VotePostsService {
         List<Votes> votesList = votesRepository.findAllByVotePosts(votePosts);
 
         Boolean isOkay = true;
-        UUID userId = sessionUser.getId();
+        User user = userRepository.findByEmail(sessionUser.getEmail());
 
         for(Votes votes : votesList){
-            if(votes.getUser().getId() == userId){
+            System.out.println(votes.getUser().getId());
+            User user1 = votes.getUser();
+            if(user1.equals(user)){
                 isOkay = false;
-                break;
+                System.out.println(votes.getVotePosts().getId() + "실패");
+                return null;
             }
             else{
                 continue;
@@ -122,24 +127,45 @@ public class VotePostsService {
         }
         if(!isOkay){
             return null;
+        } else {
+            System.out.println("성공");
+            votesRepository.save(new Votes(userRepository.findByEmail(sessionUser.getEmail()), votePosts));
+
+            votePosts.updateGood();
+            VotePosts response = votePostsRespsitory.save(votePosts);
+            return buildResponseDto(response);
         }
-
-
-        votesRepository.save(new Votes(userRepository.findByEmail(sessionUser.getEmail()), votePosts));
-
-        votePosts.updateGood();
-        VotePosts response = votePostsRespsitory.save(votePosts);
-
-
-
-        return buildResponseDto(response);
     }
 
     // 싫어요
     public VoteResponseDto updateBad(Long id, SessionUser sessionUser) {
         VotePosts votePosts = votePostsRespsitory.findById(id).orElseThrow(() -> new IllegalArgumentException("no votePost id = " + id));
-        votePosts.updateBad();
-        VotePosts response = votePostsRespsitory.save(votePosts);
-        return buildResponseDto(response);
+        List<Votes> votesList = votesRepository.findAllByVotePosts(votePosts);
+
+        Boolean isOkay = true;
+        User user = userRepository.findByEmail(sessionUser.getEmail());
+
+        for(Votes votes : votesList){
+            System.out.println(votes.getUser().getId());
+            User user1 = votes.getUser();
+            if(user1.equals(user)){
+                isOkay = false;
+                System.out.println(votes.getVotePosts().getId() + "실패");
+                return null;
+            }
+            else{
+                continue;
+            }
+        }
+        if(!isOkay){
+            return null;
+        } else {
+            System.out.println("성공");
+            votesRepository.save(new Votes(userRepository.findByEmail(sessionUser.getEmail()), votePosts));
+
+            votePosts.updateBad();
+            VotePosts response = votePostsRespsitory.save(votePosts);
+            return buildResponseDto(response);
+        }
     }
 }
