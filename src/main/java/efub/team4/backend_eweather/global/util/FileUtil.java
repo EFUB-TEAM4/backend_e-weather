@@ -1,4 +1,4 @@
-package efub.team4.backend_eweather.global.utill;
+package efub.team4.backend_eweather.global.util;
 
 import java.util.UUID;
 
