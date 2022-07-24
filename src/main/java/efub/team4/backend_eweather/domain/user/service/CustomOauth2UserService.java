@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpSession;
 import java.util.Collections;
 import java.util.Map;
+import java.util.Objects;
 
 @RequiredArgsConstructor
 @Service
@@ -29,9 +30,15 @@ public class CustomOauth2UserService implements OAuth2UserService<OAuth2UserRequ
         OAuth2UserService<OAuth2UserRequest, OAuth2User> delegate = new DefaultOAuth2UserService();
         OAuth2User oAuth2User = delegate.loadUser(userRequest);
         System.out.println(oAuth2User.getAttributes());
+        System.out.println();
+
+        String hd = (String) oAuth2User.getAttribute("hd");
+
+        if(!Objects.equals(hd, "ewhain.net")){
+            return null;
+        }
 
         String userNameAttributeName = userRequest.getClientRegistration().getProviderDetails().getUserInfoEndpoint().getUserNameAttributeName();
-        System.out.println(userNameAttributeName);
         OAuthAttributes attributes = OAuthAttributes.of(userNameAttributeName, oAuth2User.getAttributes());
 
         User user = saveOrUpdate(attributes);
@@ -62,7 +69,7 @@ public class CustomOauth2UserService implements OAuth2UserService<OAuth2UserRequ
     }
 
     public Object loadUserPostman(Map<String, Object> attribute) {
-        OAuthAttributes attributes = OAuthAttributes.ofGoogle("109922330674617439719", attribute);
+        OAuthAttributes attributes = OAuthAttributes.ofGoogle((String) attribute.get("sub"), attribute);
         User user = saveOrUpdate(attributes);
         httpSession.setAttribute("user", new SessionUser(user));
         return httpSession.getAttribute("user");
