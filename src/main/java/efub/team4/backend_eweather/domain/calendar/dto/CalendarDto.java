@@ -1,9 +1,11 @@
 package efub.team4.backend_eweather.domain.calendar.dto;
 
 import com.sun.istack.NotNull;
+import efub.team4.backend_eweather.domain.bear.dto.BearDto;
 import efub.team4.backend_eweather.domain.eweather.dto.EweatherDto;
 import efub.team4.backend_eweather.domain.icon.dto.IconDto;
 import efub.team4.backend_eweather.domain.pty.dto.PtyDto;
+import efub.team4.backend_eweather.domain.season.dto.SeasonDto;
 import efub.team4.backend_eweather.domain.sky.dto.SkyDto;
 import efub.team4.backend_eweather.domain.user.dto.UserResponseDto;
 import lombok.*;
@@ -49,6 +51,12 @@ public class CalendarDto {
 
         @NotNull
         private UUID skyId;
+
+        @NotNull
+        private UUID bearId;
+
+        @NotNull
+        private UUID seasonId;
     }
 
     @Getter
@@ -77,6 +85,8 @@ public class CalendarDto {
         private IconDto.IconResponseUrlDto iconResponseUrlDto;
         private SkyDto.SkyResponseDtoWithUrl skyResponseDtoWithUrl;
         private PtyDto.PtyResponseDtoWithUrl ptyResponseDtoWithUrl;
+        private BearDto.BearResponseDto bearResponseDto;
+        private SeasonDto.SeasonResponseDto seasonResponseDto;
         private LocalDateTime calendarCreatedOn;
         private LocalDateTime calendarUpdatedOn;
     }

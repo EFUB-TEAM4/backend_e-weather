@@ -2,8 +2,10 @@ package efub.team4.backend_eweather.domain.calendar.entity;
 
 import com.sun.istack.NotNull;
 
+import efub.team4.backend_eweather.domain.bear.entity.Bear;
 import efub.team4.backend_eweather.domain.icon.entity.Icon;
 import efub.team4.backend_eweather.domain.pty.entity.Pty;
+import efub.team4.backend_eweather.domain.season.entity.Season;
 import efub.team4.backend_eweather.domain.sky.entity.Sky;
 import efub.team4.backend_eweather.domain.user.entity.User;
 import efub.team4.backend_eweather.global.entity.BaseTimeEntity;
@@ -69,8 +71,18 @@ public class Calendar extends BaseTimeEntity {
     @JoinColumn(name = "pty_id", nullable = false)
     private Pty pty;
 
+    @OneToOne
+    @JoinColumn(name = "bear_id", nullable = false)
+    private Bear bear;
+
+    @OneToOne
+    @JoinColumn(name = "season_id", nullable = false)
+    private Season season;
+
     @Builder
-    public Calendar(String description, String forecastDate, Integer minTemperature, Integer currentTemperature, Integer maxTemperature, Integer rainfallPercentage, Icon icon, Sky sky, Pty pty) {
+    public Calendar(String description, String forecastDate, Integer minTemperature,
+                    Integer currentTemperature, Integer maxTemperature, Integer rainfallPercentage,
+                    Icon icon, Sky sky, Pty pty, Bear bear, Season season) {
         //this.user = user;
         this.description = description;
         this.forecastDate = forecastDate;
@@ -81,5 +93,7 @@ public class Calendar extends BaseTimeEntity {
         this.icon = icon;
         this.sky = sky;
         this.pty = pty;
+        this.bear = bear;
+        this.season = season;
     }
 }
