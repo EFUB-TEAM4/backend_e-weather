@@ -1,6 +1,10 @@
 package efub.team4.backend_eweather.domain.calendar.dto;
 
 import com.sun.istack.NotNull;
+import efub.team4.backend_eweather.domain.eweather.dto.EweatherDto;
+import efub.team4.backend_eweather.domain.icon.dto.IconDto;
+import efub.team4.backend_eweather.domain.pty.dto.PtyDto;
+import efub.team4.backend_eweather.domain.sky.dto.SkyDto;
 import efub.team4.backend_eweather.domain.user.dto.UserResponseDto;
 import lombok.*;
 
@@ -19,14 +23,32 @@ public class CalendarDto {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class CreateRequest {
-        @NotNull
-        private UUID userId;
-
         @NotEmpty
         private String description;
 
         @NotNull
-        private LocalDateTime createdOn;
+        private String forecastDate;
+
+        @Column(nullable = false)
+        private Integer minTemperature;
+
+        @Column(nullable = false)
+        private Integer currentTemperature;
+
+        @Column(nullable = false)
+        private Integer maxTemperature;
+
+        @Column(nullable = false)
+        private Integer rainfallPercentage;
+
+        @NotNull
+        private UUID iconId;
+
+        @NotNull
+        private UUID ptyId;
+
+        @NotNull
+        private UUID skyId;
     }
 
     @Getter
@@ -49,9 +71,13 @@ public class CalendarDto {
         private UUID id;
         private UserResponseDto userResponseDto;
         private String description;
-        private Integer temperature;
-        private Integer max_temperature;
-        private Integer min_temperature;
+        private Integer currentTemperature;
+        private Integer maxTemperature;
+        private Integer minTemperature;
+        private IconDto.IconResponseUrlDto iconResponseUrlDto;
+        private SkyDto.SkyResponseDtoWithUrl skyResponseDtoWithUrl;
+        private PtyDto.PtyResponseDtoWithUrl ptyResponseDtoWithUrl;
         private LocalDateTime calendarCreatedOn;
+        private LocalDateTime calendarUpdatedOn;
     }
 }
