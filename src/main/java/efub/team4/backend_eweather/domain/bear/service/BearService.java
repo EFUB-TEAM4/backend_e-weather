@@ -15,7 +15,6 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class BearService {
 
-    @Autowired
     private final OpenWeatherAPI openWeatherAPI;
 
     private final TimeUtil timeUtil = new TimeUtil();

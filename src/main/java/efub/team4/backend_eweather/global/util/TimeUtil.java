@@ -14,10 +14,28 @@ public class TimeUtil {
         return simpleDateFormat.format(currentDate);
     }
 
-    public String getCurrentTime(){
+    public String getFcstTime(){
         DateFormat simpleDateFormat = new SimpleDateFormat("k");
         Date currentTime = new Date();
         return simpleDateFormat.format(currentTime) + "00";
+    }
+
+    public String getBaseTime(){
+        DateFormat simpleDateFormat = new SimpleDateFormat("k");
+        Date currentHour = new Date();
+        Integer ApiTime = Integer.parseInt(String.valueOf(currentHour));
+        String baseTime = switch (ApiTime) {
+            case 0, 1, 2 -> "2300";
+            case 3, 4, 5 -> "0200";
+            case 6, 7, 8 -> "0500";
+            case 9, 10, 11 -> "0800";
+            case 12, 13, 14 -> "1100";
+            case 15, 16, 17 -> "1400";
+            case 18, 19, 20 -> "1700";
+            case 21, 22, 23 -> "2000";
+            default -> "";
+        };
+        return baseTime;
     }
 
     public String getDay(){
