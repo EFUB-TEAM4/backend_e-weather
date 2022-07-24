@@ -1,6 +1,7 @@
 package efub.team4.backend_eweather.domain.bear.entity;
 
 import efub.team4.backend_eweather.domain.pty.entity.Pty;
+import efub.team4.backend_eweather.domain.season.entity.Season;
 import efub.team4.backend_eweather.domain.temperature.entity.Temperature;
 import lombok.Builder;
 import lombok.Getter;
@@ -30,13 +31,22 @@ public class Bear {
     @JoinColumn(name = "pty_id", nullable = false)
     private Pty pty;
 
+    @OneToOne
+    @JoinColumn(name = "season_id", nullable = false)
+    private Season season;
+
+    @Column(nullable = false)
+    private String clothName;
+
     @URL
     private String bearFileUrl;
 
     @Builder
-    public Bear(Temperature temperature, Pty pty, String bearFileUrl){
+    public Bear(Temperature temperature, Pty pty, Season season, String clothName, String bearFileUrl){
         this.temperature = temperature;
         this.pty = pty;
+        this.season = season;
+        this.clothName = clothName;
         this.bearFileUrl = bearFileUrl;
     }
 

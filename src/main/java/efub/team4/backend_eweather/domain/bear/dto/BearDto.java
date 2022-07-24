@@ -1,6 +1,6 @@
 package efub.team4.backend_eweather.domain.bear.dto;
 
-import efub.team4.backend_eweather.domain.pty.dto.PtyDto;
+import efub.team4.backend_eweather.domain.season.dto.SeasonDto;
 import efub.team4.backend_eweather.domain.temperature.dto.TemperatureDto;
 import lombok.*;
 
@@ -18,6 +18,12 @@ public class BearDto {
         private Integer ptyCode;
 
         @NotEmpty
+        private Integer season;
+
+        @NotEmpty
+        private String clothName;
+
+        @NotEmpty
         private String bearFileUrl;
     }
 
@@ -28,8 +34,9 @@ public class BearDto {
     @AllArgsConstructor
     public static class BearResponseDto {
         private UUID id;
-        private PtyDto.PtyResponseDto ptyResponseDto;
+        private SeasonDto.SeasonResponseDto seasonResponseDto;
         private TemperatureDto.TemperatureResponseDto temperatureResponseDto;
+        private String clothName;
         private String bearFileUrl;
     }
 

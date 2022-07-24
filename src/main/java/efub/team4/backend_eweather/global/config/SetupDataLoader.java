@@ -11,6 +11,8 @@ import efub.team4.backend_eweather.domain.icon.entity.Icon;
 import efub.team4.backend_eweather.domain.icon.repository.IconRepository;
 import efub.team4.backend_eweather.domain.pty.entity.Pty;
 import efub.team4.backend_eweather.domain.pty.repository.PtyRepository;
+import efub.team4.backend_eweather.domain.season.entity.Season;
+import efub.team4.backend_eweather.domain.season.repository.SeasonRepository;
 import efub.team4.backend_eweather.domain.sky.entity.Sky;
 import efub.team4.backend_eweather.domain.sky.repository.SkyRepository;
 import efub.team4.backend_eweather.domain.weather.dto.CalendarWeatherResponseDto;
@@ -50,6 +52,7 @@ public class SetupDataLoader implements
     private final IconRepository iconRepository;
     private final TemperatureRepository temperatureRepository;
     private final CalendarRepository calendarRepository;
+    private final SeasonRepository seasonRepository;
 
 
     private final AmazonS3 s3Client;
@@ -114,6 +117,20 @@ public class SetupDataLoader implements
                     .build();
             temperatureRepository.save(tempNth);
             temp += 4;
+        }
+
+        int month = 1;
+        while (month<13){
+            Integer startMonth = month;
+            Integer endMonth = month + 2;
+            Season seasonNth = Season.builder()
+                    .startMonth(startMonth)
+                    .endMonth(endMonth)
+                    .seasonName("계절"+month)
+                    .seasonsBackGroundFileUrl("https://eweather-bucket.s3.ap-northeast-2.amazonaws.com/share/bear/bear_01.png")
+                    .build();
+            seasonRepository.save(seasonNth);
+            month += 3;
         }
     }
 
