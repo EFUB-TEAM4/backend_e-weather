@@ -97,6 +97,8 @@ public class CalendarMapper {
                 .ptyResponseDtoWithUrl(ptyMapper.fromEntityWithUrl(calendar.getPty()))
                 .bearResponseDto(bearMapper.bearResponseDto(calendar.getBear()))
                 .seasonResponseDto(seasonMapper.fromEntity(calendar.getSeason()))
+                .calendarCreatedOn(calendar.getCreatedOn())
+                .calendarUpdatedOn(calendar.getModifiedOn())
                 .build();
     }
 
