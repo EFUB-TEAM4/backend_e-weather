@@ -1,7 +1,9 @@
 package efub.team4.backend_eweather.domain.weather.service;
 
 import efub.team4.backend_eweather.domain.weather.dto.*;
+import efub.team4.backend_eweather.global.util.TimeUtil;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.json.simple.*;
@@ -21,9 +23,11 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
-@NoArgsConstructor
-@Service
+
+@RequiredArgsConstructor
 public class OpenWeatherAPI {
+
+    TimeUtil timeUtil = new TimeUtil();
 
     // 커밋 시 서비스 키 지우고 커밋
     private final String BASE_URL = "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst";
@@ -32,7 +36,7 @@ public class OpenWeatherAPI {
     private String pageNo = "1";
     private String numOfRows = "310";
     private String dataType = "JSON";
-    private String baseTime = "0500"; // api 제공시각
+    private String baseTime = timeUtil.getBaseTime(); // api 제공시각
     private String nx = "59";
     private String ny = "126"; // nx, ny는 서대문구 신촌동 좌표값
 
@@ -99,22 +103,9 @@ public class OpenWeatherAPI {
         return buildBearResponse(jsonResult);
     }
 
-    // 현재 요일 반환 함수
-    public String getCurrentDate(){
-        DateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
-        Date currentDate = new Date();
-        return simpleDateFormat.format(currentDate);
-    }
-
-    public String getCurrentTime(){
-        DateFormat simpleDateFormat = new SimpleDateFormat("k");
-        Date currentTime = new Date();
-        return simpleDateFormat.format(currentTime) + "00";
-    }
-
     public URL buildRequestUrl() throws IOException {
         StringBuilder sb = new StringBuilder(BASE_URL);
-        String baseDate = getCurrentDate();
+        String baseDate = timeUtil.getBaseTime();
         sb.append("?").append(URLEncoder.encode("serviceKey", "UTF-8")).append("=").append(serviceKey);
         sb.append("&").append(URLEncoder.encode("pageNo", "UTF-8")).append("=").append(URLEncoder.encode(pageNo, "UTF-8"));
         sb.append("&").append(URLEncoder.encode("numOfRows", "UTF-8")).append("=").append(URLEncoder.encode(numOfRows, "UTF-8")); /* 한 페이지 결과 수 */
@@ -185,7 +176,7 @@ public class OpenWeatherAPI {
             obj = (JSONObject) parseItem.get(idx+5);
             sky = (String) obj.get("fcstValue");
             ForcastResponseDto dto = ForcastResponseDto.builder()
-                    .baseDate(getCurrentDate())
+                    .baseDate(timeUtil.getCurrentDate())
                     .baseTime(baseTime)
                     .fcstDate(fcstDate)
                     .fcstTime(fcstTime)
@@ -207,11 +198,11 @@ public class OpenWeatherAPI {
 
     private CalendarWeatherResponseDto buildCalendarData(JSONArray jsonResult) {
         // 현재 시간 받아서 예상 시간 조회
-        String fcstTime = getCurrentTime();
+        String fcstTime = timeUtil.getFcstTime();
         if(fcstTime.length() == 3){
             fcstTime = "0" + fcstTime;
         }
-        String baseDate = getCurrentDate();
+        String baseDate = timeUtil.getCurrentDate();
         String tmp = "";
         String tmx = "";
         String tmn = "";
@@ -276,11 +267,11 @@ public class OpenWeatherAPI {
 
     public WeatherResponseDto builldWeatherResponse(JSONArray jsonResult, String category) {
         // 현재 시간 받아서 예상 시간 조회
-        String fcstTime = getCurrentTime();
+        String fcstTime = timeUtil.getFcstTime();
         if (fcstTime.length() == 3) {
             fcstTime = "0" + fcstTime;
         }
-        String baseDate = getCurrentDate();
+        String baseDate = timeUtil.getCurrentDate();
         String value = "";
 
         // jsonResult를 조회하며 필요한 데이터 받기
@@ -341,11 +332,11 @@ public class OpenWeatherAPI {
 
     private BearResponseDto buildBearResponse(JSONArray jsonResult) {
 
-        String fcstTime = getCurrentTime();
+        String fcstTime = timeUtil.getFcstTime();
         if (fcstTime.length() == 3) {
             fcstTime = "0" + fcstTime;
         }
-        String baseDate = getCurrentDate();
+        String baseDate = timeUtil.getCurrentDate();
         String tmp = "";
         String tmx = "";
         String tmn = "";
