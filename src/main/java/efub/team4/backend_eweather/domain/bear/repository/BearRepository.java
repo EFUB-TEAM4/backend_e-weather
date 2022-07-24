@@ -10,5 +10,5 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface BearRepository extends JpaRepository<Bear, UUID> {
-    Optional<Bear> findByTemperatureAndPtyAndSeason(Temperature temperature, Pty pty, Season season);
+    Optional<Bear> findBearByPtyAndTemperature(Pty pty, Temperature temperature);
 }

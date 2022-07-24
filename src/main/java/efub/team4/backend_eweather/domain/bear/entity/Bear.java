@@ -31,10 +31,6 @@ public class Bear {
     @JoinColumn(name = "pty_id", nullable = false)
     private Pty pty;
 
-    @OneToOne
-    @JoinColumn(name = "season_id", nullable = false)
-    private Season season;
-
     @Column(nullable = false)
     private String clothName;
 
@@ -42,10 +38,9 @@ public class Bear {
     private String bearFileUrl;
 
     @Builder
-    public Bear(Temperature temperature, Pty pty, Season season, String clothName, String bearFileUrl){
+    public Bear(Temperature temperature, Pty pty, String clothName, String bearFileUrl){
         this.temperature = temperature;
         this.pty = pty;
-        this.season = season;
         this.clothName = clothName;
         this.bearFileUrl = bearFileUrl;
     }

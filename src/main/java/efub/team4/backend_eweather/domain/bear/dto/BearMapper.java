@@ -26,18 +26,12 @@ public class BearMapper {
     private final PtyMapper ptyMapper;
     private final TemperatureMapper temperatureMapper;
 
-    private final SeasonRepository seasonRepository;
-    private final SeasonMapper seasonMapper;
-
     public Bear createRequestDtoToEntity(BearDto.BearCreateDto requestDto){
         Temperature temperature = temperatureRepository.findByTemperature(requestDto.getTemperature())
                 .orElseThrow(() -> new TemperatureNotFoundException("Temperature not found"));
 
         Pty pty = ptyRepository.findByPtyCode(requestDto.getPtyCode())
                 .orElseThrow(() -> new PtyNotFoundException("Pty not found with ptyCode = " + requestDto.getPtyCode()));
-
-        Season season = seasonRepository.findByMonth(requestDto.getSeason())
-                .orElseThrow(() -> new SeasonNotFoundException("Season not found"));
 
         return Bear.builder()
                 .temperature(temperature)
@@ -51,7 +45,6 @@ public class BearMapper {
         return BearDto.BearResponseDto.builder()
                 .id(entity.getId())
                 .temperatureResponseDto(temperatureMapper.fromEntity(entity.getTemperature()))
-                .seasonResponseDto(seasonMapper.fromEntity(entity.getSeason()))
                 .clothName(entity.getClothName())
                 .bearFileUrl(entity.getBearFileUrl())
                 .build();

@@ -18,9 +18,6 @@ public class BearDto {
         private Integer ptyCode;
 
         @NotEmpty
-        private Integer season;
-
-        @NotEmpty
         private String clothName;
 
         @NotEmpty
@@ -34,7 +31,6 @@ public class BearDto {
     @AllArgsConstructor
     public static class BearResponseDto {
         private UUID id;
-        private SeasonDto.SeasonResponseDto seasonResponseDto;
         private TemperatureDto.TemperatureResponseDto temperatureResponseDto;
         private String clothName;
         private String bearFileUrl;
