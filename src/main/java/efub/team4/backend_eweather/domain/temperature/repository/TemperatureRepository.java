@@ -1,6 +1,5 @@
 package efub.team4.backend_eweather.domain.temperature.repository;
 
-import efub.team4.backend_eweather.domain.pty.entity.Pty;
 import efub.team4.backend_eweather.domain.temperature.entity.Temperature;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
