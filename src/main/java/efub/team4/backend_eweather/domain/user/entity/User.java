@@ -22,7 +22,6 @@ public class User extends BaseTimeEntity {
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
     @Column(length = 16)
-    @Type(type = "org.hibernate.type.UUIDCharType")
     private UUID id;
 
     @Column

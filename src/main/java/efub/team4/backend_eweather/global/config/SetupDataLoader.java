@@ -165,7 +165,7 @@ public class SetupDataLoader implements
         System.out.println("bucket exists " + isBucket);
         boolean isObject = s3Client.doesObjectExist(bucketName, "share/bear/bear_01.png");
         System.out.println("object exists " + isObject);
-
+ /*
         CurrentWeatherResponseDto responseDto = null;
         try {
             responseDto = openWeatherAPI.findCurrentWeather();
@@ -224,7 +224,7 @@ public class SetupDataLoader implements
         Optional<Bear> bear = bearRepository.findBearByPtyAndTemperature(ptyTemp.get(), tempTemp.get());
         Optional<Season> season = seasonRepository.findByMonth(month);
 
-        /*
+
         CalendarDto.CreateRequest createRequest = CalendarDto.CreateRequest.builder()
                 .currentTemperature(cTemp.intValue())
                 .maxTemperature(maxTemp.intValue())
