@@ -5,23 +5,20 @@ import efub.team4.backend_eweather.domain.calendar.dto.CalendarDto;
 import efub.team4.backend_eweather.domain.calendar.dto.CalendarMapper;
 import efub.team4.backend_eweather.domain.calendar.entity.Calendar;
 import efub.team4.backend_eweather.domain.calendar.service.CalendarService;
-import efub.team4.backend_eweather.domain.user.dto.SessionUser;
-import efub.team4.backend_eweather.global.config.auth.LoginUser;
+import efub.team4.backend_eweather.domain.calendar.specification.CalendarSearchCriteria;
+import efub.team4.backend_eweather.domain.calendar.specification.CalendarSpecification;
 import efub.team4.backend_eweather.global.dto.DeletedEntityIdResponseDto;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import springfox.documentation.annotations.ApiIgnore;
 
-import javax.validation.Valid;
-import java.nio.file.attribute.UserPrincipalNotFoundException;
-import java.security.InvalidParameterException;
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1/calendars")
@@ -90,6 +87,35 @@ public class CalendarController {
         return ResponseEntity
                 .ok()
                 .body(new DeletedEntityIdResponseDto(id));
+    }
+
+    @GetMapping("/{id}")
+    @ApiOperation(value = "캘린더 상세 조회", notes = "캘린더를 조회한다.")
+    public ResponseEntity<CalendarDto.Response> getCalendar(
+            @ApiParam(value = "캘린더 ID",
+                    required = true) @PathVariable UUID id) {
+        Calendar calendar = calendarService.findById(id);
+        return ResponseEntity
+                .ok()
+                .body(calendarMapper.CalendarResponse(calendar));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<CalendarDto.Response>> getCalendarList(
+            @RequestParam(required = false) UUID userId,
+            @RequestParam(required = false) String forecastDate
+    ) {
+
+        CalendarSpecification spec = new CalendarSpecification(
+                CalendarSearchCriteria.builder()
+                        .userId(userId)
+                        .forecastDate(forecastDate)
+                        .build());
+        List<Calendar> response = calendarService.findAll(spec);
+
+        return ResponseEntity
+                .ok()
+                .body(response.stream().map(calendarMapper::CalendarResponse).collect(Collectors.toList()));
     }
 
 }

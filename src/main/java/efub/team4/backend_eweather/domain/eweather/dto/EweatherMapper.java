@@ -49,7 +49,7 @@ public class EweatherMapper {
 
         DayNight dayNight = dayNightRepository.findDayNightWithQueryByTime(responseDto.getFcstTime())
                 .orElseThrow(() -> new DayNightNotFoundException("DayNight not found exception with time"));
-        
+
         Sky sky = skyRepository.findSkyBySkyCodeAndDayNight_Id(Integer.parseInt(responseDto.getSky()), dayNight.getId())
                 .orElseThrow(() -> new SkyNotFoundException("Sky not found with time and skyCode"));
 

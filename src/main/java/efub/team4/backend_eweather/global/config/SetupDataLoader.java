@@ -240,5 +240,21 @@ public class SetupDataLoader implements
                 .build();
         Calendar calendar = calendarMapper.createRequestDtoToEntity(createRequest);
         calendarRepository.save(calendar);
+
+        CalendarDto.CreateRequest createRequest2 = CalendarDto.CreateRequest.builder()
+                .currentTemperature(cTemp.intValue())
+                .maxTemperature(maxTemp.intValue())
+                .minTemperature(minTemp.intValue())
+                .rainfallPercentage(rainPop.intValue())
+                .forecastDate("20220724")
+                .iconId(iconTemp.getId())
+                .skyId(skyTemp.get().getId())
+                .ptyId(ptyTemp.get().getId())
+                .bearId(bear.get().getId())
+                .seasonId(season.get().getId())
+                .description("게시글 생성2")
+                .build();
+        Calendar calendar2 = calendarMapper.createRequestDtoToEntity(createRequest2);
+        calendarRepository.save(calendar2);
     }
 }
