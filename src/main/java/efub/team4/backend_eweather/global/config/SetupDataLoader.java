@@ -113,7 +113,7 @@ public class SetupDataLoader implements
         }
 
         int temp = 0;
-        while (temp<30){
+        while (temp < 30) {
             Integer minTemp = temp;
             Integer maxTemp = temp + 3;
             Temperature tempNth = Temperature.builder()
@@ -125,13 +125,13 @@ public class SetupDataLoader implements
         }
 
         int month = 1;
-        while (month<13){
+        while (month < 13) {
             Integer startMonth = month;
             Integer endMonth = month + 2;
             Season seasonNth = Season.builder()
                     .startMonth(startMonth)
                     .endMonth(endMonth)
-                    .seasonName("계절"+month)
+                    .seasonName("계절" + month)
                     .seasonsBackGroundFileUrl("https://eweather-bucket.s3.ap-northeast-2.amazonaws.com/share/bear/bear_01.png")
                     .build();
             seasonRepository.save(seasonNth);
@@ -165,7 +165,7 @@ public class SetupDataLoader implements
         System.out.println("bucket exists " + isBucket);
         boolean isObject = s3Client.doesObjectExist(bucketName, "share/bear/bear_01.png");
         System.out.println("object exists " + isObject);
-
+ /*
         CurrentWeatherResponseDto responseDto = null;
         try {
             responseDto = openWeatherAPI.findCurrentWeather();
@@ -256,5 +256,6 @@ public class SetupDataLoader implements
                 .build();
         Calendar calendar2 = calendarMapper.createRequestDtoToEntity(createRequest2);
         calendarRepository.save(calendar2);
+         */
     }
 }
