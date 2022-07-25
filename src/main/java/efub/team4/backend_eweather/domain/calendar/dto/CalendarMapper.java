@@ -25,6 +25,7 @@ import efub.team4.backend_eweather.domain.sky.repository.SkyRepository;
 import efub.team4.backend_eweather.domain.temperature.entity.Temperature;
 import efub.team4.backend_eweather.domain.temperature.exception.TemperatureNotFoundException;
 import efub.team4.backend_eweather.domain.temperature.repository.TemperatureRepository;
+import efub.team4.backend_eweather.domain.user.dto.UserResponseDto;
 import efub.team4.backend_eweather.domain.user.entity.User;
 import efub.team4.backend_eweather.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -50,11 +51,10 @@ public class CalendarMapper {
     private final BearMapper bearMapper;
     private final SeasonMapper seasonMapper;
 
-    public Calendar createRequestDtoToEntity(CalendarDto.CreateRequest requestDto) {
-        /*
+    public Calendar createRequestDtoToEntity(UUID userId, CalendarDto.CreateRequest requestDto) {
+
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found with id=" + userId));
-*/
         Icon icon = iconRepository.findById(requestDto.getIconId())
                 .orElseThrow(() -> new IconNotFoundException("Icon not found with id=" + requestDto.getIconId()));
 
@@ -88,6 +88,7 @@ public class CalendarMapper {
     public CalendarDto.Response CalendarResponse(Calendar calendar) {
         return CalendarDto.Response.builder()
                 .id(calendar.getId())
+                .userResponseDto(new UserResponseDto(calendar.getUser()))
                 .description(calendar.getDescription())
                 .currentTemperature(calendar.getCurrentTemperature())
                 .minTemperature(calendar.getMinTemperature())
