@@ -31,7 +31,7 @@ public class CalendarController {
     @PostMapping
     @ApiOperation(value = "캘린더 생성", notes = "캘린더를 생성한다.")
     public ResponseEntity<CalendarDto.Response> createCalendar(@RequestBody CalendarDto.CreateRequest requestDto) {
-        Calendar entity = calendarMapper.createRequestDtoToEntity(requestDto);
+        Calendar entity = calendarService.save(calendarMapper.createRequestDtoToEntity(requestDto));
         return ResponseEntity
                 .created(
                         WebMvcLinkBuilder
