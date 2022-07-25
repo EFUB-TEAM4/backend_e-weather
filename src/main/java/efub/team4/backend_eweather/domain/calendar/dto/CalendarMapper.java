@@ -51,7 +51,7 @@ public class CalendarMapper {
     private final BearMapper bearMapper;
     private final SeasonMapper seasonMapper;
 
-    public Calendar createRequestDtoToEntity(UUID userId, CalendarDto.CreateRequest requestDto) {
+    public Calendar createRequestDtoToEntity(UUID userId, CalendarDto.CalendarCreateRequest requestDto) {
 
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found with id=" + userId));

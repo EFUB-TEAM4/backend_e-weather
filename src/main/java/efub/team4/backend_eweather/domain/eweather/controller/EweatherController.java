@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/v1/eweathers")
 @RequiredArgsConstructor
 @Slf4j
-@Api(tags = {"EWeather API"})
+@Api(tags = {"EWeather API"}, description = "현재 날씨 및 일기예보를 조회")
 public class EweatherController {
     private final OpenWeatherAPI openWeatherAPI;
     private final EweatherService eweatherService;

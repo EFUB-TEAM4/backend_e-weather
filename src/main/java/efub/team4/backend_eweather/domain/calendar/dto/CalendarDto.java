@@ -24,38 +24,17 @@ public class CalendarDto {
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class CreateRequest {
-        @NotEmpty
+    public static class CalendarCreateRequest {
         private String description;
-
-        @NotNull
         private String forecastDate;
-
-        @Column(nullable = false)
         private Integer minTemperature;
-
-        @Column(nullable = false)
         private Integer currentTemperature;
-
-        @Column(nullable = false)
         private Integer maxTemperature;
-
-        @Column(nullable = false)
         private Integer rainfallPercentage;
-
-        @NotNull
         private UUID iconId;
-
-        @NotNull
         private UUID ptyId;
-
-        @NotNull
         private UUID skyId;
-
-        @NotNull
         private UUID bearId;
-
-        @NotNull
         private UUID seasonId;
     }
 
@@ -65,7 +44,6 @@ public class CalendarDto {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class UpdateRequest{
-        @NotNull
         private String description;
     }
 
