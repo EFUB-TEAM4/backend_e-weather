@@ -10,4 +10,6 @@ import java.util.UUID;
 public interface TemperatureRepository extends JpaRepository<Temperature, UUID> {
     @Query(value = "SELECT * FROM TEMPERATURE WHERE MIN_TEMPERATURE <= ?1 AND ?1 <= MAX_TEMPERATURE ", nativeQuery = true)
     Optional<Temperature> findByTemperature(Integer temperature);
+
+    Optional<Temperature> findByMinTemperatureAndMaxTemperature(Integer min, Integer max);
 }

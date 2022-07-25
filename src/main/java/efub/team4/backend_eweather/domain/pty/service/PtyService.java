@@ -15,7 +15,7 @@ public class PtyService {
 
     @Transactional
     public Pty save(Pty pty) {
-        ptyRepository.findById(pty.getId()).ifPresent((existedPty) -> {
+        ptyRepository.findByPtyCode(pty.getPtyCode()).ifPresent((existedPty) -> {
             throw new PtyAlreadyExistsException("Pty already exists with specified pty id");
         });
 

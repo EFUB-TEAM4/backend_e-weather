@@ -11,4 +11,6 @@ public interface SeasonRepository extends JpaRepository<Season, UUID> {
     @Query(value = "SELECT * FROM SEASON WHERE START_MONTH <= ?1 AND ?1 <= END_MONTH", nativeQuery = true)
     Optional<Season> findByMonth(Integer month);
 
+    Optional<Season> findSeasonBySeasonName(String name);
+
 }

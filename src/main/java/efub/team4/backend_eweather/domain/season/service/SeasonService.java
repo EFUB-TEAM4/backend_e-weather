@@ -15,7 +15,7 @@ public class SeasonService {
 
     @Transactional
     public Season save(Season season){
-        seasonRepository.findById(season.getId())
+        seasonRepository.findSeasonBySeasonName(season.getSeasonName())
                 .ifPresent((existedSeason)->{
                     throw new SeasonAlreadyExistsException("Seasons already exist with specified Seasons name");
                 });

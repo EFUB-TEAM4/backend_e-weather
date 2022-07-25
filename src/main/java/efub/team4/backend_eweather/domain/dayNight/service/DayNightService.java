@@ -16,7 +16,7 @@ public class DayNightService {
 
     @Transactional
     public DayNight save(DayNight dayNight) {
-        dayNightRepository.findById(dayNight.getId())
+        dayNightRepository.findByTimeName(dayNight.getTimeName())
                 .ifPresent((existedDayNight) -> {
                     throw new DayNightAlreadyExistsException("DayNight already exists with specified DayNight name");
                 });

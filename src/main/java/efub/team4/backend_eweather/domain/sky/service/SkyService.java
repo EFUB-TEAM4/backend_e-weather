@@ -19,9 +19,9 @@ public class SkyService {
 
     @Transactional
     public Sky save(Sky sky) {
-        skyRepository.findBySkyName(sky.getSkyName())
+        skyRepository.findSkyBySkyCodeAndDayNight_Id(sky.getSkyCode(), sky.getDayNight().getId())
                 .ifPresent((existedSky) -> {
-                    throw new SkyAlreadyExistsException("Sky already exists with specified sky name");
+                    throw new SkyAlreadyExistsException("Sky already exists with specified sky code and time");
                 });
         return skyRepository.save(sky);
     }

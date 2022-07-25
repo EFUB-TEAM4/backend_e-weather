@@ -14,8 +14,8 @@ public class BearService {
 
 
     @Transactional
-    public Bear save(Bear bear){
-        bearRepository.findById(bear.getId())
+    public Bear save(Bear bear) {
+        bearRepository.findBearByPtyAndTemperature(bear.getPty(), bear.getTemperature())
                 .ifPresent((existedBear) -> {
                     throw new BearNotFoundException("Bear already exists with specified id = " + bear.getId());
                 });

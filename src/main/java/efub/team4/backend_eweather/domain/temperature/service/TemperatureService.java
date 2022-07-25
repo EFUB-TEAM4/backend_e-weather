@@ -15,9 +15,9 @@ public class TemperatureService {
 
     @Transactional
     public Temperature save(Temperature temperature){
-        temperatureRepository.findById(temperature.getId())
+        temperatureRepository.findByMinTemperatureAndMaxTemperature(temperature.getMinTemperature(), temperature.getMaxTemperature())
                 .ifPresent((existedTemperature)->{
-                    throw new TemperatureAlreadyExistsException("Temperature already exists with specified Temperature name");
+                    throw new TemperatureAlreadyExistsException("Temperature already exists with specified Temperature");
                 });
         return temperatureRepository.save(temperature);
     }
