@@ -16,13 +16,13 @@ public class Temperature {
     @Id
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
-    @Column(length = 16)
+    @Column(length = 16, name = "temperature_id")
     private UUID id;
 
-    @NotEmpty
+    @Column(nullable = false)
     private Integer minTemperature;
 
-    @NotEmpty
+    @Column(nullable = false)
     private Integer maxTemperature;
 
     @Builder

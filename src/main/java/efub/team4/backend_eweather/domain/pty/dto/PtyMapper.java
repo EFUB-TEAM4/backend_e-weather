@@ -29,11 +29,12 @@ public class PtyMapper {
                 .build();
     }
 
-    public PtyDto.PtyResponseDtoWithUrl getUrlFromEntity(Sky entity){
+    public PtyDto.PtyResponseDtoWithUrl fromEntityWithUrl(Pty entity){
         return PtyDto.PtyResponseDtoWithUrl.builder()
                 .id(entity.getId())
-                .ptyName(entity.getSkyName())
-                .ptyBackGroundFileUrl(entity.getSkyBackGroundFileUrl())
+                .ptyName(entity.getPtyName())
+                .ptyCode(entity.getPtyCode())
+                .ptyBackGroundFileUrl(entity.getPtyBackGroundFileUrl())
                 .build();
     }
 

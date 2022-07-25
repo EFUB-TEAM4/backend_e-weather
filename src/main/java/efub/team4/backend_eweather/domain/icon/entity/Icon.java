@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.validator.constraints.URL;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -34,11 +35,16 @@ public class Icon {
     @JoinColumn(name = "pty_id", nullable = false)
     private Pty pty;
 
+    @URL
+    @NotEmpty
+    private String iconUrl;
+
     @Builder
-    public Icon(String iconName, Sky sky, Pty pty) {
+    public Icon(String iconName, Sky sky, Pty pty, String iconUrl) {
         this.iconName = iconName;
         this.sky = sky;
         this.pty = pty;
+        this.iconUrl = iconUrl;
     }
 
 }

@@ -29,7 +29,6 @@ public class Votes {
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name ="uuid2", strategy = "uuid2")
     @Column(length = 16)
-    @Type(type = "org.hibernate.type.UUIDCharType")
     UUID id;
 
     @OneToOne

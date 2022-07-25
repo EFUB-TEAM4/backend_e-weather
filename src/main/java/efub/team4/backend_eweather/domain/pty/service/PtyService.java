@@ -15,7 +15,7 @@ public class PtyService {
 
     @Transactional
     public Pty save(Pty pty) {
-        ptyRepository.findById(pty.getId()).ifPresent((existedPty) -> {
+        ptyRepository.findByPtyCode(pty.getPtyCode()).ifPresent((existedPty) -> {
             throw new PtyAlreadyExistsException("Pty already exists with specified pty id");
         });
 
@@ -25,6 +25,12 @@ public class PtyService {
     @Transactional(readOnly = true)
     public Pty findByPtyCode(Integer ptyCode) {
         return ptyRepository.findByPtyCode(ptyCode)
+                .orElseThrow(() -> new PtyNotFoundException("Pty not found with ptyCode = " + ptyCode));
+    }
+
+    @Transactional(readOnly = true)
+    public Pty findByPtyCodeFromString(String ptyCode) {
+        return ptyRepository.findByPtyCode(Integer.parseInt(ptyCode))
                 .orElseThrow(() -> new PtyNotFoundException("Pty not found with ptyCode = " + ptyCode));
     }
 }

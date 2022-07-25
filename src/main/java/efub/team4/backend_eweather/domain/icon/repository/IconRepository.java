@@ -10,4 +10,8 @@ import java.util.UUID;
 
 public interface IconRepository extends JpaRepository<Icon, UUID> {
     Optional<Icon> findBySkyAndPty(Sky sky, Pty pty);
+
+    Optional<Icon> findIconBySky_IdAndPty_Id(UUID skyId, UUID ptyId);
+
+    Optional<Icon> findIconByIconName(String iconName);
 }
