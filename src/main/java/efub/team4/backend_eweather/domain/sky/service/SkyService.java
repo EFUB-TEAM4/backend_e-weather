@@ -1,8 +1,8 @@
 package efub.team4.backend_eweather.domain.sky.service;
 
-import efub.team4.backend_eweather.domain.icon.dayNight.entity.DayNight;
-import efub.team4.backend_eweather.domain.icon.dayNight.exception.DayNightNotFoundException;
-import efub.team4.backend_eweather.domain.icon.dayNight.repository.DayNightRepository;
+import efub.team4.backend_eweather.domain.dayNight.entity.DayNight;
+import efub.team4.backend_eweather.domain.dayNight.exception.DayNightNotFoundException;
+import efub.team4.backend_eweather.domain.dayNight.repository.DayNightRepository;
 import efub.team4.backend_eweather.domain.sky.entity.Sky;
 import efub.team4.backend_eweather.domain.sky.exception.SkyAlreadyExistsException;
 import efub.team4.backend_eweather.domain.sky.exception.SkyNotFoundException;
@@ -32,6 +32,15 @@ public class SkyService {
                 .orElseThrow(() -> new DayNightNotFoundException("DayNight Not Found with time = " + time));
 
         return skyRepository.findSkyBySkyCodeAndDayNight_Id(skyCode, dayNight.getId())
+                .orElseThrow(() -> new SkyNotFoundException("Sky Not found with skyCode and time"));
+    }
+
+    @Transactional(readOnly = true)
+    public Sky findBySkyCodeAndTimeFromString(String skyCode, String time) {
+        DayNight dayNight = dayNightRepository.findDayNightWithQueryByTime(time)
+                .orElseThrow(() -> new DayNightNotFoundException("DayNight Not Found with time = " + time));
+
+        return skyRepository.findSkyBySkyCodeAndDayNight_Id(Integer.parseInt(skyCode), dayNight.getId())
                 .orElseThrow(() -> new SkyNotFoundException("Sky Not found with skyCode and time"));
     }
 

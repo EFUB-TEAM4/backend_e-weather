@@ -27,4 +27,10 @@ public class PtyService {
         return ptyRepository.findByPtyCode(ptyCode)
                 .orElseThrow(() -> new PtyNotFoundException("Pty not found with ptyCode = " + ptyCode));
     }
+
+    @Transactional(readOnly = true)
+    public Pty findByPtyCodeFromString(String ptyCode) {
+        return ptyRepository.findByPtyCode(Integer.parseInt(ptyCode))
+                .orElseThrow(() -> new PtyNotFoundException("Pty not found with ptyCode = " + ptyCode));
+    }
 }
