@@ -179,10 +179,11 @@ public class OpenWeatherAPI {
         List<ForcastResponseDto> dtoList = new ArrayList<>();
         JSONObject obj;
 
-        String fcstDate;
-        String fcstTime;
-        String sky;
-        String tmp;
+        String fcstDate ="";
+        String fcstTime ="";
+        String sky ="";
+        String pty = "";
+        String tmp = "";
 
         Integer idx = 0;
         while(dtoList.size() < 22){
@@ -193,13 +194,19 @@ public class OpenWeatherAPI {
 
             obj = (JSONObject) parseItem.get(idx+5);
             sky = (String) obj.get("fcstValue");
+
+            obj = (JSONObject) parseItem.get(idx+6);
+            pty = (String) obj.get("fcstValue");
+
             ForcastResponseDto dto = ForcastResponseDto.builder()
                     .baseDate(getCurrentDate())
                     .baseTime(baseTime)
                     .fcstDate(fcstDate)
                     .fcstTime(fcstTime)
                     .tmp(tmp)
-                    .sky(sky).build();
+                    .sky(sky)
+                    .pty(pty)
+                    .build();
 
             dtoList.add(dto);
             idx += 12;
