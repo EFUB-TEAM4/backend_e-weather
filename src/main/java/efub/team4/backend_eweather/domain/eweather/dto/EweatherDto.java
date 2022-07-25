@@ -5,6 +5,7 @@ import efub.team4.backend_eweather.domain.icon.dto.IconDto;
 import efub.team4.backend_eweather.domain.pty.dto.PtyDto;
 import efub.team4.backend_eweather.domain.season.dto.SeasonDto;
 import efub.team4.backend_eweather.domain.sky.dto.SkyDto;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
 import java.util.UUID;
