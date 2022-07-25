@@ -9,7 +9,7 @@ import java.util.UUID;
 @Getter
 public class VoteResponseDto {
 
-    private Long id;
+    private UUID id;
     private UUID userId;
     private String building;
     private String clothes;
