@@ -43,4 +43,15 @@ public class EweatherDto {
         private BearDto.BearResponseDto bearResponseDto;
         private SeasonDto.SeasonResponseDto seasonResponseDto;
     }
+
+    @Getter
+    @Setter
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class ForecastWeatherResponseDto{
+        private String forecastTime;
+        private Integer temperature;
+        private IconDto.IconResponseUrlDto iconResponseDto;
+    }
 }

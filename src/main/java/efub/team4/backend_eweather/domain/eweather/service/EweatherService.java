@@ -95,4 +95,5 @@ public class EweatherService {
                 .season(season)
                 .build();
     }
+
 }
