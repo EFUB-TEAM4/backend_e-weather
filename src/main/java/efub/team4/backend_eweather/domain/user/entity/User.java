@@ -23,7 +23,6 @@ public class User extends BaseTimeEntity {
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name ="uuid2", strategy = "uuid2")
     @Column(length = 16)
-    @Type(type = "org.hibernate.type.UUIDCharType")
     private UUID id;
 
     @Column
@@ -40,8 +39,7 @@ public class User extends BaseTimeEntity {
     }
 
 
-    public Object update(UUID id, String name) {
-        this.id = id;
+    public Object update(String name) {
         this.fullName = name;
         return this;
     }

@@ -54,7 +54,7 @@ public class UserService {
         System.out.println(sessionUser.getEmail());
         System.out.println(sessionUser.getFullName()); // utf-8
         System.out.println("--- This is the current User Info ---");
-        User user = userRepository.findByEmail(sessionUser.getEmail());
+        User user = userRepository.findByEmail(sessionUser.getEmail()).get();
         return user;
     }
 

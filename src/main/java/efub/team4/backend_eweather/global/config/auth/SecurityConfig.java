@@ -19,6 +19,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .headers().frameOptions().disable()
                 .and()
 
+                /*
                 .authorizeRequests()
                 .antMatchers("api/v1/weather").permitAll()
                 .antMatchers("api/v1/bear").permitAll()
@@ -27,6 +28,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
                 .and()
 
+
+                 */
                 .logout()
                 .logoutSuccessUrl("/")
                 .and()
