@@ -36,6 +36,8 @@ public class CalendarController {
     public ResponseEntity<CalendarDto.Response> createCalendar(
             @LoginUser SessionUser user,
             @ApiParam(value = "캘린더 생성 DTO") @RequestBody CalendarDto.CalendarCreateRequest requestDto) {
+
+
         Calendar entity = calendarService.save(calendarMapper.createRequestDtoToEntity(user.getId(), requestDto));
         return ResponseEntity
                 .created(

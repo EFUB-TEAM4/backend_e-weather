@@ -72,6 +72,7 @@ public class CalendarMapper {
                 .orElseThrow(() -> new SeasonNotFoundException("Season not found with id = " + requestDto.getSeasonId()));
 
         return Calendar.builder()
+                .user(user)
                 .icon(icon)
                 .sky(sky)
                 .pty(pty)
