@@ -3,33 +3,34 @@ package efub.team4.backend_eweather.domain.bear.service;
 import efub.team4.backend_eweather.domain.bear.dto.BearImageResponseDto;
 import efub.team4.backend_eweather.domain.weather.dto.BearResponseDto;
 import efub.team4.backend_eweather.domain.weather.service.OpenWeatherAPI;
+import efub.team4.backend_eweather.global.util.TimeUtil;
 import lombok.RequiredArgsConstructor;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 @Service
 @RequiredArgsConstructor
 public class BearService {
 
+    @Autowired
+    private final OpenWeatherAPI openWeatherAPI;
 
+    private final TimeUtil timeUtil = new TimeUtil();
 
     public final String BEAR_TMP_PREFIX = "https://eweather-bucket.s3.ap-northeast-2.amazonaws.com/bear/tmp/";
     public final String BEAR_SKY_PREFIX = "https://eweather-bucket.s3.ap-northeast-2.amazonaws.com/bear/sky/";
     public final String BEAR_PTY_PREFIX = "https://eweather-bucket.s3.ap-northeast-2.amazonaws.com/bear/pty/";
     public final String BEAR_SEASON_PREFIX = "https://eweather-bucket.s3.ap-northeast-2.amazonaws.com/bear/season/";
 
-    public BearImageResponseDto findBearImage(BearResponseDto bearInfo) throws IOException, ParseException {
+    public BearImageResponseDto findBearImage() throws IOException, ParseException {
+        BearResponseDto bearInfo = openWeatherAPI.findBearInfo();
         Integer tmp = Integer.parseInt(bearInfo.getTmp());
         String pty = bearInfo.getPty();
         String sky = bearInfo.getSky();
-
-        String day = getDay();
+        String day = timeUtil.getDay();
         String tmpUrl = buildTMPURL(tmp, Integer.parseInt(pty));
         String skyUrl = BEAR_SKY_PREFIX + sky + day + ".png";
         String ptyUrl = null;
@@ -53,7 +54,7 @@ public class BearService {
     }
 
     private String buildSeasonUrl() {
-        Integer month = getMonth();
+        Integer month = timeUtil.getMonth();
         String season = switch (month) {
             case 12, 1, 2 -> "winter";
             case 3, 4, 5 -> "spring";
@@ -99,22 +100,7 @@ public class BearService {
         else{
             return BEAR_TMP_PREFIX + name + ".png";
         }
-    }
-    public String getDay(){
-        DateFormat simpleDateFormat = new SimpleDateFormat("k");
-        Date currentTime = new Date();
-        Integer time = Integer.parseInt(simpleDateFormat.format(currentTime));
-        if(time > 6 && time < 18 ){
-            return "day";
-        }
-        else{
-            return "night";
-        }
-    }
 
-    public Integer getMonth(){
-        DateFormat simpleDateFormat = new SimpleDateFormat("M");
-        Date currentTime = new Date();
-        return Integer.parseInt(simpleDateFormat.format(currentTime));
+
     }
 }
