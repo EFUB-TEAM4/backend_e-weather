@@ -246,6 +246,5 @@ public class SetupDataLoader implements
 
         //createInitialFields();
 
-    }
-}
+
 
