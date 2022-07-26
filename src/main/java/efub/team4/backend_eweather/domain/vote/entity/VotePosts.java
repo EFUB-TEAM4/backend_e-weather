@@ -24,8 +24,10 @@ public class VotePosts extends BaseTimeEntity{
     UUID id;*/
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(generator = "uuid2")
+    @GenericGenerator(name ="uuid2", strategy = "uuid2")
+    @Column(length = 16)
+    private UUID id;
 
     @ManyToOne
     @JoinColumn(name = "userId")
@@ -44,16 +46,24 @@ public class VotePosts extends BaseTimeEntity{
     Long bad;
 
     @Builder
-    public VotePosts(Long id, User user, String clothes,String building, Long good, Long bad) {
+    public VotePosts(UUID id, User user, String clothes,String building) {
         this.id = id;
         this.user = user;
         this.clothes = clothes;
         this.building = building;
-        this.good = good;
-        this.bad = bad;
+        this.good = Long.valueOf(0);
+        this.bad = Long.valueOf(0);
     }
 
     public void update(String clothes) {
         this.clothes = clothes;
+    }
+
+    public void updateGood(){
+        this.good++;
+    }
+
+    public void updateBad(){
+        this.bad++;
     }
 }

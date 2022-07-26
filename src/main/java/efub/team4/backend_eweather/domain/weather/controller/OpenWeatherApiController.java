@@ -27,9 +27,9 @@ public class OpenWeatherApiController {
         return openWeatherAPI.findForcastWeather();
     }
 
-    @GetMapping("/calendar")
-    public CalendarWeatherResponseDto loadCalendarWeather() throws IOException, ParseException{
-        return openWeatherAPI.findCalendarWeather();
+    @GetMapping("/current")
+    public CurrentWeatherResponseDto loadCurrentWeather() throws IOException, ParseException{
+        return openWeatherAPI.findCurrentWeather();
     }
 
     @GetMapping("/tmp")

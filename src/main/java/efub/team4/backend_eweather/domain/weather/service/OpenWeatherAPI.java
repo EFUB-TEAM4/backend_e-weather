@@ -54,12 +54,21 @@ public class OpenWeatherAPI {
     }
 
     @Transactional
-    public CalendarWeatherResponseDto findCalendarWeather() throws IOException, ParseException{
+    public CurrentWeatherResponseDto findCalendarWeather() throws IOException, ParseException{
         URL url = buildRequestUrl(); // url 생성성
         System.out.println(url);  // url 어떻게 되는지 확인
         String stringResult = httpURLConnect(url);
         JSONArray jsonResult = getItems(stringResult);
-        return buildCalendarData(jsonResult);
+        return buildCurrentData(jsonResult);
+    }
+
+    @Transactional
+    public CurrentWeatherResponseDto findCurrentWeather() throws IOException, ParseException{
+        URL url = buildRequestUrl(); // url 생성성
+        System.out.println(url);  // url 어떻게 되는지 확인
+        String stringResult = httpURLConnect(url);
+        JSONArray jsonResult = getItems(stringResult);
+        return buildCurrentData(jsonResult);
     }
 
     @Transactional
@@ -164,10 +173,11 @@ public class OpenWeatherAPI {
         List<ForcastResponseDto> dtoList = new ArrayList<>();
         JSONObject obj;
 
-        String fcstDate;
-        String fcstTime;
-        String sky;
-        String tmp;
+        String fcstDate ="";
+        String fcstTime ="";
+        String sky ="";
+        String pty = "";
+        String tmp = "";
 
         Integer idx = 0;
         while(dtoList.size() < 22){
@@ -178,13 +188,19 @@ public class OpenWeatherAPI {
 
             obj = (JSONObject) parseItem.get(idx+5);
             sky = (String) obj.get("fcstValue");
+
+            obj = (JSONObject) parseItem.get(idx+6);
+            pty = (String) obj.get("fcstValue");
+
             ForcastResponseDto dto = ForcastResponseDto.builder()
                     .baseDate(getCurrentDate())
                     .baseTime(getBaseTime())
                     .fcstDate(fcstDate)
                     .fcstTime(fcstTime)
                     .tmp(tmp)
-                    .sky(sky).build();
+                    .sky(sky)
+                    .pty(pty)
+                    .build();
 
             dtoList.add(dto);
             idx += 12;
@@ -199,7 +215,7 @@ public class OpenWeatherAPI {
     }
 
 
-    private CalendarWeatherResponseDto buildCalendarData(JSONArray jsonResult) {
+    private CurrentWeatherResponseDto buildCurrentData(JSONArray jsonResult) {
         // 현재 시간 받아서 예상 시간 조회
         String fcstTime = getFcstTime();
         if(fcstTime.length() == 3){
@@ -255,7 +271,7 @@ public class OpenWeatherAPI {
         }
 
         // dto로 만들어서 반환
-        CalendarWeatherResponseDto responseDto = CalendarWeatherResponseDto.builder()
+        CurrentWeatherResponseDto responseDto = CurrentWeatherResponseDto.builder()
                 .baseDate(baseDate)
                 .baseTime(getBaseTime())
                 .fcstDate(baseDate)

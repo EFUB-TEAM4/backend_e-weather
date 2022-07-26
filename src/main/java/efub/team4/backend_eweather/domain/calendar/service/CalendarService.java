@@ -1,6 +1,7 @@
 package efub.team4.backend_eweather.domain.calendar.service;
 
 import efub.team4.backend_eweather.domain.calendar.entity.Calendar;
+import efub.team4.backend_eweather.domain.calendar.exception.CalendarAlreadyExistsException;
 import efub.team4.backend_eweather.domain.calendar.exception.CalendarNotFoundException;
 import efub.team4.backend_eweather.domain.calendar.repository.CalendarRepository;
 import efub.team4.backend_eweather.domain.user.repository.UserRepository;
@@ -21,6 +22,8 @@ public class CalendarService {
 
     @Transactional
     public Calendar save(Calendar calendar) {
+        calendarRepository.findCalendarByForecastDate(calendar.getForecastDate())
+                .ifPresent((existedCalendar) -> new CalendarAlreadyExistsException("Calendar is already exists with date=" + calendar.getForecastDate()));
         return calendarRepository.save(calendar);
     }
 
@@ -29,6 +32,16 @@ public class CalendarService {
         Calendar calendar = calendarRepository.findById(id)
                 .orElseThrow(() -> new CalendarNotFoundException("캘린더 게시글을 찾을 수 없습니다."));
         calendarRepository.delete(calendar);
+    }
+
+    @Transactional
+    public UUID update(UUID id, String description) {
+        Calendar calendar = calendarRepository.findById(id)
+                .orElseThrow(() -> new CalendarNotFoundException("캘린더 게시글을 찾을 수 없습니다."));
+
+        calendar.update(description);
+
+        return id;
     }
 
     @Transactional(readOnly = true)

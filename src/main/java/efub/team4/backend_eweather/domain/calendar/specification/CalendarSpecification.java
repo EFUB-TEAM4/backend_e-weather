@@ -23,6 +23,10 @@ public class CalendarSpecification implements Specification<Calendar> {
             predicates.add(criteriaBuilder.equal(root.join("user").get("id"), criteria.getUserId()));
         }
 
+        if (criteria.getForecastDate() != null){
+            predicates.add(criteriaBuilder.equal(root.get("forecastDate"), criteria.getForecastDate()));
+        }
+
         return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
     }
 }

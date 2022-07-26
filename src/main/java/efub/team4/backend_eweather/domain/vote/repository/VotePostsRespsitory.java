@@ -9,7 +9,7 @@ import java.time.LocalTime;
 import java.util.Optional;
 import java.util.UUID;
 
-public interface VotePostsRespsitory extends JpaRepository<VotePosts, Long> {
+public interface VotePostsRespsitory extends JpaRepository<VotePosts, UUID> {
 
     // void deleteVotePost(VotePosts votePosts);
 }

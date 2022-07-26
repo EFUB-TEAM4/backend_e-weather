@@ -1,5 +1,7 @@
 package efub.team4.backend_eweather.domain.user.entity;
 
+import efub.team4.backend_eweather.domain.media.entity.UploadedFile;
+import efub.team4.backend_eweather.domain.profile.entity.Profile;
 import efub.team4.backend_eweather.global.entity.BaseTimeEntity;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -8,10 +10,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.UUID;
 
 @Getter
@@ -21,9 +20,8 @@ public class User extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(generator = "uuid2")
-    @GenericGenerator(name ="uuid2", strategy = "uuid2")
+    @GenericGenerator(name = "uuid2", strategy = "uuid2")
     @Column(length = 16)
-    @Type(type = "org.hibernate.type.UUIDCharType")
     private UUID id;
 
     @Column
@@ -31,6 +29,10 @@ public class User extends BaseTimeEntity {
 
     @Column
     private String fullName;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn
+    private Profile profile;
 
     @Builder
     public User(UUID id, String email, String fullName) {
@@ -44,5 +46,9 @@ public class User extends BaseTimeEntity {
         this.id = id;
         this.fullName = name;
         return this;
+    }
+
+    public void updateProfile(Profile profile) {
+        this.profile = profile;
     }
 }

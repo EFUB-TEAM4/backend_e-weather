@@ -1,8 +1,8 @@
 package efub.team4.backend_eweather.domain.icon.dto;
 
-import efub.team4.backend_eweather.domain.icon.dayNight.entity.DayNight;
-import efub.team4.backend_eweather.domain.icon.dayNight.exception.DayNightNotFoundException;
-import efub.team4.backend_eweather.domain.icon.dayNight.repository.DayNightRepository;
+import efub.team4.backend_eweather.domain.dayNight.entity.DayNight;
+import efub.team4.backend_eweather.domain.dayNight.exception.DayNightNotFoundException;
+import efub.team4.backend_eweather.domain.dayNight.repository.DayNightRepository;
 import efub.team4.backend_eweather.domain.icon.entity.Icon;
 import efub.team4.backend_eweather.domain.pty.dto.PtyMapper;
 import efub.team4.backend_eweather.domain.pty.entity.Pty;
@@ -37,8 +37,10 @@ public class IconMapper {
                 .orElseThrow(() -> new PtyNotFoundException("Pty not found with ptyCode = " + requestDto.getPtyCode()));
 
         return Icon.builder()
+                .iconName(requestDto.getIconName())
                 .sky(sky)
                 .pty(pty)
+                .iconUrl(requestDto.getIconUrl())
                 .build();
     }
 
@@ -47,6 +49,14 @@ public class IconMapper {
                 .id(entity.getId())
                 .skyResponseDto(skyMapper.fromEntity(entity.getSky()))
                 .ptyResponseDto(ptyMapper.fromEntity(entity.getPty()))
+                .build();
+    }
+
+    public IconDto.IconResponseUrlDto iconResponseUrlDto(Icon entity){
+        return IconDto.IconResponseUrlDto.builder()
+                .id(entity.getId())
+                .iconName(entity.getIconName())
+                .iconUrl(entity.getIconUrl())
                 .build();
     }
 }
