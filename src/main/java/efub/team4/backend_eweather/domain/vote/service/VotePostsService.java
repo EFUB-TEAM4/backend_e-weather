@@ -3,7 +3,6 @@ package efub.team4.backend_eweather.domain.vote.service;
 import efub.team4.backend_eweather.domain.user.dto.SessionUser;
 import efub.team4.backend_eweather.domain.user.entity.User;
 import efub.team4.backend_eweather.domain.user.repository.UserRepository;
-import efub.team4.backend_eweather.domain.user.service.UserService;
 import efub.team4.backend_eweather.domain.vote.dto.VoteRequestDto;
 import efub.team4.backend_eweather.domain.vote.dto.VoteResponseDto;
 import efub.team4.backend_eweather.domain.vote.dto.VoteUpdateRequestDto;
@@ -65,7 +64,7 @@ public class VotePostsService {
     }
 
     // 투표 게시글 수정
-    public Long update(Long id, VoteUpdateRequestDto requestDto){
+    public UUID update(UUID id, VoteUpdateRequestDto requestDto){
         VotePosts votePosts = votePostsRespsitory.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id " + id));
 
@@ -90,7 +89,7 @@ public class VotePostsService {
     // 투표 게시글 개별 조회 - UUID의 경우 findBy함수 사용 불가
 
     @Transactional
-    public VoteResponseDto findById(Long id){
+    public VoteResponseDto findById(UUID id){
         VotePosts entity = votePostsRespsitory.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id " + id));
         return new VoteResponseDto(entity);
@@ -98,14 +97,14 @@ public class VotePostsService {
     }
 
     // 투표 게시글 삭제
-    public void deleteVotePost (Long id){
+    public void deleteVotePost (UUID id){
         VotePosts votePosts = votePostsRespsitory.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("no votePost id = " + id));
         votePostsRespsitory.delete(votePosts);
     }
 
     // 좋아요
-    public VoteResponseDto updateGood(Long id, SessionUser sessionUser) {
+    public VoteResponseDto updateGood(UUID id, SessionUser sessionUser) {
         VotePosts votePosts = votePostsRespsitory.findById(id).orElseThrow(() -> new IllegalArgumentException("no votePost id = " + id));
 
         List<Votes> votesList = votesRepository.findAllByVotePosts(votePosts);
@@ -138,7 +137,7 @@ public class VotePostsService {
     }
 
     // 싫어요
-    public VoteResponseDto updateBad(Long id, SessionUser sessionUser) {
+    public VoteResponseDto updateBad(UUID id, SessionUser sessionUser) {
         VotePosts votePosts = votePostsRespsitory.findById(id).orElseThrow(() -> new IllegalArgumentException("no votePost id = " + id));
         List<Votes> votesList = votesRepository.findAllByVotePosts(votePosts);
 

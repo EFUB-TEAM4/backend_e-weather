@@ -1,7 +1,7 @@
 package efub.team4.backend_eweather.domain.media.service;
 
 import efub.team4.backend_eweather.domain.media.entity.UploadedFile;
-import efub.team4.backend_eweather.global.utill.FileUtil;
+import efub.team4.backend_eweather.global.util.FileUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
