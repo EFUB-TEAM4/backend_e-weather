@@ -28,18 +28,26 @@ public class ProfileMapper {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found with user"));
 
-        UploadedFile uploadedFile = uploadedFileRepository.findById(request.getFileId())
-                .orElseThrow(() -> new UploadedFileNotFoundException("UploadedFile not found with id"));
+        if (request.getFileId() != null && !request.getFileId().equals("")) {
+            UploadedFile uploadedFile = uploadedFileRepository.findById(request.getFileId())
+                    .orElseThrow(() -> new UploadedFileNotFoundException("UploadedFile not found with id"));
+
+            return Profile.builder()
+                    .user(user)
+                    .nickname(request.getNickname())
+                    .uploadedFile(uploadedFile)
+                    .build();
+        }
 
         return Profile.builder()
                 .user(user)
                 .nickname(request.getNickname())
-                .uploadedFile(uploadedFile)
                 .build();
     }
 
     public ProfileDto.Response fromEntity(Profile profile) {
         return ProfileDto.Response.builder()
+                .id(profile.getId())
                 .userResponseDto(new UserResponseDto(profile.getUser()))
                 .nickname(profile.getNickname())
                 .uploadedFileDto(uploadedFileMapper.toResponseDto(profile.getUploadedFile()))
