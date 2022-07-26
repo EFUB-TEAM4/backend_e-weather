@@ -55,6 +55,7 @@ public class CalendarMapper {
 
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found with id=" + userId));
+
         Icon icon = iconRepository.findById(requestDto.getIconId())
                 .orElseThrow(() -> new IconNotFoundException("Icon not found with id=" + requestDto.getIconId()));
 
@@ -88,6 +89,7 @@ public class CalendarMapper {
     public CalendarDto.Response CalendarResponse(Calendar calendar) {
         return CalendarDto.Response.builder()
                 .id(calendar.getId())
+                .forecastDate(calendar.getForecastDate())
                 .userResponseDto(new UserResponseDto(calendar.getUser()))
                 .description(calendar.getDescription())
                 .currentTemperature(calendar.getCurrentTemperature())
