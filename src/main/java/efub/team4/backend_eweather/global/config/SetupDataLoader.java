@@ -107,9 +107,8 @@ public class SetupDataLoader implements
         ArrayList<Integer> minInt = new ArrayList<Integer>(Arrays.asList(-20, 5, 9, 12, 17, 20, 23, 28));
         ArrayList<Integer> maxInt = new ArrayList<Integer>(Arrays.asList(4, 8, 11, 16, 19, 22, 27, 40));
         ArrayList<String> season = new ArrayList<String>(Arrays.asList("봄", "여름", "가을", "겨울"));
-        ArrayList<Integer> startMonth = new ArrayList<Integer>(Arrays.asList(3, 6, 9, 2));
-        ArrayList<Integer> endMonth = new ArrayList<Integer>(Arrays.asList(5, 8, 11, 12));
-
+        ArrayList<Integer> startMonth = new ArrayList<Integer>(Arrays.asList(3, 6, 9, 12));
+        ArrayList<Integer> endMonth = new ArrayList<Integer>(Arrays.asList(5, 8, 11, 2));
 
         DayNight day = DayNight.builder()
                 .timeName("day")
@@ -242,9 +241,6 @@ public class SetupDataLoader implements
     }
 }
 
-
-
-        //createInitialFields();
 
 
 

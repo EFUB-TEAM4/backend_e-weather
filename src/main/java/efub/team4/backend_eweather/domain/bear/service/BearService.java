@@ -1,5 +1,9 @@
 package efub.team4.backend_eweather.domain.bear.service;
 
+
+import efub.team4.backend_eweather.domain.bear.dto.BearImageResponseDto;
+import efub.team4.backend_eweather.domain.weather.dto.BearResponseDto;
+import efub.team4.backend_eweather.domain.weather.service.OpenWeatherAPI;
 import efub.team4.backend_eweather.domain.bear.entity.Bear;
 import efub.team4.backend_eweather.domain.bear.exception.BearNotFoundException;
 import efub.team4.backend_eweather.domain.bear.repository.BearRepository;
@@ -9,9 +13,17 @@ import efub.team4.backend_eweather.domain.pty.repository.PtyRepository;
 import efub.team4.backend_eweather.domain.temperature.entity.Temperature;
 import efub.team4.backend_eweather.domain.temperature.exception.TemperatureNotFoundException;
 import efub.team4.backend_eweather.domain.temperature.repository.TemperatureRepository;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import java.util.List;
 import java.util.UUID;
@@ -19,6 +31,8 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 public class BearService {
+
+
     private final BearRepository bearRepository;
     private final PtyRepository ptyRepository;
     private final TemperatureRepository temperatureRepository;
@@ -52,6 +66,7 @@ public class BearService {
     @Transactional(readOnly = true)
     public List<Bear> findAll() {
         return bearRepository.findAll();
+
     }
 
 }
