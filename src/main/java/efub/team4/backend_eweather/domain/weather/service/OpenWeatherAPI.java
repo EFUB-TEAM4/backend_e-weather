@@ -2,6 +2,7 @@ package efub.team4.backend_eweather.domain.weather.service;
 
 import efub.team4.backend_eweather.domain.weather.dto.*;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.json.simple.*;
@@ -16,14 +17,12 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
-@NoArgsConstructor
 @Service
+@RequiredArgsConstructor
 public class OpenWeatherAPI {
+
 
     // 커밋 시 서비스 키 지우고 커밋
     private final String BASE_URL = "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst";
@@ -31,8 +30,7 @@ public class OpenWeatherAPI {
     // 요청 고정갑
     private String pageNo = "1";
     private String numOfRows = "310";
-    private String dataType = "JSON";
-    private String baseTime = "0500"; // api 제공시각
+    private String dataType = "JSON";// api 제공시각
     private String nx = "59";
     private String ny = "126"; // nx, ny는 서대문구 신촌동 좌표값
 
@@ -99,22 +97,18 @@ public class OpenWeatherAPI {
         return buildBearResponse(jsonResult);
     }
 
-    // 현재 요일 반환 함수
-    public String getCurrentDate(){
-        DateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
-        Date currentDate = new Date();
-        return simpleDateFormat.format(currentDate);
-    }
-
-    public String getCurrentTime(){
-        DateFormat simpleDateFormat = new SimpleDateFormat("k");
-        Date currentTime = new Date();
-        return simpleDateFormat.format(currentTime) + "00";
-    }
-
     public URL buildRequestUrl() throws IOException {
         StringBuilder sb = new StringBuilder(BASE_URL);
         String baseDate = getCurrentDate();
+        String baseTime = getBaseTime();
+        System.out.println(baseDate + " " + baseTime);
+        if(Objects.equals(baseTime, "2300")){
+            Date dDate = new Date();
+            dDate = new Date(dDate.getTime()+(1000*60*60*24*-1));
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+            baseDate = sdf.format(dDate);
+        }
+        System.out.println(baseDate + " " + baseTime);
         sb.append("?").append(URLEncoder.encode("serviceKey", "UTF-8")).append("=").append(serviceKey);
         sb.append("&").append(URLEncoder.encode("pageNo", "UTF-8")).append("=").append(URLEncoder.encode(pageNo, "UTF-8"));
         sb.append("&").append(URLEncoder.encode("numOfRows", "UTF-8")).append("=").append(URLEncoder.encode(numOfRows, "UTF-8")); /* 한 페이지 결과 수 */
@@ -186,7 +180,7 @@ public class OpenWeatherAPI {
             sky = (String) obj.get("fcstValue");
             ForcastResponseDto dto = ForcastResponseDto.builder()
                     .baseDate(getCurrentDate())
-                    .baseTime(baseTime)
+                    .baseTime(getBaseTime())
                     .fcstDate(fcstDate)
                     .fcstTime(fcstTime)
                     .tmp(tmp)
@@ -207,9 +201,12 @@ public class OpenWeatherAPI {
 
     private CalendarWeatherResponseDto buildCalendarData(JSONArray jsonResult) {
         // 현재 시간 받아서 예상 시간 조회
-        String fcstTime = getCurrentTime();
+        String fcstTime = getFcstTime();
         if(fcstTime.length() == 3){
             fcstTime = "0" + fcstTime;
+        }
+        if(fcstTime.equals("2400")){
+            fcstTime = "0000";
         }
         String baseDate = getCurrentDate();
         String tmp = "";
@@ -260,7 +257,7 @@ public class OpenWeatherAPI {
         // dto로 만들어서 반환
         CalendarWeatherResponseDto responseDto = CalendarWeatherResponseDto.builder()
                 .baseDate(baseDate)
-                .baseTime(baseTime)
+                .baseTime(getBaseTime())
                 .fcstDate(baseDate)
                 .fcstTime(fcstTime)
                 .tmp(tmp)
@@ -276,9 +273,12 @@ public class OpenWeatherAPI {
 
     public WeatherResponseDto builldWeatherResponse(JSONArray jsonResult, String category) {
         // 현재 시간 받아서 예상 시간 조회
-        String fcstTime = getCurrentTime();
+        String fcstTime = getFcstTime();
         if (fcstTime.length() == 3) {
             fcstTime = "0" + fcstTime;
+        }
+        if(fcstTime.equals("2400")){
+            fcstTime = "0000";
         }
         String baseDate = getCurrentDate();
         String value = "";
@@ -301,7 +301,7 @@ public class OpenWeatherAPI {
         WeatherResponseDto responseDto = WeatherResponseDto
                 .builder()
                 .baseDate(baseDate)
-                .baseTime(baseTime)
+                .baseTime(getBaseTime())
                 .fcstDate(baseDate)
                 .fcstTime(fcstTime)
                 .category(category)
@@ -341,11 +341,15 @@ public class OpenWeatherAPI {
 
     private BearResponseDto buildBearResponse(JSONArray jsonResult) {
 
-        String fcstTime = getCurrentTime();
+        String fcstTime = getFcstTime();
         if (fcstTime.length() == 3) {
             fcstTime = "0" + fcstTime;
         }
+        if(fcstTime.equals("2400")){
+            fcstTime = "0000";
+        }
         String baseDate = getCurrentDate();
+
         String tmp = "";
         String tmx = "";
         String tmn = "";
@@ -377,7 +381,7 @@ public class OpenWeatherAPI {
 
         BearResponseDto responseDto = BearResponseDto.builder()
                 .baseDate(baseDate)
-                .baseTime(baseTime)
+                .baseTime(getBaseTime())
                 .fcstDate(baseDate)
                 .fcstTime(fcstTime)
                 .tmp(tmp)
@@ -386,6 +390,57 @@ public class OpenWeatherAPI {
                 .build();
 
         return responseDto;
+    }
+
+    public String getCurrentDate(){
+        DateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
+        Date currentDate = new Date();
+        return simpleDateFormat.format(currentDate);
+    }
+
+    public String getFcstTime(){
+        DateFormat simpleDateFormat = new SimpleDateFormat("k");
+        Date currentTime = new Date();
+        return simpleDateFormat.format(currentTime) + "00";
+    }
+
+
+    public String getBaseTime(){
+        DateFormat simpleDateFormat = new SimpleDateFormat("k");
+        Date currentHour = new Date();
+        String ApiTime = simpleDateFormat.format(currentHour);
+        System.out.println(ApiTime);
+        return switch (ApiTime) {
+            case "24", "1", "2" -> "2300";
+            case "3", "4", "5" -> "0200";
+            case "6", "7", "8" -> "0500";
+            case "9", "10", "11" -> "0800";
+            case "12", "13", "14" -> "1100";
+            case "15", "16", "17" -> "1400";
+            case "18", "19", "20" -> "1700";
+            case "21", "22", "23" -> "2000";
+            default -> "";
+        };
+    }
+
+
+
+    public String getDay(){
+        DateFormat simpleDateFormat = new SimpleDateFormat("k");
+        Date currentTime = new Date();
+        Integer time = Integer.parseInt(simpleDateFormat.format(currentTime));
+        if(time > 6 && time < 18 ){
+            return "day";
+        }
+        else{
+            return "night";
+        }
+    }
+
+    public Integer getMonth(){
+        DateFormat simpleDateFormat = new SimpleDateFormat("M");
+        Date currentTime = new Date();
+        return Integer.parseInt(simpleDateFormat.format(currentTime));
     }
 
 }

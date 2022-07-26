@@ -15,7 +15,6 @@ import java.util.List;
 @RequestMapping("api/v1/weather")
 public class OpenWeatherApiController {
 
-    @Autowired
     private final OpenWeatherAPI openWeatherAPI = new OpenWeatherAPI();
 
     @GetMapping
