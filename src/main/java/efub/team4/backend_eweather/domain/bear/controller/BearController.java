@@ -1,9 +1,16 @@
 package efub.team4.backend_eweather.domain.bear.controller;
 
 import efub.team4.backend_eweather.domain.bear.dto.BearDto;
+import efub.team4.backend_eweather.domain.bear.dto.BearImageResponseDto;
 import efub.team4.backend_eweather.domain.bear.dto.BearMapper;
 import efub.team4.backend_eweather.domain.bear.entity.Bear;
 import efub.team4.backend_eweather.domain.bear.service.BearService;
+
+import efub.team4.backend_eweather.domain.weather.service.OpenWeatherAPI;
+import lombok.RequiredArgsConstructor;
+import org.json.simple.parser.ParseException;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import efub.team4.backend_eweather.domain.weather.dto.BearResponseDto;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -11,6 +18,7 @@ import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,7 +37,10 @@ public class BearController {
     private final BearService bearService;
     private final BearMapper bearMapper;
 
-    @GetMapping
+    @Autowired
+    private final OpenWeatherAPI openWeatherAPI;
+
+
     @ApiOperation(value = "곰돌이 목록 조회", notes = "곰돌이 목록을 조회한다.")
     public ResponseEntity<List<BearDto.BearResponseDto>> getBearList() {
         List<Bear> bearList = bearService.findAll();
