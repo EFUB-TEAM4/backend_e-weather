@@ -1,6 +1,7 @@
 package efub.team4.backend_eweather.domain.bear.controller;
 
 import efub.team4.backend_eweather.domain.bear.dto.BearDto;
+import efub.team4.backend_eweather.domain.bear.dto.BearImageResponseDto;
 import efub.team4.backend_eweather.domain.bear.dto.BearMapper;
 import efub.team4.backend_eweather.domain.bear.entity.Bear;
 import efub.team4.backend_eweather.domain.bear.service.BearService;
@@ -41,10 +42,6 @@ public class BearController {
     @Autowired
     private final OpenWeatherAPI openWeatherAPI;
 
-    @GetMapping
-
-    public BearImageResponseDto loadBearImage() throws IOException, ParseException {
-        return bearService.findBearImage(openWeatherAPI.findBearInfo());
 
     @ApiOperation(value = "곰돌이 목록 조회", notes = "곰돌이 목록을 조회한다.")
     public ResponseEntity<List<BearDto.BearResponseDto>> getBearList() {
