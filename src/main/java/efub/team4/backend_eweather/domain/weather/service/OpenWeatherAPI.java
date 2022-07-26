@@ -34,7 +34,7 @@ public class OpenWeatherAPI {
     private String pageNo = "1";
     private String numOfRows = "310";
     private String dataType = "JSON";
-    private String baseTime = "0500"; // api 제공시각
+    private String baseTime = getBaseTime(); // api 제공시각
     private String nx = "59";
     private String ny = "126"; // nx, ny는 서대문구 신촌동 좌표값
 
@@ -389,26 +389,26 @@ public class OpenWeatherAPI {
         return simpleDateFormat.format(currentTime) + "00";
     }
 
-    /*
+
     public String getBaseTime(){
         DateFormat simpleDateFormat = new SimpleDateFormat("k");
         Date currentHour = new Date();
-        int ApiTime = Integer.parseInt(String.valueOf(currentHour));
+        String ApiTime = simpleDateFormat.format(currentHour);
         String baseTime = switch (ApiTime) {
-            case 0, 1, 2 -> "2300";
-            case 3, 4, 5 -> "0200";
-            case 6, 7, 8 -> "0500";
-            case 9, 10, 11 -> "0800";
-            case 12, 13, 14 -> "1100";
-            case 15, 16, 17 -> "1400";
-            case 18, 19, 20 -> "1700";
-            case 21, 22, 23 -> "2000";
+            case "0", "1", "2" -> "2300";
+            case "3", "4", "5" -> "0200";
+            case "6", "7", "8" -> "0500";
+            case "9", "10", "11" -> "0800";
+            case "12", "13", "14" -> "1100";
+            case "15", "16", "17" -> "1400";
+            case "18", "19", "20" -> "1700";
+            case "21", "22", "23" -> "2000";
             default -> "";
         };
         return baseTime;
     }
 
-     */
+
 
     public String getDay(){
         DateFormat simpleDateFormat = new SimpleDateFormat("k");
