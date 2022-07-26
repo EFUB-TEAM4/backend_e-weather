@@ -1,9 +1,6 @@
 package efub.team4.backend_eweather.domain.weather.service;
 
-import efub.team4.backend_eweather.domain.weather.dto.CalendarWeatherResponseDto;
-import efub.team4.backend_eweather.domain.weather.dto.ForcastResponseDto;
-import efub.team4.backend_eweather.domain.weather.dto.OpenWeatherResponseDto;
-import efub.team4.backend_eweather.domain.weather.dto.WeatherResponseDto;
+import efub.team4.backend_eweather.domain.weather.dto.*;
 import lombok.NoArgsConstructor;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -59,12 +56,21 @@ public class OpenWeatherAPI {
     }
 
     @Transactional
-    public CalendarWeatherResponseDto findCalendarWeather() throws IOException, ParseException{
+    public CurrentWeatherResponseDto findCalendarWeather() throws IOException, ParseException{
         URL url = buildRequestUrl(); // url 생성성
         System.out.println(url);  // url 어떻게 되는지 확인
         String stringResult = httpURLConnect(url);
         JSONArray jsonResult = getItems(stringResult);
-        return buildCalendarData(jsonResult);
+        return buildCurrentData(jsonResult);
+    }
+
+    @Transactional
+    public CurrentWeatherResponseDto findCurrentWeather() throws IOException, ParseException{
+        URL url = buildRequestUrl(); // url 생성성
+        System.out.println(url);  // url 어떻게 되는지 확인
+        String stringResult = httpURLConnect(url);
+        JSONArray jsonResult = getItems(stringResult);
+        return buildCurrentData(jsonResult);
     }
 
     @Transactional
@@ -94,6 +100,14 @@ public class OpenWeatherAPI {
         return builldWeatherResponse(jsonResult, "POP");
     }
 
+    public BearResponseDto findBearInfo() throws IOException, ParseException{
+        URL url = buildRequestUrl(); // url 생성성
+        System.out.println(url);  // url 어떻게 되는지 확인
+        String stringResult = httpURLConnect(url);
+        JSONArray jsonResult = getItems(stringResult);
+        return buildBearResponse(jsonResult);
+    }
+
     // 현재 요일 반환 함수
     public String getCurrentDate(){
         DateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
@@ -110,7 +124,6 @@ public class OpenWeatherAPI {
     public URL buildRequestUrl() throws IOException {
         StringBuilder sb = new StringBuilder(BASE_URL);
         String baseDate = getCurrentDate();
-        // append로만 구성되게 바꾸고는 싶은데 공식문서 참고코드에 이렇게 나와있으니 잠시 대기
         sb.append("?").append(URLEncoder.encode("serviceKey", "UTF-8")).append("=").append(serviceKey);
         sb.append("&").append(URLEncoder.encode("pageNo", "UTF-8")).append("=").append(URLEncoder.encode(pageNo, "UTF-8"));
         sb.append("&").append(URLEncoder.encode("numOfRows", "UTF-8")).append("=").append(URLEncoder.encode(numOfRows, "UTF-8")); /* 한 페이지 결과 수 */
@@ -166,10 +179,11 @@ public class OpenWeatherAPI {
         List<ForcastResponseDto> dtoList = new ArrayList<>();
         JSONObject obj;
 
-        String fcstDate;
-        String fcstTime;
-        String sky;
-        String tmp;
+        String fcstDate ="";
+        String fcstTime ="";
+        String sky ="";
+        String pty = "";
+        String tmp = "";
 
         Integer idx = 0;
         while(dtoList.size() < 22){
@@ -180,13 +194,19 @@ public class OpenWeatherAPI {
 
             obj = (JSONObject) parseItem.get(idx+5);
             sky = (String) obj.get("fcstValue");
+
+            obj = (JSONObject) parseItem.get(idx+6);
+            pty = (String) obj.get("fcstValue");
+
             ForcastResponseDto dto = ForcastResponseDto.builder()
                     .baseDate(getCurrentDate())
                     .baseTime(baseTime)
                     .fcstDate(fcstDate)
                     .fcstTime(fcstTime)
                     .tmp(tmp)
-                    .sky(sky).build();
+                    .sky(sky)
+                    .pty(pty)
+                    .build();
 
             dtoList.add(dto);
             idx += 12;
@@ -201,7 +221,7 @@ public class OpenWeatherAPI {
     }
 
 
-    private CalendarWeatherResponseDto buildCalendarData(JSONArray jsonResult) {
+    private CurrentWeatherResponseDto buildCurrentData(JSONArray jsonResult) {
         // 현재 시간 받아서 예상 시간 조회
         String fcstTime = getCurrentTime();
         if(fcstTime.length() == 3){
@@ -254,7 +274,7 @@ public class OpenWeatherAPI {
         }
 
         // dto로 만들어서 반환
-        CalendarWeatherResponseDto responseDto = CalendarWeatherResponseDto.builder()
+        CurrentWeatherResponseDto responseDto = CurrentWeatherResponseDto.builder()
                 .baseDate(baseDate)
                 .baseTime(baseTime)
                 .fcstDate(baseDate)
@@ -335,5 +355,53 @@ public class OpenWeatherAPI {
         return dataList;
     }
 
+    private BearResponseDto buildBearResponse(JSONArray jsonResult) {
+
+        String fcstTime = getCurrentTime();
+        if (fcstTime.length() == 3) {
+            fcstTime = "0" + fcstTime;
+        }
+        String baseDate = getCurrentDate();
+        String tmp = "";
+        String tmx = "";
+        String tmn = "";
+        String sky = "";
+        String pop = "";
+        String pty = "";
+
+        // jsonResult를 조회하며 필요한 데이터 받기
+        for (int i = 0; i < jsonResult.size(); i++) {
+            JSONObject obj = (JSONObject) jsonResult.get(i);
+
+            String TimeTemp = (String) obj.get("fcstTime");
+            String CategoryTemp = (String) obj.get("category");
+
+            if (!fcstTime.equals(TimeTemp)) {
+                continue;
+            } else {
+                if (CategoryTemp.equals("TMP")) {
+                    tmp = (String) obj.get("fcstValue");
+                }
+                if (CategoryTemp.equals("SKY")) {
+                    sky = (String) obj.get("fcstValue");
+                }
+                if (CategoryTemp.equals("PTY")) {
+                    pty = (String) obj.get("fcstValue");
+                }
+            }
+        }
+
+        BearResponseDto responseDto = BearResponseDto.builder()
+                .baseDate(baseDate)
+                .baseTime(baseTime)
+                .fcstDate(baseDate)
+                .fcstTime(fcstTime)
+                .tmp(tmp)
+                .sky(sky)
+                .pty(pty)
+                .build();
+
+        return responseDto;
+    }
 
 }

@@ -14,5 +14,5 @@ import java.util.UUID;
 @AllArgsConstructor
 public class CalendarSearchCriteria {
     private UUID userId;
-    private LocalDateTime createdOn;
+    private String forecastDate;
 }

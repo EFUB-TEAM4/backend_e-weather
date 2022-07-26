@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/v1/hello")
-@Api(tags = {"테스트 API"})
 @RequiredArgsConstructor
 public class HelloController {
 
