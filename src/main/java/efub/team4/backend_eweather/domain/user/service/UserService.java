@@ -1,5 +1,6 @@
 package efub.team4.backend_eweather.domain.user.service;
 
+import efub.team4.backend_eweather.domain.profile.entity.Profile;
 import efub.team4.backend_eweather.domain.user.dto.SessionUser;
 import efub.team4.backend_eweather.domain.user.dto.UserResponseDto;
 import efub.team4.backend_eweather.domain.user.entity.User;
@@ -7,6 +8,7 @@ import efub.team4.backend_eweather.domain.user.entity.User;
 import efub.team4.backend_eweather.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,7 +26,7 @@ public class UserService {
 
     private final HttpSession httpSession;
 
-    public UserResponseDto buildUserDto(User user){
+    public UserResponseDto buildUserDto(User user) {
         return new UserResponseDto(user);
     }
 
@@ -32,7 +34,7 @@ public class UserService {
     public List<UserResponseDto> loadUsers() {
         List<User> userList = userRepository.findAll();
         List<UserResponseDto> userResponseDtoList = new ArrayList<>();
-        for(User user : userList){
+        for (User user : userList) {
             UserResponseDto userResponseDto = buildUserDto(user);
             userResponseDtoList.add(userResponseDto);
         }
@@ -46,7 +48,7 @@ public class UserService {
     }
 
     @Transactional
-    public User getSessionUser(){
+    public User getSessionUser() {
         SessionUser sessionUser = (SessionUser) httpSession.getAttribute("user");
         // 세션 저장 됐는지 확인
         System.out.println("--- This is the current User Info ---");
@@ -56,6 +58,14 @@ public class UserService {
         System.out.println("--- This is the current User Info ---");
         User user = userRepository.findByEmail(sessionUser.getEmail());
         return user;
+    }
+
+    @Transactional
+    public void updateProfile(UUID userId, Profile profile) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with id"));
+
+        user.updateProfile(profile);
     }
 
 }

@@ -32,20 +32,26 @@ public class ProfileService {
         return profileRepository.save(profile);
     }
 
-    @Transactional(readOnly = true)
-    public UUID update(UUID id, String nickname, UUID fileId) {
-        Profile profile = profileRepository.findById(id)
-                .orElseThrow(() -> new ProfileNotFoundException("Profile not found with id"));
+    @Transactional
+    public UUID update(UUID userId, String nickname, UUID fileId) {
 
-        UploadedFile uploadedFile = uploadedFileRepository.findById(fileId)
-                .orElseThrow(() -> new UploadedFileNotFoundException("UploadedFile not found with id"));
-
-        profile.update(nickname, uploadedFile);
-        User user = userRepository.findById(profile.getUser().getId())
+        User user = userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found with id"));
 
-        user.updateProfile(profile);
-        return id;
+        Profile profile = profileRepository.findProfileByUser(user)
+                .orElseThrow(() -> new ProfileNotFoundException("Profile not found with user"));
+
+        if (fileId != null && !fileId.equals("")) {
+            UploadedFile uploadedFile = uploadedFileRepository.findById(fileId)
+                    .orElseThrow(() -> new UploadedFileNotFoundException("UploadedFile not found with id"));
+            profile.update(nickname, uploadedFile);
+        } else {
+            profile.update(nickname, null);
+        }
+
+        profileRepository.save(profile);
+
+        return profile.getId();
     }
 
     @Transactional(readOnly = true)
@@ -63,6 +69,14 @@ public class ProfileService {
 
         Profile profile = profileRepository.findProfileByUser(user)
                 .orElseThrow(() -> new ProfileNotFoundException("Profile not found with user"));
+
+        return profile;
+    }
+
+    @Transactional(readOnly = true)
+    public Profile findByNickname(String nickname) {
+        Profile profile = profileRepository.findProfileByNickname(nickname)
+                .orElseThrow(() -> new ProfileNotFoundException("Profile not found with nickname"));
 
         return profile;
     }

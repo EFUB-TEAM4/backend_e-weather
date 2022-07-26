@@ -7,6 +7,7 @@ import efub.team4.backend_eweather.global.entity.BaseTimeEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -26,6 +27,7 @@ public class Profile extends BaseTimeEntity {
 
     @Size(max = 50)
     @NotEmpty
+    @Column(unique=true)
     private String nickname;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -43,7 +45,13 @@ public class Profile extends BaseTimeEntity {
         this.uploadedFile = uploadedFile;
     }
 
-    public void update(String nickname, UploadedFile uploadedFile){
+    @Builder
+    public Profile(String nickname, User user) {
+        this.nickname = nickname;
+        this.user = user;
+    }
+
+    public void update(String nickname, UploadedFile uploadedFile) {
         this.nickname = nickname;
         this.uploadedFile = uploadedFile;
     }
