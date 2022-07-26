@@ -17,10 +17,7 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -104,6 +101,12 @@ public class OpenWeatherAPI {
     public URL buildRequestUrl() throws IOException {
         StringBuilder sb = new StringBuilder(BASE_URL);
         String baseDate = getCurrentDate();
+        if(baseTime == "0200" || baseTime == "0000" || baseTime == "0100"){
+            Calendar calendar = new GregorianCalendar();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+            calendar.add(Calendar.DATE, -1);
+            baseDate = sdf.format(calendar.getTime());
+        }
         sb.append("?").append(URLEncoder.encode("serviceKey", "UTF-8")).append("=").append(serviceKey);
         sb.append("&").append(URLEncoder.encode("pageNo", "UTF-8")).append("=").append(URLEncoder.encode(pageNo, "UTF-8"));
         sb.append("&").append(URLEncoder.encode("numOfRows", "UTF-8")).append("=").append(URLEncoder.encode(numOfRows, "UTF-8")); /* 한 페이지 결과 수 */
@@ -335,6 +338,7 @@ public class OpenWeatherAPI {
             fcstTime = "0" + fcstTime;
         }
         String baseDate = getCurrentDate();
+
         String tmp = "";
         String tmx = "";
         String tmn = "";
