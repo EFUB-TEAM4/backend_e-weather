@@ -1,3 +1,6 @@
+
+
+
 package efub.team4.backend_eweather.global.config;
 
 import com.amazonaws.services.s3.AmazonS3;
@@ -234,7 +237,14 @@ public class SetupDataLoader implements
         if (alreadySetup) {
             return;
         }
-        //createInitialFields();
+
 
     }
 }
+
+
+
+        //createInitialFields();
+
+
+

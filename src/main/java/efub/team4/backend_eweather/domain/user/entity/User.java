@@ -42,8 +42,7 @@ public class User extends BaseTimeEntity {
     }
 
 
-    public Object update(UUID id, String name) {
-        this.id = id;
+    public Object update(String name) {
         this.fullName = name;
         return this;
     }
