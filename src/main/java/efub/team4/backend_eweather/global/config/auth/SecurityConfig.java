@@ -43,7 +43,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/v2/api-docs/**").permitAll()
                 .antMatchers("/h2-console/**").permitAll();
 
-        http.cors()
+        http.csrf().disable()
+                .cors()
                 .and()
                 .headers().frameOptions().disable()
                 .and()
@@ -57,8 +58,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/api/v1/media/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/v1/users/**").permitAll()
                 .antMatchers("/api/v1/media/**").permitAll()
-                .antMatchers("/api/v1/**")
-                .hasAnyRole("User")
+                .antMatchers("api/v1/votes/**").hasAnyRole("USER")
+                .antMatchers("api/v1/calendars/**").hasAnyRole("USER")
                 .antMatchers("/",
                         "/error",
                         "/favicon.ico",
@@ -116,7 +117,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         configuration.addAllowedOrigin("*");
         configuration.addAllowedHeader("*");
         configuration.addAllowedMethod("*");
-        configuration.setAllowCredentials(true);
+        //configuration.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
