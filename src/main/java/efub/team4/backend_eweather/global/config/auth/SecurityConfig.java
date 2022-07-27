@@ -49,7 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .headers().frameOptions().disable()
                 .and()
                 .authorizeRequests().expressionHandler(expressionHandler())
-                .antMatchers(HttpMethod.GET, "/api/v1/eweather/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/v1/eweathers/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/v1/bears/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/v1/icons/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/v1/calendars/**").permitAll()
