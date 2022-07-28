@@ -108,6 +108,9 @@ public class CalendarDto {
         @ApiModelProperty(value = "최고 기온", example = "32", required = true)
         private Integer maxTemperature;
 
+        @ApiModelProperty(value = "강수량", example = "10", required = true)
+        private Integer rainfallPercentage;
+
         private IconDto.IconResponseUrlDto iconResponseUrlDto;
         private SkyDto.SkyResponseDtoWithUrl skyResponseDtoWithUrl;
         private PtyDto.PtyResponseDtoWithUrl ptyResponseDtoWithUrl;
