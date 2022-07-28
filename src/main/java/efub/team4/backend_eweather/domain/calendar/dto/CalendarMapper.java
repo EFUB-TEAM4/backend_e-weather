@@ -72,6 +72,7 @@ public class CalendarMapper {
                 .orElseThrow(() -> new SeasonNotFoundException("Season not found with id = " + requestDto.getSeasonId()));
 
         return Calendar.builder()
+                .user(user)
                 .icon(icon)
                 .sky(sky)
                 .pty(pty)
@@ -95,6 +96,7 @@ public class CalendarMapper {
                 .currentTemperature(calendar.getCurrentTemperature())
                 .minTemperature(calendar.getMinTemperature())
                 .maxTemperature(calendar.getMaxTemperature())
+                .rainfallPercentage(calendar.getRainfallPercentage())
                 .iconResponseUrlDto(iconMapper.iconResponseUrlDto(calendar.getIcon()))
                 .skyResponseDtoWithUrl(skyMapper.fromEntityWithUrl(calendar.getSky()))
                 .ptyResponseDtoWithUrl(ptyMapper.fromEntityWithUrl(calendar.getPty()))

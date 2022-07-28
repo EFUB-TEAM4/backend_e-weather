@@ -29,7 +29,7 @@ public class CalendarDto {
         @ApiModelProperty(value = "게시글 내용", example = "오늘 날씨 게시글", required = true)
         private String description;
 
-        @ApiModelProperty(value = "현재 시간", example = "1200", required = true)
+        @ApiModelProperty(value = "현재 시간", example = "20220725", required = true)
         private String forecastDate;
 
         @ApiModelProperty(value = "최저 기온", example = "28", required = true)
@@ -90,7 +90,7 @@ public class CalendarDto {
         @ApiModelProperty(value = "캘린더 ID", example = "3fa85f64-5717-4562-b3fc-2c963f66afa6", required = true)
         private UUID id;
 
-        @ApiModelProperty(value = "현재 시간", example = "1200", required = true)
+        @ApiModelProperty(value = "현재 시간", example = "20220725", required = true)
         private String forecastDate;
 
         @ApiModelProperty(value = "사용자 정보 Response Dto", required = true)
@@ -107,6 +107,9 @@ public class CalendarDto {
 
         @ApiModelProperty(value = "최고 기온", example = "32", required = true)
         private Integer maxTemperature;
+
+        @ApiModelProperty(value = "강수량", example = "10", required = true)
+        private Integer rainfallPercentage;
 
         private IconDto.IconResponseUrlDto iconResponseUrlDto;
         private SkyDto.SkyResponseDtoWithUrl skyResponseDtoWithUrl;

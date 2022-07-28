@@ -36,6 +36,8 @@ public class CalendarController {
     public ResponseEntity<CalendarDto.Response> createCalendar(
             @LoginUser SessionUser user,
             @ApiParam(value = "캘린더 생성 DTO") @RequestBody CalendarDto.CalendarCreateRequest requestDto) {
+
+
         Calendar entity = calendarService.save(calendarMapper.createRequestDtoToEntity(user.getId(), requestDto));
         return ResponseEntity
                 .created(
@@ -97,7 +99,7 @@ public class CalendarController {
     @ApiOperation(value = "캘린더 조건 조회", notes = "사용자와 날짜에 따라 캘린더를 조회한다.")
     public ResponseEntity<List<CalendarDto.Response>> getCalendarList(
             @ApiParam(value = "사용자 ID", example = "3fa85f64-5717-4562-b3fc-2c963f66afa6") @RequestParam(required = false) UUID userId,
-            @ApiParam(value = "검색 날짜 예제", example = "3fa85f64-5717-4562-b3fc-2c963f66afa6") @RequestParam(required = false) String forecastDate
+            @ApiParam(value = "검색 날짜 예제", example = "20220725") @RequestParam(required = false) String forecastDate
     ) {
 
         CalendarSpecification spec = new CalendarSpecification(
