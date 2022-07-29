@@ -34,8 +34,6 @@ import java.util.stream.Collectors;
 @Slf4j
 @Api(tags = {"Bear API"}, description = "곰돌이 코디 조회")
 public class BearController {
-
-    @Autowired
     private final BearService bearService;
     private final BearMapper bearMapper;
 

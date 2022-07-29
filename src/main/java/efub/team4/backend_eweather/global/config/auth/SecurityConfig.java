@@ -3,6 +3,7 @@ package efub.team4.backend_eweather.global.config.auth;
 import efub.team4.backend_eweather.domain.user.service.CustomOauth2UserService;
 import efub.team4.backend_eweather.global.config.CustomCorsFilter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -16,6 +17,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.web.FilterInvocation;
 import org.springframework.security.web.access.channel.ChannelProcessingFilter;
 import org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -33,6 +35,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final CustomOauth2UserService customOauth2UserService;
 
+    @Autowired
+    private OAuth2SuccessHandler oAuth2SuccessHandler;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
@@ -42,6 +47,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/swagger-resources/**").permitAll()
                 .antMatchers("/v2/api-docs/**").permitAll()
                 .antMatchers("/h2-console/**").permitAll();
+
 
         http.csrf().disable()
                 .cors()
@@ -80,7 +86,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutSuccessUrl("/")
                 .and()
                 .oauth2Login()
-                .defaultSuccessUrl("/")
+                .defaultSuccessUrl("/").successHandler(oAuth2SuccessHandler)
                 .userInfoEndpoint()
                 .userService(customOauth2UserService);
         http.addFilterBefore(new CustomCorsFilter(), ChannelProcessingFilter.class);
