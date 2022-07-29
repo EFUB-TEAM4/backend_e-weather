@@ -34,14 +34,18 @@ public class Bear {
     @Column(nullable = false)
     private String clothName;
 
+    @Column(nullable = false)
+    private String clothDescription;
+
     @URL
     private String bearFileUrl;
 
     @Builder
-    public Bear(Temperature temperature, Pty pty, String clothName, String bearFileUrl){
+    public Bear(Temperature temperature, Pty pty, String clothName, String clothDescription, String bearFileUrl){
         this.temperature = temperature;
         this.pty = pty;
         this.clothName = clothName;
+        this.clothDescription = clothDescription;
         this.bearFileUrl = bearFileUrl;
     }
 
