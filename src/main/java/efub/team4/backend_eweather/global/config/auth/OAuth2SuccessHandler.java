@@ -17,6 +17,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
     // 아 제발 이걸로 걍 되라
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
         OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
+        System.out.println(oAuth2User.getAttributes());
         Map<String, Object> google = (Map<String, Object>) oAuth2User.getAttributes();
         getRedirectStrategy().sendRedirect(request, response, makeRedirectUrl());
     }
