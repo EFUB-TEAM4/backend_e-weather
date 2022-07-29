@@ -1,8 +1,10 @@
 package efub.team4.backend_eweather.domain.user.controller;
 
+import efub.team4.backend_eweather.domain.user.dto.SessionUser;
 import efub.team4.backend_eweather.domain.user.dto.UserResponseDto;
 import efub.team4.backend_eweather.domain.user.service.CustomOauth2UserService;
 import efub.team4.backend_eweather.domain.user.service.UserService;
+import efub.team4.backend_eweather.global.config.auth.LoginUser;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -31,4 +33,10 @@ public class UserController {
     public Object sessionTest(@RequestBody Map<String, Object> attribute){
         return oauth2UserService.loadUserPostman(attribute);
     }
+
+    @GetMapping("/session")
+    public String test(@LoginUser SessionUser sessionUser){
+        return sessionUser.getEmail();
+    }
+
 }
