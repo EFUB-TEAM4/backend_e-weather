@@ -1,6 +1,6 @@
-package efub.team4.backend_eweather.domain.user.repository;
+package efub.team4.backend_eweather.domain.auth.repository;
 
-import efub.team4.backend_eweather.domain.user.entity.UserRefreshToken;
+import efub.team4.backend_eweather.domain.auth.entity.UserRefreshToken;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

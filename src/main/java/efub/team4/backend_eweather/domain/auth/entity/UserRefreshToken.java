@@ -1,4 +1,4 @@
-package efub.team4.backend_eweather.domain.user.entity;
+package efub.team4.backend_eweather.domain.auth.entity;
 
 import efub.team4.backend_eweather.global.entity.BaseTimeEntity;
 import lombok.*;
