@@ -145,6 +145,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.addFilterBefore(tokenAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 
+    //.baseUri("/*/oauth2/code/*")
     /*
      * auth 매니저 설정
      * */
