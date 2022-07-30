@@ -1,9 +1,7 @@
 package efub.team4.backend_eweather.global.config;
 
-import efub.team4.backend_eweather.domain.user.repository.UserRefreshTokenRepository;
+import efub.team4.backend_eweather.domain.auth.repository.UserRefreshTokenRepository;
 import efub.team4.backend_eweather.domain.user.repository.UserRepository;
-import efub.team4.backend_eweather.domain.user.service.CustomOauth2UserService;
-import efub.team4.backend_eweather.global.config.CustomCorsFilter;
 import efub.team4.backend_eweather.global.config.auth.OAuth2SuccessHandler;
 import efub.team4.backend_eweather.global.config.properties.AppProperties;
 import efub.team4.backend_eweather.global.config.properties.CorsProperties;
@@ -28,17 +26,15 @@ import org.springframework.security.access.hierarchicalroles.RoleHierarchyUtils;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.oauth2.client.web.AuthorizationRequestRepository;
-import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequest;
 import org.springframework.security.web.FilterInvocation;
 import org.springframework.security.web.access.channel.ChannelProcessingFilter;
 import org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -52,6 +48,10 @@ import java.util.Map;
 
 @RequiredArgsConstructor
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(
+        securedEnabled = true,
+        jsr250Enabled = true,
+        prePostEnabled = true)
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -63,6 +63,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final TokenAccessDeniedHandler tokenAccessDeniedHandler;
     private final UserRefreshTokenRepository userRefreshTokenRepository;
     private final UserRepository userRepository;
+    private final CustomUserDetailsService customUserDetailsService;
 
 
     @Autowired
@@ -107,11 +108,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/v1/users/**").permitAll()
                 .antMatchers("/api/v1/profiles/**").permitAll()
                 .antMatchers("/api/v1/media/**").permitAll()
-                .antMatchers("api/v1/users/**").hasAnyRole("USER")
-                .antMatchers("api/v1/profiles/**").hasAnyRole("USER")
-                .antMatchers("api/v1/media/**").hasAnyRole("USER")
-                .antMatchers("api/v1/votes/**").hasAnyRole("USER")
-                .antMatchers("api/v1/calendars/**").hasAnyRole("USER")
+                .antMatchers("/api/v1/auths/**").permitAll()
+                .antMatchers("api/v1/**").hasAnyRole("USER")
                 .antMatchers("/",
                         "/error",
                         "/favicon.ico",
@@ -169,7 +167,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      * */
     @Bean
     public TokenAuthenticationFilter tokenAuthenticationFilter() {
-        return new TokenAuthenticationFilter(tokenProvider);
+        return new TokenAuthenticationFilter(tokenProvider, customUserDetailsService);
     }
 
     /*

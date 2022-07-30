@@ -1,6 +1,5 @@
 package efub.team4.backend_eweather.domain.vote.controller;
 
-import efub.team4.backend_eweather.domain.profile.controller.UserProfileController;
 import efub.team4.backend_eweather.domain.user.dto.SessionUser;
 import efub.team4.backend_eweather.domain.vote.dto.*;
 import efub.team4.backend_eweather.domain.vote.entity.Votes;
@@ -8,7 +7,7 @@ import efub.team4.backend_eweather.domain.vote.service.VotePostsService;
 import efub.team4.backend_eweather.domain.vote.service.VoteService;
 import efub.team4.backend_eweather.domain.vote.specification.VoteSearchCriteria;
 import efub.team4.backend_eweather.domain.vote.specification.VotesSpecification;
-import efub.team4.backend_eweather.global.config.auth.LoginUser;
+import efub.team4.backend_eweather.global.config.auth.CurrentUser;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -35,13 +34,13 @@ public class VotePostsController {
 
     @PostMapping
     @ApiOperation(value = "투표 게시글 등록", notes = "투표 게시글을 업로드한다.")
-    public VoteResponseDto savePost(@LoginUser SessionUser user, @ApiParam(value = "투표 요청 DTO") @RequestBody VoteRequestDto voteRequestDto) {
+    public VoteResponseDto savePost(@CurrentUser SessionUser user, @ApiParam(value = "투표 요청 DTO") @RequestBody VoteRequestDto voteRequestDto) {
         return votePostsService.savePost(user.getId(), voteRequestDto);
     }
 
     @PostMapping("/yesorno")
     @ApiOperation(value = "착장 찬반 투표", notes = "착장 찬반 투표 진행")
-    public ResponseEntity<VotesDto.VotesResponse> createVote(@LoginUser SessionUser user,
+    public ResponseEntity<VotesDto.VotesResponse> createVote(@CurrentUser SessionUser user,
                                                              @ApiParam(value = "찬반 투표 DTO") @RequestBody VotesDto.VotesCreateRequest requestDto) {
 
         Votes vote = voteService.save(votesMapper.createVotesFromRequestDto(user.getId(), requestDto));
