@@ -68,4 +68,9 @@ public class UserService {
         user.updateProfile(profile);
     }
 
+    @Transactional
+    public User findUserByEmail(String email){
+        return userRepository.findByEmail(email);
+    }
+
 }

@@ -10,14 +10,17 @@ import efub.team4.backend_eweather.domain.calendar.specification.CalendarSpecifi
 import efub.team4.backend_eweather.domain.user.dto.SessionUser;
 import efub.team4.backend_eweather.global.config.auth.LoginUser;
 import efub.team4.backend_eweather.global.dto.DeletedEntityIdResponseDto;
+import efub.team4.backend_eweather.global.outh.entity.UserPrincipal;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.nio.file.attribute.UserPrincipalNotFoundException;
 import java.security.InvalidParameterException;
 import java.util.List;
 import java.util.UUID;
@@ -34,11 +37,11 @@ public class CalendarController {
     @PostMapping
     @ApiOperation(value = "캘린더 생성", notes = "캘린더를 생성한다.")
     public ResponseEntity<CalendarDto.Response> createCalendar(
-            @LoginUser SessionUser user,
+            @LoginUser UserPrincipal user,
             @ApiParam(value = "캘린더 생성 DTO") @RequestBody CalendarDto.CalendarCreateRequest requestDto) {
 
 
-        Calendar entity = calendarService.save(calendarMapper.createRequestDtoToEntity(user.getId(), requestDto));
+        Calendar entity = calendarService.save(calendarMapper.createRequestDtoToEntity(user.getUserId(), requestDto));
         return ResponseEntity
                 .created(
                         WebMvcLinkBuilder
@@ -50,10 +53,16 @@ public class CalendarController {
 
     @PutMapping("/{id}")
     @ApiOperation(value = "캘린더 수정", notes = "캘린더를 수정한다.")
-    public ResponseEntity<CalendarDto.Response> updateCalendar(@ApiParam(value = "수정할 캘린더 ID", example = "3fa85f64-5717-4562-b3fc-2c963f66afa6") @PathVariable UUID id,
-                                                               @ApiParam(value = "캘린더 수정 DTO") @RequestBody CalendarDto.UpdateRequest updateRequest) {
+    public ResponseEntity<CalendarDto.Response> updateCalendar(
+            @LoginUser UserPrincipal user,
+            @ApiParam(value = "수정할 캘린더 ID", example = "3fa85f64-5717-4562-b3fc-2c963f66afa6") @PathVariable UUID id,
+            @ApiParam(value = "캘린더 수정 DTO") @RequestBody CalendarDto.UpdateRequest updateRequest) {
         UUID calendarId = calendarService.update(id, updateRequest.getDescription());
         Calendar calendar = calendarService.findById(calendarId);
+
+        if (!user.getUserId().equals(calendar.getUser().getId())){
+            throw new ResourceNotFoundException("User Id not equal with calendar user id");
+        }
 
         return ResponseEntity
                 .created(
@@ -67,14 +76,14 @@ public class CalendarController {
     @DeleteMapping("/{id}")
     @ApiOperation(value = "캘린더 삭제", notes = "캘린더를 삭제한다.")
     public ResponseEntity<DeletedEntityIdResponseDto> deleteCalendar(
-            @ApiParam(value = "현재 사용자", required = true) @LoginUser SessionUser user,
+            @ApiParam(value = "현재 사용자", required = true) @LoginUser UserPrincipal user,
             @ApiParam(value = "캘린더 ID", required = true, example = "3fa85f64-5717-4562-b3fc-2c963f66afa6") @PathVariable UUID id) {
 
         Calendar calendar = calendarService.findById(id);
 
 
-        if (!user.getId().equals(calendar.getUser().getId())) {
-            throw new InvalidParameterException("User Forbidden Exception with id = " + user.getId());
+        if (!user.getUserId().equals(calendar.getUser().getId())) {
+            throw new InvalidParameterException("User Forbidden Exception with id = " + user.getUserId());
         }
 
         calendarService.delete(id);
