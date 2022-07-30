@@ -1,8 +1,8 @@
 package efub.team4.backend_eweather.global.outh.handler;
 
 import efub.team4.backend_eweather.domain.user.entity.User;
-import efub.team4.backend_eweather.domain.user.entity.UserRefreshToken;
-import efub.team4.backend_eweather.domain.user.repository.UserRefreshTokenRepository;
+import efub.team4.backend_eweather.domain.auth.entity.UserRefreshToken;
+import efub.team4.backend_eweather.domain.auth.repository.UserRefreshTokenRepository;
 import efub.team4.backend_eweather.domain.user.repository.UserRepository;
 import efub.team4.backend_eweather.global.config.properties.AppProperties;
 import efub.team4.backend_eweather.global.outh.entity.ProviderType;
@@ -64,7 +64,8 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
             throw new IllegalArgumentException("Sorry! We've got an Unauthorized Redirect URI and can't proceed with the authentication");
         }
 
-        setDefaultTargetUrl(appProperties.getOauth2().getDefaultRedirectUri());
+        //setDefaultTargetUrl(appProperties.getOauth2().getDefaultRedirectUri());
+        //setDefaultTargetUrl("/api/v1/auths/redirect");
 
         String targetUrl = redirectUri.orElse(getDefaultTargetUrl());
 
