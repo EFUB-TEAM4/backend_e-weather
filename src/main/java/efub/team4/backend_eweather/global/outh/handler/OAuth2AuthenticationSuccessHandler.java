@@ -64,8 +64,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
             throw new IllegalArgumentException("Sorry! We've got an Unauthorized Redirect URI and can't proceed with the authentication");
         }
 
-        //setDefaultTargetUrl(appProperties.getOauth2().getDefaultRedirectUri());
-        //setDefaultTargetUrl("/api/v1/auths/redirect");
+        setDefaultTargetUrl(appProperties.getOauth2().getDefaultRedirectUri());
 
         String targetUrl = redirectUri.orElse(getDefaultTargetUrl());
 
