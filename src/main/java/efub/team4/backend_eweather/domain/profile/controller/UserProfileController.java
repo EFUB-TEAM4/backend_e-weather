@@ -5,9 +5,8 @@ import efub.team4.backend_eweather.domain.profile.dto.ProfileMapper;
 import efub.team4.backend_eweather.domain.profile.entity.Profile;
 import efub.team4.backend_eweather.domain.profile.service.ProfileService;
 import efub.team4.backend_eweather.domain.user.dto.SessionUser;
-import efub.team4.backend_eweather.domain.user.entity.User;
 import efub.team4.backend_eweather.domain.user.service.UserService;
-import efub.team4.backend_eweather.global.config.auth.LoginUser;
+import efub.team4.backend_eweather.global.config.auth.CurrentUser;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
@@ -27,7 +26,7 @@ public class UserProfileController {
 
     @PostMapping
     @ApiOperation(value = "프로필 생성", notes = "프로필을 생성한다.")
-    public ResponseEntity<ProfileDto.Response> createProfile(@LoginUser SessionUser user,
+    public ResponseEntity<ProfileDto.Response> createProfile(@CurrentUser SessionUser user,
                                                              @ApiParam(value = "프로필 생성 DTO") @RequestBody ProfileDto.CreateRequest requestDto) {
         Profile profile = profileService.save(profileMapper.createReqeustDtoToEntity(user.getId(), requestDto));
 
@@ -45,7 +44,7 @@ public class UserProfileController {
 
     @PutMapping
     @ApiOperation(value = "프로필 수정", notes = "프로필을 수정한다.")
-    public ResponseEntity<ProfileDto.Response> updateProfile(@LoginUser SessionUser user,
+    public ResponseEntity<ProfileDto.Response> updateProfile(@CurrentUser SessionUser user,
                                                              @ApiParam(value = "프로필 수정 DTO") @RequestBody ProfileDto.CreateRequest requestDto) {
 
         UUID profileId = profileService.update(user.getId(), requestDto.getNickname(), requestDto.getFileId());
@@ -76,7 +75,7 @@ public class UserProfileController {
     @ApiOperation(value = "사용자 프로필 상세 조회", notes = "사용자 프로필을 조회한다.")
     public ResponseEntity<ProfileDto.Response> getProfile(
             @ApiParam(value = "현재 User",
-                    required = true) @LoginUser SessionUser user) {
+                    required = true) @CurrentUser SessionUser user) {
         Profile profile = profileService.findProfileByUser(user.getId());
 
         return ResponseEntity

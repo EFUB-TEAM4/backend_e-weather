@@ -7,8 +7,7 @@ import efub.team4.backend_eweather.domain.calendar.entity.Calendar;
 import efub.team4.backend_eweather.domain.calendar.service.CalendarService;
 import efub.team4.backend_eweather.domain.calendar.specification.CalendarSearchCriteria;
 import efub.team4.backend_eweather.domain.calendar.specification.CalendarSpecification;
-import efub.team4.backend_eweather.domain.user.dto.SessionUser;
-import efub.team4.backend_eweather.global.config.auth.LoginUser;
+import efub.team4.backend_eweather.global.config.auth.CurrentUser;
 import efub.team4.backend_eweather.global.dto.DeletedEntityIdResponseDto;
 import efub.team4.backend_eweather.global.outh.entity.UserPrincipal;
 import io.swagger.annotations.Api;
@@ -20,7 +19,6 @@ import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.nio.file.attribute.UserPrincipalNotFoundException;
 import java.security.InvalidParameterException;
 import java.util.List;
 import java.util.UUID;
@@ -37,7 +35,7 @@ public class CalendarController {
     @PostMapping
     @ApiOperation(value = "캘린더 생성", notes = "캘린더를 생성한다.")
     public ResponseEntity<CalendarDto.Response> createCalendar(
-            @LoginUser UserPrincipal user,
+            @CurrentUser UserPrincipal user,
             @ApiParam(value = "캘린더 생성 DTO") @RequestBody CalendarDto.CalendarCreateRequest requestDto) {
 
 
@@ -54,7 +52,7 @@ public class CalendarController {
     @PutMapping("/{id}")
     @ApiOperation(value = "캘린더 수정", notes = "캘린더를 수정한다.")
     public ResponseEntity<CalendarDto.Response> updateCalendar(
-            @LoginUser UserPrincipal user,
+            @CurrentUser UserPrincipal user,
             @ApiParam(value = "수정할 캘린더 ID", example = "3fa85f64-5717-4562-b3fc-2c963f66afa6") @PathVariable UUID id,
             @ApiParam(value = "캘린더 수정 DTO") @RequestBody CalendarDto.UpdateRequest updateRequest) {
         UUID calendarId = calendarService.update(id, updateRequest.getDescription());
@@ -76,7 +74,7 @@ public class CalendarController {
     @DeleteMapping("/{id}")
     @ApiOperation(value = "캘린더 삭제", notes = "캘린더를 삭제한다.")
     public ResponseEntity<DeletedEntityIdResponseDto> deleteCalendar(
-            @ApiParam(value = "현재 사용자", required = true) @LoginUser UserPrincipal user,
+            @ApiParam(value = "현재 사용자", required = true) @CurrentUser UserPrincipal user,
             @ApiParam(value = "캘린더 ID", required = true, example = "3fa85f64-5717-4562-b3fc-2c963f66afa6") @PathVariable UUID id) {
 
         Calendar calendar = calendarService.findById(id);
