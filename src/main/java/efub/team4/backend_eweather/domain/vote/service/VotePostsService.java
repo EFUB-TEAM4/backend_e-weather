@@ -93,6 +93,13 @@ public class VotePostsService {
 
     }
 
+    @Transactional
+    public VotePosts findVotePostsById(UUID id) {
+        VotePosts entity = votePostsRespsitory.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id " + id));
+        return entity;
+    }
+
     // 투표 게시글 삭제
     @Transactional
     public void deleteVotePost(UUID id) {

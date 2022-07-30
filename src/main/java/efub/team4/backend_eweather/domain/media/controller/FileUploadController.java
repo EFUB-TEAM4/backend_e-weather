@@ -6,6 +6,7 @@ import efub.team4.backend_eweather.domain.media.entity.UploadedFile;
 import efub.team4.backend_eweather.domain.media.exception.UploadedFileInvalidException;
 import efub.team4.backend_eweather.domain.media.service.S3Service;
 import efub.team4.backend_eweather.domain.media.service.UploadedFileService;
+import efub.team4.backend_eweather.global.dto.ApiResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -34,7 +35,7 @@ public class FileUploadController {
 
     @PostMapping
     @ApiOperation(value = "파일 업로드", notes = "S3 버킷에 한 개의 파일을 업로드한다.")
-    public ResponseEntity<UploadedFileDto.Response> create(
+    public ApiResponse<UploadedFileDto.Response> create(
             @ApiParam(value = "업로드할 파일", required = true) @RequestParam("file") MultipartFile file) throws IonException {
 
         try {
@@ -46,11 +47,7 @@ public class FileUploadController {
                     .fileType(file.getContentType())
                     .build());
 
-            return ResponseEntity.created(
-                            WebMvcLinkBuilder
-                                    .linkTo(FileUploadController.class)
-                                    .toUri())
-                    .body(uploadedFileMapper.toResponseDto(uploadedFile));
+            return ApiResponse.success("file", uploadedFileMapper.toResponseDto(uploadedFile));
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -60,26 +57,23 @@ public class FileUploadController {
 
     @GetMapping("/{id}")
     @ApiOperation(value = "S3 버킷에 업로드된 파일 상세 조회", notes = "업로드된 파일 하나에 대한 상세 정보를 조회한다.")
-    public ResponseEntity<UploadedFileDto.Response> get(
+    public ApiResponse<UploadedFileDto.Response> get(
             @ApiParam(value = "업로드된 파일 ID", required = true) @PathVariable UUID id) {
 
         UploadedFile uploadedFile = uploadedFileService.findById(id);
 
-        return ResponseEntity
-                .ok()
-                .body(uploadedFileMapper.toResponseDto(uploadedFile));
+        return ApiResponse.success("file", uploadedFileMapper.toResponseDto(uploadedFile));
     }
 
     @DeleteMapping("/{id}")
     @ApiOperation(value = "S3 버킷에 업로드된 파일 상세 조회", notes = "업로드된 파일 하나에 대한 상세 정보를 조회한다.")
-    public ResponseEntity<UploadedFileDto.Response> delete(
+    public ApiResponse<UploadedFileDto.Response> delete(
             @ApiParam(value = "업로드된 파일 ID", required = true) @PathVariable UUID id) {
 
         UploadedFile uploadedFile = uploadedFileService.findById(id);
         s3Service.deleteFileFromS3Bucket(uploadedFile.getUrl());
 
-        return ResponseEntity
-                .ok()
-                .body(uploadedFileMapper.toResponseDto(uploadedFile));
+        return ApiResponse.success("file", uploadedFileMapper.toResponseDto(uploadedFile));
+
     }
 }

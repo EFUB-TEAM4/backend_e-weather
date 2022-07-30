@@ -15,10 +15,11 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -40,13 +41,6 @@ public class AuthController {
     private final static long THREE_DAYS_MSEC = 259200000;
     private final static String REFRESH_TOKEN = "refresh_token";
 
-    @GetMapping("/redirect/{token}")
-    @ApiOperation(value = "리다이렉션", notes = "로그인 이후 리다이렉션 한다.")
-    public ApiResponse getToken(
-            @ApiParam(value = "Access Token", example = "Bearer Token") @PathVariable String token) {
-        return ApiResponse.success("token", token);
-    }
-
 
     @GetMapping("/refresh")
     @ApiOperation(value = "리프레시 토큰 확인", notes = "리프레시 토큰을 갱신한다.")
@@ -54,7 +48,7 @@ public class AuthController {
         // access token 확인
         String accessToken = HeaderUtil.getAccessToken(request);
         AuthToken authToken = tokenProvider.convertAuthToken(accessToken);
-        if (!authToken.validate()) {
+        if (!authToken.validate() && StringUtils.hasText(accessToken)) {
             return ApiResponse.invalidAccessToken();
         }
 
@@ -64,7 +58,8 @@ public class AuthController {
             return ApiResponse.notExpiredTokenYet();
         }
 
-        String userId = claims.getSubject();
+        String userId = claims.get("sub", String.class);
+
         RoleType roleType = RoleType.of(claims.get("role", String.class));
 
         // refresh token

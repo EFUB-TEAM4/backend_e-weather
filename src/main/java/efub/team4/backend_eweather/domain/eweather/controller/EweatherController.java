@@ -8,6 +8,7 @@ import efub.team4.backend_eweather.domain.media.controller.FileUploadController;
 import efub.team4.backend_eweather.domain.weather.dto.CurrentWeatherResponseDto;
 import efub.team4.backend_eweather.domain.weather.dto.ForcastResponseDto;
 import efub.team4.backend_eweather.domain.weather.service.OpenWeatherAPI;
+import efub.team4.backend_eweather.global.dto.ApiResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -34,15 +35,11 @@ public class EweatherController {
 
     @GetMapping("/current")
     @ApiOperation(value = "현재 날씨 정보값 조회", notes = "현재 날씨 정보값을 조회한다.")
-    public ResponseEntity<EweatherDto.CurrentResponseDto> getCurrentWeather() {
+    public ApiResponse<EweatherDto.CurrentResponseDto> getCurrentWeather() {
         try {
             CurrentWeatherResponseDto currentWeather = openWeatherAPI.findCurrentWeather();
             Eweather eweather = eweatherService.create(currentWeather);
-            return ResponseEntity.created(
-                            WebMvcLinkBuilder
-                                    .linkTo(FileUploadController.class)
-                                    .toUri())
-                    .body(eweatherMapper.fromEntity(eweather));
+            return ApiResponse.success("eweather", eweatherMapper.fromEntity(eweather));
         } catch (Exception e) {
             e.printStackTrace();
             throw new IllegalStateException("Could Not Load Current Weather Resources");
@@ -52,7 +49,7 @@ public class EweatherController {
 
     @GetMapping("/forecast")
     @ApiOperation(value = "하루 일기 예보 조회", notes = "하루 일기 예보 목록을 조회한다.")
-    public ResponseEntity<List<EweatherDto.ForecastWeatherResponseDto>> getForcastWeatherList() {
+    public ApiResponse<List<EweatherDto.ForecastWeatherResponseDto>> getForcastWeatherList() {
         try {
             List<ForcastResponseDto> forcastWeather = openWeatherAPI.findForcastWeather();
 
@@ -60,11 +57,7 @@ public class EweatherController {
                     .map(eweatherMapper::fromForecasts)
                     .collect(Collectors.toList());
 
-            return ResponseEntity.created(
-                            WebMvcLinkBuilder
-                                    .linkTo(EweatherController.class)
-                                    .toUri())
-                    .body(forecastLists);
+            return ApiResponse.success("forecast", forecastLists);
         } catch (Exception e) {
             e.printStackTrace();
             throw new IllegalStateException("Could Not Load Current Weather Resources");
