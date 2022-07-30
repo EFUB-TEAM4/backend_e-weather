@@ -5,6 +5,7 @@ import efub.team4.backend_eweather.domain.user.dto.SessionUser;
 import efub.team4.backend_eweather.domain.user.repository.UserRepository;
 import efub.team4.backend_eweather.domain.user.entity.User;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
@@ -18,6 +19,7 @@ import javax.servlet.http.HttpSession;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 @RequiredArgsConstructor
 @Service
@@ -40,10 +42,20 @@ public class CustomOauth2UserService implements OAuth2UserService<OAuth2UserRequ
 
         String userNameAttributeName = userRequest.getClientRegistration().getProviderDetails().getUserInfoEndpoint().getUserNameAttributeName();
         OAuthAttributes attributes = OAuthAttributes.of(userNameAttributeName, oAuth2User.getAttributes());
+        String userInfoUri = userRequest.getClientRegistration().getProviderDetails().getUserInfoEndpoint().getUri();
 
+
+
+        /*
+        여기서 session 저장하는 부분을 jwt 토큰 발행해서 돌리도록 바꿔야 할 듯
+        아니다 일단은 저장을 해 보자...
+         */
         User user = saveOrUpdate(attributes);
         httpSession.setAttribute("user", new SessionUser(user));
         SessionUser sessionUser = (SessionUser) httpSession.getAttribute("user");
+
+        // 필요 없음 어차피 안들어감
+        // System.out.println(httpSession.getId());
 
 
         return new DefaultOAuth2User(
@@ -55,8 +67,6 @@ public class CustomOauth2UserService implements OAuth2UserService<OAuth2UserRequ
     }
 
     public User saveOrUpdate(OAuthAttributes attributes){
-
-
         User user = userRepository.findByEmail(attributes.getEmail());
 
         if(user != null){

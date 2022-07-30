@@ -18,8 +18,11 @@ public class BearDto {
         @ApiModelProperty(value = "PTY CODE", example = "1", required = true)
         private Integer ptyCode;
 
-        @ApiModelProperty(value = "착장 명", example = "후드티/청바지", required = true)
+        @ApiModelProperty(value = "착장 기준", example = "비/눈_5_8", required = true)
         private String clothName;
+
+        @ApiModelProperty(value = "착장 명", example = "후드티/청바지", required = true)
+        private String clothDescription;
 
         @ApiModelProperty(value = "bear url", example = "https://-.com", required = true)
         private String bearFileUrl;
@@ -37,8 +40,11 @@ public class BearDto {
         @ApiModelProperty(value = "기온 분류 API", required = true)
         private TemperatureDto.TemperatureResponseDto temperatureResponseDto;
 
-        @ApiModelProperty(value = "착장 명", example = "후드티/청바지", required = true)
+        @ApiModelProperty(value = "착장 기준", example = "비/눈_5_8", required = true)
         private String clothName;
+
+        @ApiModelProperty(value = "착장 명", example = "후드티 / 청바지", required = true)
+        private String clothDescription;
 
         @ApiModelProperty(value = "bear url", example = "https://-.com", required = true)
         private String bearFileUrl;

@@ -33,13 +33,17 @@ public class ProfileService {
     }
 
     @Transactional
-    public UUID update(UUID userId, String nickname, UUID fileId) {
+    public Profile update(UUID userId, UUID profileId, String nickname, UUID fileId) {
 
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found with id"));
 
-        Profile profile = profileRepository.findProfileByUser(user)
-                .orElseThrow(() -> new ProfileNotFoundException("Profile not found with user"));
+        Profile profile = profileRepository.findById(profileId)
+                .orElseThrow(() -> new ProfileNotFoundException("Profile not found with id"));
+
+        if (!userId.equals(profile.getUser().getId())){
+            throw new IllegalStateException("UserId does not match with profile id");
+        }
 
         if (fileId != null && !fileId.equals("")) {
             UploadedFile uploadedFile = uploadedFileRepository.findById(fileId)
@@ -49,9 +53,9 @@ public class ProfileService {
             profile.update(nickname, null);
         }
 
-        profileRepository.save(profile);
+        Profile updatedProfile = profileRepository.save(profile);
 
-        return profile.getId();
+        return updatedProfile;
     }
 
     @Transactional(readOnly = true)

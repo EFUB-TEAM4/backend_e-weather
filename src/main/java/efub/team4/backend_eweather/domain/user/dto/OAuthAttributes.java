@@ -40,7 +40,6 @@ public class OAuthAttributes {
 
     public User toEntity() {
         return User.builder()
-                .id(UUID.randomUUID())
                 .fullName(name)
                 .email(email)
                 .build();

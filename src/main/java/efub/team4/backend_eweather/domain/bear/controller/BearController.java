@@ -7,6 +7,10 @@ import efub.team4.backend_eweather.domain.bear.entity.Bear;
 import efub.team4.backend_eweather.domain.bear.service.BearService;
 
 import efub.team4.backend_eweather.domain.weather.service.OpenWeatherAPI;
+import efub.team4.backend_eweather.global.config.auth.CurrentUser;
+import efub.team4.backend_eweather.global.outh.entity.RoleType;
+import efub.team4.backend_eweather.global.outh.entity.UserPrincipal;
+import efub.team4.backend_eweather.global.outh.exception.InvalidUserRoleException;
 import lombok.RequiredArgsConstructor;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +27,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.List;
 import java.util.UUID;
@@ -40,7 +45,7 @@ public class BearController {
     @Autowired
     private final OpenWeatherAPI openWeatherAPI;
 
-
+    @GetMapping
     @ApiOperation(value = "곰돌이 목록 조회", notes = "곰돌이 목록을 조회한다.")
     public ResponseEntity<List<BearDto.BearResponseDto>> getBearList() {
         List<Bear> bearList = bearService.findAll();
