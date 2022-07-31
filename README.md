@@ -1,4 +1,4 @@
-# 이상청
+# 🌈이상청
 
 ### 이화인을 위한 기상 정보 및 옷차림 정보 제공 서비스
 
@@ -10,50 +10,90 @@
 
 ### 🌦 ABOUT E-WEATHER
 
-<aside>
-💡 기존 교내 커뮤니티 날씨 게시판의 시각 정보 부족과, 기상정보를 종합적으로 파악할 수 없다는 문제점에서 시작하여 고안한, 이화인을 위한 기상정보 서비스입니다. 오픈 API를 활용해 매일의 기상정보를 제공하며, 옷에 대한 투표를 통해 교내 커뮤니티  날씨게시판의 기능을 시각적으로 확장합니다. 이화그린 색의 야잠, 뽀글이후드 등을 입은 이화 곰돌이를 통해 기온과 강수상태를 파악할 수 있습니다.
 
-</aside>
+> 💡 기존 교내 커뮤니티 날씨 게시판의 시각 정보 부족과, 기상정보를 종합적으로 파악할 수 없다는 문제점에서 시작하여 고안한, 이화인을 위한 기상정보 서비스입니다. 오픈 API를 활용해 매일의 기상정보를 제공하며, 옷에 대한 투표를 통해 교내 커뮤니티  날씨게시판의 기능을 시각적으로 확장합니다. 이화그린 색의 야잠, 뽀글이후드 등을 입은 이화 곰돌이를 통해 기온과 강수상태를 파악할 수 있습니다.
 
-<img width="775" alt="스크린샷 2022-07-31 오후 11 22 16" src="https://user-images.githubusercontent.com/70934572/182031754-2a6985c2-7284-45fb-b911-49f6fd114d89.png">
-<img width="679" alt="스크린샷 2022-07-31 오후 11 15 26" src="https://user-images.githubusercontent.com/70934572/182031757-a1c2705e-33b9-4603-9672-775efe3adef2.png">
+<br>
 
+
+<table>
+    <tr width="100%">
+        <td width="50%" align="center"><img src="https://eweather-bucket.s3.ap-northeast-2.amazonaws.com/share/readme/intro1.png"></td>
+        <td width="50%" align="center"><img src="https://eweather-bucket.s3.ap-northeast-2.amazonaws.com/share/readme/intro2.png"></td>
+    </tr>
+</table>
+<table>
+    <tr width="100%">
+        <td width="25%" align="center"><img src="https://eweather-bucket.s3.ap-northeast-2.amazonaws.com/share/readme/func1.png"></td>
+        <td width="25%" align="center"><img src="https://eweather-bucket.s3.ap-northeast-2.amazonaws.com/share/readme/func2.png"></td>
+        <td width="25%" align="center"><img src="https://eweather-bucket.s3.ap-northeast-2.amazonaws.com/share/readme/func3.png"></td>
+        <td width="25%" align="center"><img src="https://eweather-bucket.s3.ap-northeast-2.amazonaws.com/share/readme/func4.png"></td>
+    </tr>
+</table>
 
 
 ## 🌟팀원 소개
 
 
-|[이소림](https://github.com/thfla1105)|[박소현](https://github.com/Sohyun-Dev)|[이선의](https://github.com/sunnyineverywhere)|[김은서](https://github.com/eunseo22mv)| [김명지](https://github.com/Gom3rye)|
-|---|---|---|---|---|
-|<img src="https://github.com/thfla1105.png">|<img src="https://github.com/Sohyun-Dev.png">|<img src="https://github.com/sunnyineverywhere.png">|<img src="https://github.com/eunseo22mv.png">|<img src="https://github.com/Gom3rye.png">|
-|서버 인프라 관리 및 CICD 환경 구축, RDS 환경 구축, S3 Bucket 환경 설정 및 파일 업로드 API 구현, OAuth JWT 로그인 시스템 구현, [캘린더, EWEATHER, ICON 등 COMPONENT]  CRUD API 로직 설계 및 개발, GLOBAL Config 및 환경 요소 설정, 데이터베이스 설계 | 곰돌이 logic 설계, 곰돌이 코디 조회 관련 로직 구현 및 CRUD API 개발, 기온 관련 로직 구현 및 CRUD API 개발, DB 데이터 관리, 데이터베이스 설계 | 데이터베이스 설계, 투표 조회 관련 로직 구현 및 투표 게시글 CRUD API 개발 및 구현, 투표 게시글 좋아요&싫어요 기능 개발 | 데이터베이스 설계, 투표 조회 관련 로직 구현 및 투표 게시글 CRUD API 개발 및 구현, 투표 게시글 좋아요&싫어요 기능 개발 | 배포, 인프라 유지 보수                                      |
+<table border="1" cellspacing="0" cellpadding="0" width="90%">
+    <tr width="100%">
+        <td width="20%" align="center"><a href= "https://github.com/thfla1105">이소림</a></td>
+        <td width="20%" align="center"><a href= "https://github.com/Sohyun-Dev">박소현</a></td>
+        <td width="20%" align="center"><a href= "https://github.com/sunnyineverywhere">이선의</a></td>
+        <td width="20%" align="center"><a href= "https://github.com/eunseo22mv">김은서</a></td>
+        <td width="20%" align="center"><a href= "https://github.com/Gom3rye">김명지</a></td>
+    </tr>
+    <tr width="100%">
+        <td width="20%" align="center"><img src = "https://github.com/thfla1105.png"></td>
+        <td width="20%" align="center"><img src = "https://github.com/Sohyun-Dev.png"/></td>
+        <td width="20%" align="center"><img src = "https://github.com/sunnyineverywhere.png"/></td>
+        <td width="20%" align="center"><img src = "https://github.com/eunseo22mv.png"/></td>
+        <td width="20%" align="center"><img src = "https://github.com/Gom3rye.png"/></td>
+    </tr>
+    <tr width="100%">
+        <td width="20%" align="center">
+서버 인프라 관리 및 CICD 환경 구축, RDS 환경 구축, S3 Bucket 환경 설정 및 파일 업로드 API 구현, OAuth JWT 로그인 시스템 구현, [캘린더, EWEATHER, ICON 등 COMPONENT]  CRUD API 로직 설계 및 개발, GLOBAL Config 및 환경 요소 설정, 데이터베이스 설계</td>
+        <td width="20%" align="center">
+곰돌이 logic 설계, 곰돌이 코디 조회 관련 로직 구현 및 CRUD API 개발, 기온 관련 로직 구현 및 CRUD API 개발, DB 데이터 관리, 데이터베이스 설계</td>
+        <td width="20%" align="center">
+데이터베이스 설계, 투표 조회 관련 로직 구현 및 투표 게시글 CRUD API 개발 및 구현, 투표 게시글 좋아요&싫어요 기능 개발</td>
+        <td width="20%" align="center">
+데이터베이스 설계, 투표 조회 관련 로직 구현 및 투표 게시글 CRUD API 개발 및 구현, 투표 게시글 좋아요&싫어요 기능 개발</td>
+        <td width="20%" align="center">
+배포, 인프라 유지 보수</td>
+   </tr>
+</table>
 
 ## ⚡프로젝트 구조
 
-
-### 기술 STACK
-
-- `Java 11`
-- `Spring Boot`
-- `AWS EC2, RDS, S3, CodeDeploy`
-- `Nginx`
-- `Travis CI`
-
-![Untitled (1)](https://user-images.githubusercontent.com/70934572/182031704-3953dcda-4e9f-43bb-a04d-c2a54f00e27b.png)
+<table>
+    <tr width="100%">
+        <td width="30%" align="left">
+<h3>기술 STACK</h3>
+<ul>
+<li>Java 11</li>
+<li>Spring Boot</li>
+<li>AWS EC2, RDS, S3, CodeDeploy</li>
+<li>Nginx</li>
+<li>Travis CI</li>
+</ul>
+</td>
+        <td width="70%" align="center"><img src="https://eweather-bucket.s3.ap-northeast-2.amazonaws.com/share/readme/structure.png"></td>
+    </tr>
+</table>
 
 
 ## ☂ERD
 
 
 
-![eweather](https://user-images.githubusercontent.com/70934572/182031660-2122963e-f57a-4a6a-a5bc-333c3af20ee0.png)
+![eweather](https://eweather-bucket.s3.ap-northeast-2.amazonaws.com/share/readme/erd2.png)
 
 
 ## ☃API 문서
 
 
-
-[api-docs](http://ewhaweather.com/v2/api-docs)
+<b> <h3>[링크](http://ewhaweather.com/v2/api-docs) </h3></b>
 
 ## 🌜폴더 구조
 
