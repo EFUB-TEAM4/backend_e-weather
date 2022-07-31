@@ -19,6 +19,7 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
+import java.security.InvalidParameterException;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -27,6 +28,7 @@ import java.util.UUID;
 public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
     private final UserRepository userRepository;
+    private final static String VALID_DOMAIN = "ewhain.net";
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
@@ -46,6 +48,17 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         ProviderType providerType = ProviderType.valueOf(userRequest.getClientRegistration().getRegistrationId().toUpperCase());
 
         OAuth2UserInfo userInfo = OAuth2UserInfoFactory.getOAuth2UserInfo(providerType, user.getAttributes());
+
+        Object emailDomain = userInfo.getAttributes().get("hd");
+
+        if (emailDomain == null) {
+            throw new InvalidParameterException("User cannot upload without specified domain at email");
+        } else {
+            if (!emailDomain.toString().equals(VALID_DOMAIN)) {
+                throw new InvalidParameterException("User cannot upload without specified domain at email");
+            }
+        }
+
         User savedUser = userRepository.findByEmail(userInfo.getEmail());
 
         if (savedUser != null) {
