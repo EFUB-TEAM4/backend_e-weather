@@ -15,8 +15,10 @@
 
 </aside>
 
-<img width="775" alt="스크린샷 2022-07-31 오후 11 22 16" src="https://user-images.githubusercontent.com/70934572/182031754-2a6985c2-7284-45fb-b911-49f6fd114d89.png">
-<img width="679" alt="스크린샷 2022-07-31 오후 11 15 26" src="https://user-images.githubusercontent.com/70934572/182031757-a1c2705e-33b9-4603-9672-775efe3adef2.png">
+<img width="775" alt="스크린샷 2022-07-31 오후 11 22 16" src="https://eweather-bucket.s3.ap-northeast-2.amazonaws.com/share/readme/intro1.png">
+<img width="679" alt="스크린샷 2022-07-31 오후 11 15 26" src="https://eweather-bucket.s3.ap-northeast-2.amazonaws.com/share/readme/intro2.png">
+
+
 
 
 
