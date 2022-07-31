@@ -41,14 +41,14 @@
 - `Nginx`
 - `Travis CI`
 
-![Untitled (1)](https://user-images.githubusercontent.com/70934572/182031704-3953dcda-4e9f-43bb-a04d-c2a54f00e27b.png)
+![Untitled (1)](https://eweather-bucket.s3.ap-northeast-2.amazonaws.com/share/readme/structure.png)
 
 
 ## ☂ERD
 
 
 
-![eweather](https://user-images.githubusercontent.com/70934572/182031660-2122963e-f57a-4a6a-a5bc-333c3af20ee0.png)
+![eweather](https://eweather-bucket.s3.ap-northeast-2.amazonaws.com/share/readme/erd.png)
 
 
 ## ☃API 문서
