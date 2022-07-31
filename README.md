@@ -1,4 +1,4 @@
-# 이상청
+# 🌈이상청
 
 ### 이화인을 위한 기상 정보 및 옷차림 정보 제공 서비스
 
@@ -10,19 +10,26 @@
 
 ### 🌦 ABOUT E-WEATHER
 
-<aside>
-💡 기존 교내 커뮤니티 날씨 게시판의 시각 정보 부족과, 기상정보를 종합적으로 파악할 수 없다는 문제점에서 시작하여 고안한, 이화인을 위한 기상정보 서비스입니다. 오픈 API를 활용해 매일의 기상정보를 제공하며, 옷에 대한 투표를 통해 교내 커뮤니티  날씨게시판의 기능을 시각적으로 확장합니다. 이화그린 색의 야잠, 뽀글이후드 등을 입은 이화 곰돌이를 통해 기온과 강수상태를 파악할 수 있습니다.
 
-</aside>
+> 💡 기존 교내 커뮤니티 날씨 게시판의 시각 정보 부족과, 기상정보를 종합적으로 파악할 수 없다는 문제점에서 시작하여 고안한, 이화인을 위한 기상정보 서비스입니다. 오픈 API를 활용해 매일의 기상정보를 제공하며, 옷에 대한 투표를 통해 교내 커뮤니티  날씨게시판의 기능을 시각적으로 확장합니다. 이화그린 색의 야잠, 뽀글이후드 등을 입은 이화 곰돌이를 통해 기온과 강수상태를 파악할 수 있습니다.
 
-<img width="775" alt="스크린샷 2022-07-31 오후 11 22 16" src="https://eweather-bucket.s3.ap-northeast-2.amazonaws.com/share/readme/intro1.png">
-<img width="679" alt="스크린샷 2022-07-31 오후 11 15 26" src="https://eweather-bucket.s3.ap-northeast-2.amazonaws.com/share/readme/intro2.png">
+<br>
 
-<img width="1000" alt="스크린샷 2022-07-31 오후 11 15 26" src="https://eweather-bucket.s3.ap-northeast-2.amazonaws.com/share/readme/func1.png">
-<img width="1000" alt="스크린샷 2022-07-31 오후 11 15 26" src="https://eweather-bucket.s3.ap-northeast-2.amazonaws.com/share/readme/func2.png">
-<img width="1000" alt="스크린샷 2022-07-31 오후 11 15 26" src="https://eweather-bucket.s3.ap-northeast-2.amazonaws.com/share/readme/func3.png">
-<img width="1000" alt="스크린샷 2022-07-31 오후 11 15 26" src="https://eweather-bucket.s3.ap-northeast-2.amazonaws.com/share/readme/func4.png">
 
+<table>
+    <tr width="100%">
+        <td width="50%" align="center"><img src="https://eweather-bucket.s3.ap-northeast-2.amazonaws.com/share/readme/intro1.png"></td>
+        <td width="50%" align="center"><img src="https://eweather-bucket.s3.ap-northeast-2.amazonaws.com/share/readme/intro2.png"></td>
+    </tr>
+</table>
+<table>
+    <tr width="100%">
+        <td width="25%" align="center"><img src="https://eweather-bucket.s3.ap-northeast-2.amazonaws.com/share/readme/func1.png"></td>
+        <td width="25%" align="center"><img src="https://eweather-bucket.s3.ap-northeast-2.amazonaws.com/share/readme/func2.png"></td>
+        <td width="25%" align="center"><img src="https://eweather-bucket.s3.ap-northeast-2.amazonaws.com/share/readme/func3.png"></td>
+        <td width="25%" align="center"><img src="https://eweather-bucket.s3.ap-northeast-2.amazonaws.com/share/readme/func4.png"></td>
+    </tr>
+</table>
 
 
 ## 🌟팀원 소개
@@ -59,16 +66,21 @@
 
 ## ⚡프로젝트 구조
 
-
-### 기술 STACK
-
-- `Java 11`
-- `Spring Boot`
-- `AWS EC2, RDS, S3, CodeDeploy`
-- `Nginx`
-- `Travis CI`
-
-![Untitled (1)](https://eweather-bucket.s3.ap-northeast-2.amazonaws.com/share/readme/structure.png)
+<table>
+    <tr width="100%">
+        <td width="30%" align="left">
+<h3>기술 STACK</h3>
+<ul>
+<li>Java 11</li>
+<li>Spring Boot</li>
+<li>AWS EC2, RDS, S3, CodeDeploy</li>
+<li>Nginx</li>
+<li>Travis CI</li>
+</ul>
+</td>
+        <td width="70%" align="center"><img src="https://eweather-bucket.s3.ap-northeast-2.amazonaws.com/share/readme/structure.png"></td>
+    </tr>
+</table>
 
 
 ## ☂ERD
@@ -81,8 +93,7 @@
 ## ☃API 문서
 
 
-
-[api-docs](http://ewhaweather.com/v2/api-docs)
+<b> <h3>[링크](http://ewhaweather.com/v2/api-docs) </h3></b>
 
 ## 🌜폴더 구조
 
