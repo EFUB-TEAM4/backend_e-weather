@@ -18,7 +18,10 @@
 <img width="775" alt="스크린샷 2022-07-31 오후 11 22 16" src="https://eweather-bucket.s3.ap-northeast-2.amazonaws.com/share/readme/intro1.png">
 <img width="679" alt="스크린샷 2022-07-31 오후 11 15 26" src="https://eweather-bucket.s3.ap-northeast-2.amazonaws.com/share/readme/intro2.png">
 
-
+<img width="1000" alt="스크린샷 2022-07-31 오후 11 15 26" src="https://eweather-bucket.s3.ap-northeast-2.amazonaws.com/share/readme/func1.png">
+<img width="1000" alt="스크린샷 2022-07-31 오후 11 15 26" src="https://eweather-bucket.s3.ap-northeast-2.amazonaws.com/share/readme/func2.png">
+<img width="1000" alt="스크린샷 2022-07-31 오후 11 15 26" src="https://eweather-bucket.s3.ap-northeast-2.amazonaws.com/share/readme/func3.png">
+<img width="1000" alt="스크린샷 2022-07-31 오후 11 15 26" src="https://eweather-bucket.s3.ap-northeast-2.amazonaws.com/share/readme/func4.png">
 
 
 
