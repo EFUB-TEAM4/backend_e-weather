@@ -25,10 +25,34 @@
 ## 🌟팀원 소개
 
 
-|[이소림](https://github.com/thfla1105)|[박소현](https://github.com/Sohyun-Dev)|[이선의](https://github.com/sunnyineverywhere)|[김은서](https://github.com/eunseo22mv)| [김명지](https://github.com/Gom3rye)|
-|---|---|---|---|---|
-|<img src="https://github.com/thfla1105.png">|<img src="https://github.com/Sohyun-Dev.png">|<img src="https://github.com/sunnyineverywhere.png">|<img src="https://github.com/eunseo22mv.png">|<img src="https://github.com/Gom3rye.png">|
-|서버 인프라 관리 및 CICD 환경 구축, RDS 환경 구축, S3 Bucket 환경 설정 및 파일 업로드 API 구현, OAuth JWT 로그인 시스템 구현, [캘린더, EWEATHER, ICON 등 COMPONENT]  CRUD API 로직 설계 및 개발, GLOBAL Config 및 환경 요소 설정, 데이터베이스 설계 | 곰돌이 logic 설계, 곰돌이 코디 조회 관련 로직 구현 및 CRUD API 개발, 기온 관련 로직 구현 및 CRUD API 개발, DB 데이터 관리, 데이터베이스 설계 | 데이터베이스 설계, 투표 조회 관련 로직 구현 및 투표 게시글 CRUD API 개발 및 구현, 투표 게시글 좋아요&싫어요 기능 개발 | 데이터베이스 설계, 투표 조회 관련 로직 구현 및 투표 게시글 CRUD API 개발 및 구현, 투표 게시글 좋아요&싫어요 기능 개발 | 배포, 인프라 유지 보수                                      |
+<table border="1" cellspacing="0" cellpadding="0" width="90%">
+    <tr width="100%">
+        <td width="20%" align="center"><a href= "https://github.com/thfla1105">이소림</a></td>
+        <td width="20%" align="center"><a href= "https://github.com/Sohyun-Dev">박소현</a></td>
+        <td width="20%" align="center"><a href= "https://github.com/sunnyineverywhere">이선의</a></td>
+        <td width="20%" align="center"><a href= "https://github.com/eunseo22mv">김은서</a></td>
+        <td width="20%" align="center"><a href= "https://github.com/Gom3rye">김명지</a></td>
+    </tr>
+    <tr width="100%">
+        <td width="20%" align="center"><img src = "https://github.com/thfla1105.png"></td>
+        <td width="20%" align="center"><img src = "https://github.com/Sohyun-Dev.png"/></td>
+        <td width="20%" align="center"><img src = "https://github.com/sunnyineverywhere.png"/></td>
+        <td width="20%" align="center"><img src = "https://github.com/eunseo22mv.png"/></td>
+        <td width="20%" align="center"><img src = "https://github.com/Gom3rye.png"/></td>
+    </tr>
+    <tr width="100%">
+        <td width="20%" align="center">
+서버 인프라 관리 및 CICD 환경 구축, RDS 환경 구축, S3 Bucket 환경 설정 및 파일 업로드 API 구현, OAuth JWT 로그인 시스템 구현, [캘린더, EWEATHER, ICON 등 COMPONENT]  CRUD API 로직 설계 및 개발, GLOBAL Config 및 환경 요소 설정, 데이터베이스 설계</td>
+        <td width="20%" align="center">
+곰돌이 logic 설계, 곰돌이 코디 조회 관련 로직 구현 및 CRUD API 개발, 기온 관련 로직 구현 및 CRUD API 개발, DB 데이터 관리, 데이터베이스 설계</td>
+        <td width="20%" align="center">
+데이터베이스 설계, 투표 조회 관련 로직 구현 및 투표 게시글 CRUD API 개발 및 구현, 투표 게시글 좋아요&싫어요 기능 개발</td>
+        <td width="20%" align="center">
+데이터베이스 설계, 투표 조회 관련 로직 구현 및 투표 게시글 CRUD API 개발 및 구현, 투표 게시글 좋아요&싫어요 기능 개발</td>
+        <td width="20%" align="center">
+배포, 인프라 유지 보수</td>
+   </tr>
+</table>
 
 ## ⚡프로젝트 구조
 
@@ -48,7 +72,7 @@
 
 
 
-![eweather1](https://eweather-bucket.s3.ap-northeast-2.amazonaws.com/share/readme/erd.png)
+![eweather](https://eweather-bucket.s3.ap-northeast-2.amazonaws.com/share/readme/erd.png)
 
 
 ## ☃API 문서
