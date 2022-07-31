@@ -1,9 +1,12 @@
 # 이상청
+
 ### 이화인을 위한 기상 정보 및 옷차림 정보 제공 서비스
 
-## 🌞프로젝트 설명
+<br>
 
----
+
+
+## 🌞프로젝트 설명
 
 ### 🌦 ABOUT E-WEATHER
 
@@ -12,26 +15,21 @@
 
 </aside>
 
-![스크린샷 2022-07-31 오후 11.22.16.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/cf8a69fb-0278-414b-8713-5cdc2c0d5f2d/_2022-07-31__11.22.16.png)
+<img width="775" alt="스크린샷 2022-07-31 오후 11 22 16" src="https://user-images.githubusercontent.com/70934572/182031754-2a6985c2-7284-45fb-b911-49f6fd114d89.png">
+<img width="679" alt="스크린샷 2022-07-31 오후 11 15 26" src="https://user-images.githubusercontent.com/70934572/182031757-a1c2705e-33b9-4603-9672-775efe3adef2.png">
 
-![스크린샷 2022-07-31 오후 11.15.26.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/45247d3f-ab6b-4347-9fb9-b0e2263a2804/_2022-07-31__11.15.26.png)
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/a34c990f-e0eb-463e-8455-597798fbcfc5/Untitled.png)
-
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/16a61a60-b9d1-4d08-b7a2-ebc0263727fe/Untitled.png)
 
 ## 🌟팀원 소개
 
----
 
-| [이소림](https://github.com/thfla1105)                                                                                                                                                   | [박소현](https://github.com/Sohyun-Dev)                                                            | [이선의](https://github.com/sunnyineverywhere)                               | [김은서](https://github.com/eunseo22mv)                                      | [김명지](https://github.com/Gom3rye)       |
-|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------|---------------------------------------------------------------------------|-----------------------------------------|
-| <img src="https://github.com/thfla1105.png" style="width:100px; height:100px">                                                                                                        | <img src="https://github.com/Sohyun-Dev.png" style="width:100px; height:100px">                                                  | <img src="https://github.com/sunnyineverywhere.png" style="width:100px; height:100px">                     | <img src="https://github.com/eunseo22mv.png" style="width:100px; height:100px">                            | <img src="https://github.com/Gom3rye" style="width:100px; height:100px"> |
-| 서버 인프라 관리 및 CICD 환경 구축, RDS 환경 구축, S3 Bucket 환경 설정 및 파일 업로드 API 구현, OAuth JWT 로그인 시스템 구현, [캘린더, EWEATHER, ICON 등 COMPONENT]  CRUD API 로직 설계 및 개발, GLOBAL Config 및 환경 요소 설정, 데이터베이스 설계 | 곰돌이 logic 설계, 곰돌이 코디 조회 관련 로직 구현 및 CRUD API 개발, 기온 관련 로직 구현 및 CRUD API 개발, DB 데이터 관리, 데이터베이스 설계 | 데이터베이스 설계, 투표 조회 관련 로직 구현 및 투표 게시글 CRUD API 개발 및 구현, 투표 게시글 좋아요&싫어요 기능 개발 | 데이터베이스 설계, 투표 조회 관련 로직 구현 및 투표 게시글 CRUD API 개발 및 구현, 투표 게시글 좋아요&싫어요 기능 개발 | 배포                                      |
+|[이소림](https://github.com/thfla1105)|[박소현](https://github.com/Sohyun-Dev)|[이선의](https://github.com/sunnyineverywhere)|[김은서](https://github.com/eunseo22mv)| [김명지](https://github.com/Gom3rye)|
+|---|---|---|---|---|
+|<img src="https://github.com/thfla1105.png">|<img src="https://github.com/Sohyun-Dev.png">|<img src="https://github.com/sunnyineverywhere.png">|<img src="https://github.com/eunseo22mv.png">|<img src="https://github.com/Gom3rye.png">|
+|서버 인프라 관리 및 CICD 환경 구축, RDS 환경 구축, S3 Bucket 환경 설정 및 파일 업로드 API 구현, OAuth JWT 로그인 시스템 구현, [캘린더, EWEATHER, ICON 등 COMPONENT]  CRUD API 로직 설계 및 개발, GLOBAL Config 및 환경 요소 설정, 데이터베이스 설계 | 곰돌이 logic 설계, 곰돌이 코디 조회 관련 로직 구현 및 CRUD API 개발, 기온 관련 로직 구현 및 CRUD API 개발, DB 데이터 관리, 데이터베이스 설계 | 데이터베이스 설계, 투표 조회 관련 로직 구현 및 투표 게시글 CRUD API 개발 및 구현, 투표 게시글 좋아요&싫어요 기능 개발 | 데이터베이스 설계, 투표 조회 관련 로직 구현 및 투표 게시글 CRUD API 개발 및 구현, 투표 게시글 좋아요&싫어요 기능 개발 | 배포, 인프라 유지 보수                                      |
 
 ## ⚡프로젝트 구조
 
----
 
 ### 기술 STACK
 
@@ -41,23 +39,25 @@
 - `Nginx`
 - `Travis CI`
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/02398e14-5281-485d-a3be-8234dcac56dc/Untitled.png)
+![Untitled (1)](https://user-images.githubusercontent.com/70934572/182031704-3953dcda-4e9f-43bb-a04d-c2a54f00e27b.png)
+
 
 ## ☂ERD
 
----
 
-![eweather.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/130a3d96-2ee0-4fbb-b023-da1daeb0ce12/eweather.png)
+
+![eweather](https://user-images.githubusercontent.com/70934572/182031660-2122963e-f57a-4a6a-a5bc-333c3af20ee0.png)
+
 
 ## ☃API 문서
 
----
+
 
 [api-docs](http://ewhaweather.com/v2/api-docs)
 
 ## 🌜폴더 구조
 
----
+
 
 ```jsx
 ├── README.md
