@@ -72,7 +72,7 @@
 
 
 
-![eweather](https://eweather-bucket.s3.ap-northeast-2.amazonaws.com/share/readme/erd.png)
+![eweather](https://eweather-bucket.s3.ap-northeast-2.amazonaws.com/share/readme/erd2.png)
 
 
 ## ☃API 문서
