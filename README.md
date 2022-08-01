@@ -56,7 +56,7 @@
         <td width="20%" align="center">
 곰돌이 logic 설계, 곰돌이 코디 조회 관련 로직 구현 및 CRUD API 개발, 기온 관련 로직 구현 및 CRUD API 개발, DB 데이터 관리, 데이터베이스 설계</td>
         <td width="20%" align="center">
-데이터베이스 설계, 투표 조회 관련 로직 구현 및 투표 게시글 CRUD API 개발 및 구현, 투표 게시글 좋아요&싫어요 기능 개발</td>
+데이터베이스 설계, 투표 조회 관련 로직 구현 및 투표 게시글 CRUD API 개발 및 구현, 투표 게시글 좋아요&싫어요 기능 개발, 기상청 단기예보 OPEN API 가공, S3 Bucket 생성 및 환경 설정, oauth2를 활용한 로그인 </td>
         <td width="20%" align="center">
 데이터베이스 설계, 투표 조회 관련 로직 구현 및 투표 게시글 CRUD API 개발 및 구현, 투표 게시글 좋아요&싫어요 기능 개발</td>
         <td width="20%" align="center">
