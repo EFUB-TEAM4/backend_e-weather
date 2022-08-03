@@ -2,7 +2,6 @@ package efub.team4.backend_eweather.global.config;
 
 import efub.team4.backend_eweather.domain.auth.repository.UserRefreshTokenRepository;
 import efub.team4.backend_eweather.domain.user.repository.UserRepository;
-import efub.team4.backend_eweather.global.config.auth.OAuth2SuccessHandler;
 import efub.team4.backend_eweather.global.config.properties.AppProperties;
 import efub.team4.backend_eweather.global.config.properties.CorsProperties;
 import efub.team4.backend_eweather.global.outh.exception.RestAuthenticationEntryPoint;
@@ -15,7 +14,6 @@ import efub.team4.backend_eweather.global.outh.service.CustomOAuth2UserService;
 import efub.team4.backend_eweather.global.outh.service.CustomUserDetailsService;
 import efub.team4.backend_eweather.global.outh.token.AuthTokenProvider;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -64,10 +62,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final UserRefreshTokenRepository userRefreshTokenRepository;
     private final UserRepository userRepository;
     private final CustomUserDetailsService customUserDetailsService;
-
-
-    @Autowired
-    private OAuth2SuccessHandler oAuth2SuccessHandler;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -141,11 +135,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .successHandler(oAuth2AuthenticationSuccessHandler())
                 .failureHandler(oAuth2AuthenticationFailureHandler());
-        http.addFilterBefore(new CustomCorsFilter(), ChannelProcessingFilter.class);
+        //http.addFilterBefore(new CustomCorsFilter(), ChannelProcessingFilter.class);
         http.addFilterBefore(tokenAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 
-    //.baseUri("/*/oauth2/code/*")
     /*
      * auth 매니저 설정
      * */
@@ -202,44 +195,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new OAuth2AuthenticationFailureHandler(oAuth2AuthorizationRequestBasedOnCookieRepository());
     }
 
-
     /*
+     * Cors 설정
+     *
+     */
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity.csrf().disable()
-                .cors().and()
-                .headers().frameOptions().disable()
-                .and()
-                .authorizeRequests()
-                .antMatchers("/**", "/main", "/", "/css/**", "/images/**", "/js/**", "/profile").permitAll()
-                .antMatchers("api/v1/weather").permitAll()
-                .antMatchers("api/v1/bear").permitAll()
-                .antMatchers("api/v1/votes").hasAnyRole("USER")
-                .antMatchers("api/v1/calendars").hasAnyRole("USER")
-                .anyRequest().authenticated()
-                .and()
-                .logout()
-                .logoutSuccessUrl("/")
-                .and()
-                .oauth2Login()
-                .defaultSuccessUrl("/")
-                .userInfoEndpoint()
-                .userService(customOauth2UserService);
-        return httpSecurity.build();
-    }
-*/
-    @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
+    public UrlBasedCorsConfigurationSource corsConfigurationSource() {
+        UrlBasedCorsConfigurationSource corsConfigSource = new UrlBasedCorsConfigurationSource();
 
-        configuration.addAllowedOrigin("*");
-        configuration.addAllowedHeader("*");
-        configuration.addAllowedMethod("*");
-        //configuration.setAllowCredentials(true);
+        CorsConfiguration corsConfig = new CorsConfiguration();
+        corsConfig.setAllowedHeaders(Arrays.asList(corsProperties.getAllowedHeaders().split(",")));
+        corsConfig.setAllowedMethods(Arrays.asList(corsProperties.getAllowedMethods().split(",")));
+        corsConfig.setAllowedOrigins(Arrays.asList(corsProperties.getAllowedOrigins().split(",")));
+        corsConfig.setAllowCredentials(true);
+        corsConfig.setMaxAge(corsConfig.getMaxAge());
 
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
-        return source;
+        corsConfigSource.registerCorsConfiguration("/**", corsConfig);
+        return corsConfigSource;
     }
 
     @Bean
