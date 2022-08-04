@@ -3,6 +3,11 @@ jdk:
   - openjdk17
 
 branches:
+  except:
+    - main
+		- develop
+
+branches:
   only:
     - document/travis
 
