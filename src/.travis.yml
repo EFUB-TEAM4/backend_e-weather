@@ -5,7 +5,7 @@ jdk:
 branches:
   except:
     - main
-		- develop
+    - develop
 
 branches:
   only:
