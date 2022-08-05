@@ -22,19 +22,6 @@ before_deploy:
   - mkdir -p deploy
   - mv backend_e-weather.zip deploy/backend_e-weather.zip
 
-deploy:
-  - provider: s3
-    access_key_id: $AWS_S3_BUCKET_ACCESS_KEY
-    secret_access_key: $AWS_S3_BUCKET_SECRET_KEY
-    bucket: eweather-deploy
-    region: ap-northeast-2
-    skip_cleanup: true
-    acl: private
-    local_dir: deploy
-    wait-until-deployed: true
-    on:
-      branch: document/travis
-
 notifications:
   email:
     recipients:
