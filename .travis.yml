@@ -18,7 +18,7 @@ cache:
 script: "./gradlew clean build"
 
 before_deploy:
-  - zip -r backend_e-weather # 모든 파일을 eweather-backend로 압축
+  - zip -r backend_e-weather *
   - mkdir -p deploy
   - mv backend_e-weather.zip deploy/backend_e-weather.zip
 
