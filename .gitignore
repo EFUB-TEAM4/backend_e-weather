@@ -39,3 +39,6 @@ out/
 src/main/resources/application.properties
 src/main/resources/application-oauth.properties
 src/main/resources/application-cloud.properties
+src/main/resources/application-springboot.yml
+/.env
+.env
