@@ -1,23 +1,43 @@
 version: "3"
 
 services:
-  backend:
+  server1:
     build:
       context: .
       dockerfile: Dockerfile
+    image: spring
+    container_name: server1
     ports:
-      - 8080:8080
+      - 8082:8082
     volumes:
       - ./:/app
     working_dir: /app
-    expose:
-      - 8080
     env_file:
-      - ./settings/.env
+      - .env
+    environment:
+      active: prod1
+
+  server2:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: spring
+    container_name: server2
+    ports:
+      - 8083:8083
+    volumes:
+      - ./:/app
+    working_dir: /app
+    env_file:
+      - .env
+    environment:
+      active: prod2
+
 
   nginx:
     build: ./nginx
     ports:
       - 80:80
     depends_on:
-      - backend
+      - server1
+      - server2

@@ -22,8 +22,8 @@ import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @Configuration
-//@EnableOpenApi
 @EnableSwagger2
+@Profile(value = "dev")
 public class SpringFoxConfig {
     public static final Contact DEFAULT_CONTACT =
             new Contact(
