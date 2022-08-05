@@ -1,3 +1,7 @@
+application:
+  version: 1.0.0
+  title: eweather
+
 cloud:
   aws:
     credentials:
@@ -10,6 +14,10 @@ cloud:
     stack:
       auto: 'false'
 spring:
+  config:
+    import:
+    - optional:file:.env[.properties]
+    - classpath:/application-springboot.yml
   jpa:
     generate-ddl: 'false'
     hibernate:
@@ -19,8 +27,6 @@ spring:
         enable_lazy_load_no_trans: 'true'
         format_sql: 'false'
     database: mysql
-  profiles:
-    include: oauth
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     password: ${DATABASE_PASSWORD}
@@ -60,8 +66,5 @@ cors:
   allowed-methods: ${CORS_ALLOWED_METHODS}
   allowed-headers: ${CORS_ALLOWED_HEADERS}
   max-age: ${CORS_MAX_AGE}
-application:
-  version: 1.0.0
-  title: eweather
 jwt:
   secret: ${JWT_SECRET}
