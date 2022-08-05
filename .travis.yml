@@ -24,8 +24,8 @@ before_deploy:
 
 deploy:
   - provider: s3
-    access_key_id: $AWS_S3_BUCKET_ACCESS_KEY
-    secret_access_key: $AWS_S3_BUCKET_SECRET_KEY
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key: $AWS_SECRET_KEY
     bucket: eweather-deploy
     region: ap-northeast-2
     skip_cleanup: true
