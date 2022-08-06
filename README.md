@@ -93,7 +93,7 @@
 ## ☃API 문서
 
 
-<b> <h3>[링크](http://ewhaweather.com/v2/api-docs) </h3></b>
+<b> <h3>[링크](http://api.eweather.site:8081/v2/api-docs) </h3></b>
 
 ## 🌜폴더 구조
 
