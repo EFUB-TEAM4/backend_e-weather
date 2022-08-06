@@ -37,7 +37,7 @@ public class OpenWeatherAPI {
     @Transactional
     public List<OpenWeatherResponseDto> findWeather() throws IOException, ParseException {
         URL url = buildRequestUrl(); // url 생성성
-        System.out.println(url);  // url 어떻게 되는지 확인
+        //System.out.println(url);  // url 어떻게 되는지 확인
         String stringResult = httpURLConnect(url);
         JSONArray jsonResult = getItems(stringResult);
         return buildResponse(jsonResult);
@@ -47,7 +47,7 @@ public class OpenWeatherAPI {
     @Transactional
     public List<ForcastResponseDto> findForcastWeather() throws IOException, ParseException{
         URL url = buildRequestUrl(); // url 생성성
-        System.out.println(url);  // url 어떻게 되는지 확인
+        //System.out.println(url);  // url 어떻게 되는지 확인
         String stringResult = httpURLConnect(url);
         JSONArray jsonResult = getItems(stringResult);
         return buildForcastResponse(jsonResult);
@@ -56,7 +56,7 @@ public class OpenWeatherAPI {
     @Transactional
     public CurrentWeatherResponseDto findCalendarWeather() throws IOException, ParseException{
         URL url = buildRequestUrl(); // url 생성성
-        System.out.println(url);  // url 어떻게 되는지 확인
+        //System.out.println(url);  // url 어떻게 되는지 확인
         String stringResult = httpURLConnect(url);
         JSONArray jsonResult = getItems(stringResult);
         return buildCurrentData(jsonResult);
@@ -65,7 +65,7 @@ public class OpenWeatherAPI {
     @Transactional
     public CurrentWeatherResponseDto findCurrentWeather() throws IOException, ParseException{
         URL url = buildRequestUrl(); // url 생성성
-        System.out.println(url);  // url 어떻게 되는지 확인
+        //System.out.println(url);  // url 어떻게 되는지 확인
         String stringResult = httpURLConnect(url);
         JSONArray jsonResult = getItems(stringResult);
         return buildCurrentData(jsonResult);
@@ -74,7 +74,7 @@ public class OpenWeatherAPI {
     @Transactional
     public WeatherResponseDto findTemperature() throws IOException, ParseException {
         URL url = buildRequestUrl(); // url 생성성
-        System.out.println(url);  // url 어떻게 되는지 확인
+        //System.out.println(url);  // url 어떻게 되는지 확인
         String stringResult = httpURLConnect(url);
         JSONArray jsonResult = getItems(stringResult);
         return builldWeatherResponse(jsonResult, "TMP");
@@ -83,7 +83,7 @@ public class OpenWeatherAPI {
     @Transactional
     public WeatherResponseDto findSkyCode() throws IOException, ParseException{
         URL url = buildRequestUrl(); // url 생성성
-        System.out.println(url);  // url 어떻게 되는지 확인
+        //System.out.println(url);  // url 어떻게 되는지 확인
         String stringResult = httpURLConnect(url);
         JSONArray jsonResult = getItems(stringResult);
         return builldWeatherResponse(jsonResult, "SKY");
@@ -92,7 +92,7 @@ public class OpenWeatherAPI {
     @Transactional
     public WeatherResponseDto findPrecipitation() throws IOException, ParseException{
         URL url = buildRequestUrl(); // url 생성성
-        System.out.println(url);  // url 어떻게 되는지 확인
+        //System.out.println(url);  // url 어떻게 되는지 확인
         String stringResult = httpURLConnect(url);
         JSONArray jsonResult = getItems(stringResult);
         return builldWeatherResponse(jsonResult, "POP");
@@ -100,7 +100,7 @@ public class OpenWeatherAPI {
 
     public BearResponseDto findBearInfo() throws IOException, ParseException{
         URL url = buildRequestUrl(); // url 생성성
-        System.out.println(url);  // url 어떻게 되는지 확인
+        //System.out.println(url);  // url 어떻게 되는지 확인
         String stringResult = httpURLConnect(url);
         JSONArray jsonResult = getItems(stringResult);
         return buildBearResponse(jsonResult);
@@ -110,14 +110,14 @@ public class OpenWeatherAPI {
         StringBuilder sb = new StringBuilder(BASE_URL);
         String baseDate = getCurrentDate();
         String baseTime = getBaseTime();
-        System.out.println(baseDate + " " + baseTime);
+        //System.out.println(baseDate + " " + baseTime);
         if(Objects.equals(baseTime, "2300")){
             Date dDate = new Date();
             dDate = new Date(dDate.getTime()+(1000*60*60*24*-1));
             SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
             baseDate = sdf.format(dDate);
         }
-        System.out.println(baseDate + " " + baseTime);
+        //System.out.println(baseDate + " " + baseTime);
         sb.append("?").append(URLEncoder.encode("serviceKey", "UTF-8")).append("=").append(serviceKey);
         sb.append("&").append(URLEncoder.encode("pageNo", "UTF-8")).append("=").append(URLEncoder.encode(pageNo, "UTF-8"));
         sb.append("&").append(URLEncoder.encode("numOfRows", "UTF-8")).append("=").append(URLEncoder.encode(numOfRows, "UTF-8")); /* 한 페이지 결과 수 */
@@ -135,7 +135,7 @@ public class OpenWeatherAPI {
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
         conn.setRequestProperty("Content-type", "application/json");
-        System.out.println("Response code: " + conn.getResponseCode());
+        //System.out.println("Response code: " + conn.getResponseCode());
 
         BufferedReader rd;
 
@@ -425,7 +425,7 @@ public class OpenWeatherAPI {
         DateFormat simpleDateFormat = new SimpleDateFormat("k");
         Date currentHour = new Date();
         String ApiTime = simpleDateFormat.format(currentHour);
-        System.out.println(ApiTime);
+        //System.out.println(ApiTime);
         return switch (ApiTime) {
             case "24", "1", "2" -> "2300";
             case "3", "4", "5" -> "0200";
