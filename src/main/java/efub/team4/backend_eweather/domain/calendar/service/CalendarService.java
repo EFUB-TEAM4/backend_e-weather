@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -22,8 +23,10 @@ public class CalendarService {
 
     @Transactional
     public Calendar save(Calendar calendar) {
-        calendarRepository.findCalendarByForecastDate(calendar.getForecastDate())
-                .ifPresent((existedCalendar) -> new CalendarAlreadyExistsException("Calendar is already exists with date=" + calendar.getForecastDate()));
+        Optional<Calendar> existedCalendar = calendarRepository.findCalendarByForecastDateAndUser_Id(calendar.getForecastDate(), calendar.getUser().getId());
+        if (existedCalendar.isPresent()){
+            throw new CalendarAlreadyExistsException("Calendar is already exists with date=" + calendar.getForecastDate());
+        }
         return calendarRepository.save(calendar);
     }
 
