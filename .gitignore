@@ -42,3 +42,5 @@ src/main/resources/application-cloud.properties
 src/main/resources/application-springboot.yml
 /.env
 .env
+
+*.properties
